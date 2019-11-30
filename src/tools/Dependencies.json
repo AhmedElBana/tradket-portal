@@ -1,0 +1,92 @@
+{
+    "en": {
+        "currencies": {
+            "EGP": "EGP",
+            "USD": "USD"
+        },
+        "types": {
+            "card": "Card",
+            "aggregator": "Accept Kiosk",
+            "wallet": "Wallet",
+            "cash": "Cash",
+            "premium": "Premium",
+            "valu": "valU"
+        },
+        "integrations": {
+            "VPC": "Credit Card",
+            "CASH": "Cash Collection",
+            "UIG": "Wallet",
+            "CAGG": "Accept Kiosk",
+            "PREMIUM": "Premium",
+            "VALU": "valU"
+        },
+        "status": {
+            "Pending": "Pending",
+            "Approved": "Approved",
+            "Successful": "Successful"
+        }
+    },
+    "ar": {
+        "currencies": {
+            "EGP": "جنية مصرى",
+            "USD": "دولار امريكى"
+        },
+        "types": {
+            "card": "بطاقة",
+            "aggregator": "اكسبت كيوسك",
+            "wallet": "محفظه",
+            "cash": "كاش",
+            "premium": "بريميوم",
+            "valu": "فاليو"
+        },
+        "integrations": {
+            "VPC": "بطاقة ائتمان",
+            "CASH": "كاش عند التوصيل",
+            "UIG": "محفظة",
+            "CAGG": "اكسبت كيوسك",
+            "PREMIUM": "بريميوم",
+            "VALU": "فاليو"
+        },
+        "status": {
+            "Pending": "قيد الإنتظار",
+            "Approved": "مصدق عليه",
+            "Successful": "ناجح"
+        },
+        "bs_status": {
+            "Pending": "قيد الإنتظار",
+            "Approved": "مصدق عليه",
+            "Rejected": "مرفوض",
+            "Deactivated": "معطل"
+        },
+        "perms":{
+            "can create orders": "يستطيع إنشاء طلبات",
+            "can view orders": "يستطيع عرض الطلبات",
+            "can update orders": "يستطيع تحديث الطلبات",
+            "can delete orders": "يستطيع حذف الطلبات",
+            "can view products": "يستطيع عرض المنتجات",
+            "can create products": "يستطيع إنشاء المنتجات",
+            "can update products": "يستطيع تحديث المنتجات",
+            "can delete products": "يستطيع حذف المنتجات",
+            "can view transactions": "يستطيع عرض المعاملات",
+            "can capture transactions": "يستطيع سحب المعاملات",
+            "can void transactions": "يستطيع إبطال المعاملات",
+            "can refund transactions": "يستطيع إعادة المعاملات",
+            "can create transactions": "يستطيع إنشاء المعاملات",
+            "can delete transactions": "يستطيع حذف المعاملات",
+            "can view payment integration": "يستطيع عرض تكامل الدفع",
+            "can create payment integration": "يستطيع إنشاء تكامل الدفع",
+            "can update payment integration": "يستطيع تحديث تكامل الدفع",
+            "can view iframe": "يستطيع عرض اي فريم",
+            "can create iframe": "يستطيع إنشاء اي فريم",
+            "can update iframe": "يستطيع تحديث اي فريم",
+            "can delete iframe": "يستطيع حذف اي فريم",
+            "can view staff": "يستطيع عرض المستخدمين",
+            "can create staff": "يستطيع إنشاء المستخدمين",
+            "can update staff": "يستطيع تحديث المستخدمين",
+            "can delete staff": "يستطيع حذف المستخدمين",
+            "can view transfers":"يستطيع عرض التحويلات",
+            "can view plugins":"يستطيع عرض الإضافات",
+            "can view notifications":"يستطيع عرض الإشعارات"
+        }
+    }
+}

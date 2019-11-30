@@ -1,0 +1,199 @@
+// Here you can add other styles
+
+.sm_alert{
+    width: 375px;
+    margin: 7px auto;
+    max-width: 100%;
+    border-radius: 10px;
+    padding: 10px 15px;
+    text-align: left;
+}
+.btn{
+    display: inline-block;
+    height: 45px;
+    background-color: #20A8D8 !important;
+    border-radius: 10px;
+    color: #fff !important;
+    font-size: 16px;
+    padding: 9px 15px;
+    width: 200px;
+    max-width: 100%;
+    text-align: center;
+    text-decoration: none;
+    transition: all .3s ease-in-out;
+}
+.btn:hover{
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0px 3px 6px #00000029;
+}
+.btn:disabled{
+    cursor: not-allowed;
+}
+.btn_b{
+    display: inline-block;
+    height: 45px;
+    background-color: #20A8D8 !important;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    color: #fff !important;
+    font-size: 16px;
+    padding: 9px 15px;
+    min-width: 116px;
+    text-align: center;
+    text-decoration: none;
+    transition: all .3s ease-in-out;
+}
+.btn_b:hover{
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #fff !important;
+    color: #20A8D8 !important;
+}
+.btn_w{
+    display: inline-block;
+    height: 45px;
+    background-color: #fff !important;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    color: #20A8D8 !important;
+    font-size: 16px;
+    padding: 9px 15px;
+    min-width: 116px;
+    text-align: center;
+    text-decoration: none;
+    transition: all .3s ease-in-out;
+}
+.btn_w:hover{
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #20A8D8 !important;
+    color: #fff !important;
+}
+//-----------
+.tradket_input{
+    text-align: left;
+    width: 400px;
+    max-width: 100%;
+    margin: auto;
+    margin-bottom: 0px;
+}
+.mui-textfield{
+    padding-top: 6px;
+    padding: 6px 15px;
+}
+.mui-textfield--float-label>label{
+    padding: 0px 15px;
+    background-color: #fff;
+    width: auto;
+    margin: 0px 15px;
+}
+.mui-textfield>input{
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px 15px;
+    font-size: 20px;
+    overflow: hidden;
+}
+.mui-textfield>input:focus{
+    height: calc(50px + 1px);
+    margin-bottom: -1px;
+}
+.mui-textfield>input:invalid:not(:focus):not(:required), 
+.mui-textfield>input:invalid:not(:focus):required.mui--is-empty.mui--is-touched, 
+.mui-textfield>input:invalid:not(:focus):required.mui--is-not-empty, 
+.mui-textfield>input:invalid:not(:focus):required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty), 
+.mui-textfield>input:invalid:not(:focus):required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty), 
+.mui-textfield>input:not(:focus).mui--is-invalid:not(:required), 
+.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-empty.mui--is-touched, 
+.mui-textfield>input:not(:focus).mui--is-invalid:required.mui--is-not-empty, 
+.mui-textfield>input:not(:focus).mui--is-invalid:required:not(:empty):not(.mui--is-empty):not(.mui--is-not-empty), 
+.mui-textfield>input:not(:focus).mui--is-invalid:required[value]:not([value=""]):not(.mui--is-empty):not(.mui--is-not-empty){
+    height: calc(50px + 1px);
+    margin-bottom: -1px;
+}
+.mui-textfield--float-label>input:focus~label, 
+.mui-textfield--float-label>textarea:focus~label{
+    transform: translate(50,50) !important;
+    overflow: hidden;
+}
+//-------------
+.tradket_model{
+    margin-top: 50px;
+    background-color: #fff;
+    box-shadow: 0px 3px 6px #00000029;
+}
+.tradket_model > .head{
+    height: 90px;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    padding: 20px 0px;
+}
+.tradket_model > .head > p{
+    font-size: 34px;
+    color: #20A8D8;
+    font-weight: bold;
+    margin: 0px;
+}
+.tradket_model > .body{
+    width: 100%;
+    text-align: center;
+    padding: 40px 0px;
+}
+//------------------------ start LogoutHeader -----------------------
+.LogoutHeader{
+    position: relative;
+    width: 100%;
+    height: 88px;
+    background-color: #20A8D8;
+
+}
+.LogoutHeader .logo{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    height: 59px;
+}
+.btns_div{
+    position: absolute;
+    right: 75px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.btns_div > *{
+    margin: 0px 5px;
+}
+@media only screen and (max-width: 1000px) {
+    .LogoutHeader .logo{
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .btns_div{
+        right: 15px;
+    }
+}
+@media only screen and (max-width: 500px) {
+    .LogoutHeader{
+        height: 165px;
+    }
+    .LogoutHeader .logo{
+        position: absolute;
+        left: 50%;
+        top: 15px;
+        transform: translateX(-50%);
+        height: 59px;
+    }
+    .btns_div{
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        right: 50%;
+        top: 100px;
+        transform: translateX(50%);
+    }
+}
+//------------------------ end LogoutHeader -------------------------

@@ -1,0 +1,33 @@
+.waitingComponent{
+    position: relative;
+}
+.waitingContent{
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.waitingContent > img{
+    max-width: 80%;
+    max-height: 80%;
+    width: 150px;
+}
+.loading{
+    animation-name: loading;
+    animation-iteration-count: infinite;
+    animation-duration: 1.2s;
+}
+@-webkit-keyframes loading {
+    0%   {transform: scale(1,1);}
+    50%  {transform: scale(1.2,1.2);}
+    100%   {transform: scale(1,1);}
+}
+  
+/* Standard syntax */
+@keyframes loading {
+    0%   {transform: scale(1,1);}
+    50%  {transform: scale(1.2,1.2);}
+    100%   {transform: scale(1,1);}
+}

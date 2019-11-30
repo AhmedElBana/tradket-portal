@@ -1,0 +1,15 @@
+.login-signup-forget{
+    width: 430px;
+    max-width: 100%;
+    margin: auto;
+    margin-top: 25px;
+}
+.login-signup-forget a:hover{
+    text-decoration: none;
+}
+@media only screen and (max-width: 767px) {
+    .login-signup-forget a:first-of-type{
+        margin-bottom: 10px;
+        display: block;
+    }
+}
