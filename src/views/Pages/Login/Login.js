@@ -17,43 +17,72 @@ class Login extends Component {
         error: false,
         errorMessage: "",
         email: "",
+        firstEmail: true,
         password: "",
+        firstPassword: true
     };
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleFormValidate = this.handleFormValidate.bind(this);
+    this.handleFormValidateChange = this.handleFormValidateChange.bind(this);
     this.removeFormErr = this.removeFormErr.bind(this);
     this.login = this.login.bind(this);
   }
   handleEmailChange(e){
     this.setState({email: e.target.value},()=>{
-      if(this.state.email != "" && this.state.password != ""){
-        this.handleFormValidate()
+      if(!this.state.firstEmail){
+        this.handleFormValidateChange("email")
       }
     });
   }
   handlePasswordChange(e){
     this.setState({password: e.target.value},()=>{
-      if(this.state.email != "" && this.state.password != ""){
-        this.handleFormValidate()
+      if(!this.state.firstPassword){
+        this.handleFormValidateChange("password")
       }
     });
   }
   removeFormErr(e){
     this.setState({email: e.target.value, error: false, errorMessage: ""});
   }
-  handleFormValidate(e){
+  handleFormValidate(field){
     //validation
-    if(this.state.email == ""){
-      this.setState({error: true, errorMessage: "Email field is required."})
-    }else if(!validator.isEmail(this.state.email)){
-      this.setState({error: true, errorMessage: "Please enter valid email."})
-    }else if(this.state.password == ""){
-      this.setState({error: true, errorMessage: "Password field is required."})
-    }else if(this.state.password.length < 6){
-      this.setState({error: true, errorMessage: "Password must be more than 6 letters."})
-    }else{
-      this.setState({error: false, errorMessage: ""})
+    if(field == "email" && this.state.firstEmail){
+      if(this.state.email == ""){
+        this.setState({firstEmail: false, error: true, errorMessage: "Email field is required."})
+      }else if(!validator.isEmail(this.state.email)){
+        this.setState({firstEmail: false, error: true, errorMessage: "Please enter valid email."})
+      }else{
+        this.setState({firstEmail: false, error: false, errorMessage: ""})
+      }
+    }else if(field == "password" && this.state.firstPassword){
+      if(this.state.password == ""){
+        this.setState({firstPassword: false, error: true, errorMessage: "Password field is required."})
+      }else if(this.state.password.length < 6){
+        this.setState({firstPassword: false, error: true, errorMessage: "Password must be more than 6 letters."})
+      }else{
+        this.setState({firstPassword: false, error: false, errorMessage: ""})
+      }
+    }
+  }
+  handleFormValidateChange(field){
+    //validation
+    if(field == "email" && !this.state.firstEmail){
+      if(this.state.email == ""){
+        this.setState({error: true, errorMessage: "Email field is required."})
+      }else if(!validator.isEmail(this.state.email)){
+        this.setState({error: true, errorMessage: "Please enter valid email."})
+      }else{
+        this.setState({error: false, errorMessage: ""})
+      }
+    }else if(field == "password" && !this.state.firstPassword){
+      if(this.state.password == ""){
+        this.setState({error: true, errorMessage: "Password field is required."})
+      }else if(this.state.password.length < 6){
+        this.setState({error: true, errorMessage: "Password must be more than 6 letters."})
+      }else{
+        this.setState({error: false, errorMessage: ""})
+      }
     }
   }
   login(){
@@ -114,10 +143,10 @@ class Login extends Component {
                         required
                         className="tradket_input"
                         floatingLabel={true} 
+                        autoFocus={true}
                         value={this.state.email} 
                         onChange={this.handleEmailChange}
-                        onBlur={this.handleFormValidate}
-                        // onFocus={this.removeFormErr}
+                        onBlur={()=> this.handleFormValidate("email")}
                       />
                       <Input label="Password" type="password" 
                         required
@@ -126,8 +155,7 @@ class Login extends Component {
                         floatingLabel={true}
                         value={this.state.password}
                         onChange={this.handlePasswordChange}
-                        onBlur={this.handleFormValidate}
-                        // onFocus={this.removeFormErr}
+                        onBlur={()=> this.handleFormValidate("password")}
                       />  
                       {this.state.error?
                       <Alert color="danger" className="sm_alert" >{this.state.errorMessage}</Alert>
