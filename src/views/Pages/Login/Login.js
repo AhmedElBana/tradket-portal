@@ -47,16 +47,16 @@ class Login extends Component {
   }
   handleFormValidate(field){
     //validation
-    if(field == "email" && this.state.firstEmail){
-      if(this.state.email == ""){
+    if(field === "email" && this.state.firstEmail){
+      if(this.state.email === ""){
         this.setState({firstEmail: false, error: true, errorMessage: "Email field is required."})
       }else if(!validator.isEmail(this.state.email)){
         this.setState({firstEmail: false, error: true, errorMessage: "Please enter valid email."})
       }else{
         this.setState({firstEmail: false, error: false, errorMessage: ""})
       }
-    }else if(field == "password" && this.state.firstPassword){
-      if(this.state.password == ""){
+    }else if(field === "password" && this.state.firstPassword){
+      if(this.state.password === ""){
         this.setState({firstPassword: false, error: true, errorMessage: "Password field is required."})
       }else if(this.state.password.length < 6){
         this.setState({firstPassword: false, error: true, errorMessage: "Password must be more than 6 letters."})
@@ -67,16 +67,16 @@ class Login extends Component {
   }
   handleFormValidateChange(field){
     //validation
-    if(field == "email" && !this.state.firstEmail){
-      if(this.state.email == ""){
+    if(field === "email" && !this.state.firstEmail){
+      if(this.state.email === ""){
         this.setState({error: true, errorMessage: "Email field is required."})
       }else if(!validator.isEmail(this.state.email)){
         this.setState({error: true, errorMessage: "Please enter valid email."})
       }else{
         this.setState({error: false, errorMessage: ""})
       }
-    }else if(field == "password" && !this.state.firstPassword){
-      if(this.state.password == ""){
+    }else if(field === "password" && !this.state.firstPassword){
+      if(this.state.password === ""){
         this.setState({error: true, errorMessage: "Password field is required."})
       }else if(this.state.password.length < 6){
         this.setState({error: true, errorMessage: "Password must be more than 6 letters."})
@@ -111,7 +111,7 @@ class Login extends Component {
           (error) => {
             //end waiting and print error message
             if(error.response){
-              if(error.response.status === 400){
+              if(error.response.status === 401){
                 this.setState({waiting:false, error: true, errorMessage: "Email or password is wrong."});
               }else{
                 this.setState({waiting:false, error: true, errorMessage: "Oops! Something went wrong. If this problem persists, please contact your service provider."});
@@ -129,7 +129,7 @@ class Login extends Component {
         <LogoutHeader />
         <Container>
           <Row className="justify-content-center">
-            <Col xl="12" md="9" lg="8" xl="7">
+            <Col xs="12" md="9" lg="8" xl="7">
               <div className="tradket_model">
                 <div className="head">
                   <p>LOG IN</p>
@@ -163,17 +163,17 @@ class Login extends Component {
                       null
                     }
                     <br/>
-                    {this.state.email == "" || this.state.password == "" || this.state.error?
+                    {this.state.email === "" || this.state.password === "" || this.state.error?
                       <button disabled className="btn">Log In</button>  
                     :
                       <button className="btn" onClick={this.login}>Log In</button>  
                     }
                     <div className="login-signup-forget">
                       <Row>
-                        <Col xl="12" sm="6" md="6" lg="6" xl="6">
+                        <Col xs="12" sm="6" md="6" lg="6" xl="6">
                           <a href="/portal/register">Not a member? Sign up</a>
                         </Col>
-                        <Col xl="12" sm="6" md="6" lg="6" xl="6">
+                        <Col xs="12" sm="6" md="6" lg="6" xl="6">
                           <a href="/404">I can't remember my password</a>
                         </Col>
                       </Row>

@@ -3,7 +3,7 @@
 .sm_alert{
     width: 375px;
     margin: 7px auto;
-    max-width: 100%;
+    max-width: calc(100% - 30px);
     border-radius: 10px;
     padding: 10px 15px;
     text-align: left;
