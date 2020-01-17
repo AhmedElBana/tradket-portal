@@ -169,6 +169,7 @@ class Forget extends Component {
     return(
       <VForm onSubmit={this.verifyCode}>
         <Col>
+          <p className="verifyText">We sent verify code to your email <br/> {this.state.form.email}</p>
           <div className="tradketInputGroup">
             <VInput type="text" className="tradket_b_i"
               autoComplete="off"
@@ -239,11 +240,12 @@ class Forget extends Component {
             <VInput type="password" className="tradket_b_i"
               id="Password"
               autoComplete="off"
+              autoFocus={true}
               name="password"
               value={this.state.form.password}
               onChange={(e) => this.handleFormChange("password", e)}
               validations={[required, Password]}
-              placeholder="Password"
+              placeholder="New Password"
             />
           </div>
           <div className="tradketInputGroup">
