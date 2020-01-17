@@ -32,6 +32,7 @@
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-test-renderer": "^16.8.6",
+    "react-validation": "^3.0.7",
     "reactstrap": "^8.0.0",
     "simple-line-icons": "^2.4.1",
     "validator": "^12.1.0"

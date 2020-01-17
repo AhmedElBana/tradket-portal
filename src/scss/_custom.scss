@@ -76,6 +76,53 @@
 //     color: #fff !important;
 // }
 //-----------
+.tradket_b_i{
+    width: 100%;
+    height: 50px;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    padding: 15px 15px;
+    font-size: 20px;
+    overflow: hidden;
+}
+.tradket_b_i:focus{
+    border-color: #00A2DA;
+    outline: none;
+    box-shadow: none;
+}
+.tradketInputGroup{
+    margin: auto;
+    width: 400px;
+    max-width: 100%;
+    margin-bottom: 15px;
+}
+.tradketInputGroup > div{
+    position: relative;
+}
+.tradketInputGroup .alert{
+    text-align: left;
+    color: #813838;
+    font-size: 16px;
+    width: 100%;
+}
+.tradketInputGroup .simple-alert > i{
+    display: inline-block;
+    position: absolute;
+    font-size: 23px;
+    top: 15px;
+    right: 15px;
+}
+.tradketInputGroup .simple-alert.outDiv{
+    position: static;
+}
+.tradketInputGroup .simple-alert.outDiv > i{
+    right: 25px;
+}
+.tradketInputGroup .simple-alert > .alert-danger{
+    padding: 5px 15px;
+    margin: 0px;
+    margin-top: 5px;
+}
 .tradket_input{
     text-align: left;
     width: 400px;
