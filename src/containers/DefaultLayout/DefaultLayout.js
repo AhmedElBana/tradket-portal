@@ -2,6 +2,7 @@ import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
+// import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 
 import {
   AppAside,
@@ -12,13 +13,15 @@ import {
   AppSidebarForm,
   AppSidebarHeader,
   AppSidebarMinimizer,
-  AppBreadcrumb2 as AppBreadcrumb,
+  // AppBreadcrumb2 as AppBreadcrumb,
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
 import navigation from '../../_nav';
 // routes config
 import routes from '../../routes';
+import logo from '../../assets/img/brand/logo.png'
+import sygnet from '../../assets/img/brand/sygnet.png'
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
@@ -46,13 +49,17 @@ class DefaultLayout extends Component {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
+            <div className="sideBarHead">
+              <img src={logo} alt="tradket logo" className="logo-lg"/>
+              <img src={sygnet} alt="tradket logo" className="logo-sm"/>
+            </div>
             <AppSidebarNav navConfig={navigation} {...this.props} router={router}/>
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={routes} router={router}/>
+            {/* <AppBreadcrumb appRoutes={routes} router={router}/> */}
             <Container fluid>
               <Suspense fallback={this.loading()}>
                 <Switch>
@@ -68,7 +75,7 @@ class DefaultLayout extends Component {
                         )} />
                     ) : (null);
                   })}
-                  <Redirect from="/" to="/dashboard" />
+                  <Redirect from="/" to="/home" />
                 </Switch>
               </Suspense>
             </Container>
