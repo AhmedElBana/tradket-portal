@@ -1,6 +1,4 @@
 import text from "./Dependencies.json";
-import cookie from 'react-cookies';
-let cookies = cookie.loadAll();
 class Dependencies {
     currencyName(currency){
         if(text[localStorage.lang].currencies[currency]){
@@ -37,30 +35,7 @@ class Dependencies {
             return bs_status;
         }
     }
-    getAccountPermNames(list_of_perm_ids){
-        let account_perms = [];
-        var keys = JSON.parse(cookies.permsDict);
-        for(let i=0; i < list_of_perm_ids.length; i++){
-          let perm_id = list_of_perm_ids[i]
-          let perm_name = keys[perm_id]
-          account_perms.push(perm_name);
-        }
-        return account_perms
-    }
-   
-
-    getPermsIds(namesList){
-        let idsArr = [];
-        var keys = cookies.permsDict;
-        namesList.map((name)=>{
-            Object.keys(keys).map((id)=>{
-                if(name === keys[id]){
-                    idsArr.push(id);
-                }
-            });
-        });
-        return idsArr
-    }
+    
     permsName(perm){
         if(localStorage.lang == "ar"){
             if(text[localStorage.lang].perms[perm]){
@@ -165,10 +140,6 @@ class Dependencies {
         }
     }
 
-    //permissions
-    viewIntegrationsPerm(){
-        return (cookies.permNames).includes("can view payment integration");
-    }
 }
 
 export let dependencies = new Dependencies();
