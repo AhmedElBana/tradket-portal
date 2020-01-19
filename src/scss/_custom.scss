@@ -521,6 +521,9 @@ table tr > td,th{
 table.transactionsTable tr:hover{
     cursor: pointer;
 }
+.currentTableDiv{
+    overflow-x: auto;
+}
 .paginationList{
     list-style: none;
     padding: 0px;
