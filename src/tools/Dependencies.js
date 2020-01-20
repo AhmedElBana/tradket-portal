@@ -1,5 +1,8 @@
 import text from "./Dependencies.json";
 class Dependencies {
+    getUserData(){
+        return JSON.parse(localStorage.userData)
+    }
     currencyName(currency){
         if(text[localStorage.lang].currencies[currency]){
             return text[localStorage.lang].currencies[currency];

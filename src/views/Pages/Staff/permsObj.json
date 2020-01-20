@@ -1,0 +1,42 @@
+{
+    "orders": [
+      "can create orders",
+      "can view orders",
+      "can update orders",
+      "can delete orders"
+    ],
+    "products": [
+      "can view products",
+      "can create products",
+      "can update products",
+      "can delete products"
+    ],
+    "transactions": [
+      "can view transactions",
+      "can capture transactions",
+      "can void transactions",
+      "can refund transactions",
+      "can create transactions",
+      "can delete transactions"
+    ],
+    "paymentIntegrations": [
+      "can view payment integration",
+      "can create payment integration",
+      "can update payment integration"
+    ],
+    "iframes": [
+      "can view iframe",
+      "can create iframe",
+      "can update iframe",
+      "can delete iframe"
+    ],
+    "users": [
+      "can view staff",
+      "can create staff",
+      "can update staff",
+      "can delete staff"
+    ],
+    "transfers":[
+      "can view transfers"
+    ]
+  }

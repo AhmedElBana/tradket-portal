@@ -7,6 +7,7 @@ import { AppSidebarToggler } from '@coreui/react';
 // import logo from '../../assets/img/brand/logo.svg'
 // import sygnet from '../../assets/img/brand/sygnet.svg'
 import {auth} from './../../tools/Auth';
+import { dependencies } from '../../tools/Dependencies';
 
 const propTypes = {
   children: PropTypes.node,
@@ -55,7 +56,11 @@ class DefaultHeader extends Component {
           </NavItem> */}
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle nav>
-              <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              {/* <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" /> */}
+              <span className="userLogo">
+                <span>{dependencies.getUserData().name}</span>
+                <span className="usrImgDev"><span>{dependencies.getUserData().name[0].toUpperCase()}</span></span>
+              </span>
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
