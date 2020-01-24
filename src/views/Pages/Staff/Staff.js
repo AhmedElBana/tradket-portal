@@ -11,6 +11,7 @@ import {httpClient} from './../../../tools/HttpClient';
 import validator from 'validator';
 import "./Staff.scss";
 import permsObj from "./permsObj.json";
+import successImg from "./../../../assets/img/success.png"
 
 import Waiting from "./../../../views/Waiting/waiting";
 
@@ -37,6 +38,55 @@ const email = (value) => {
           </div>;
   }
 };
+let fullNameError = "Please enter your full name."
+const fullName = (value) => {
+  var patt = new RegExp("[a-zA-Zا-ى]+ [a-zA-Zا-ى]+");
+  if (!patt.test(value)) {
+    return <div className="simple-alert">
+            <i className="fa fa-exclamation-circle"></i>
+            <Alert color="danger">
+              {fullNameError}
+            </Alert>
+          </div>;
+  }
+};
+let phoneNameError = "Please enter valid phone number  (11 number)."
+const phoneNumber = (value) => {
+  var patt = new RegExp("^(01)([0-9]*)$");
+  if (isNaN(value) || value.toString().trim().length !== 11 || !patt.test(value)) {
+    return <div className="simple-alert">
+            <i className="fa fa-exclamation-circle"></i>
+            <Alert color="danger">
+              {phoneNameError}
+            </Alert>
+          </div>;
+  }
+}
+// Password validation
+let PasswordNameError = <span>Please add more difficulty to your password.<br/> <b>Hint</b>: add special characters, numbers and capital letters.</span>
+const Password = (value) => {
+  var patt = new RegExp("^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20})$");
+  if (!patt.test(value)) {
+    return <div className="simple-alert">
+            <i className="fa fa-exclamation-circle"></i>
+            <Alert color="danger">
+              {PasswordNameError}
+            </Alert>
+          </div>;
+  }
+}
+let RePasswordNameError = "Please enter the same password as above."
+const RePassword = (value) => {
+  let password = document.getElementById("addPassword").value;
+  if (!validator.equals(value,password)) {
+    return <div className="simple-alert">
+            <i className="fa fa-exclamation-circle"></i>
+            <Alert color="danger">
+              {RePasswordNameError}
+            </Alert>
+          </div>;
+  }
+}
 class Staff extends Component {
   constructor(props){
     super(props);
@@ -55,28 +105,20 @@ class Staff extends Component {
         showUsersDetails: false,
         selectedUser: {},
         //add modal
+        addStaffPath: "/api/staff/create",
         addModalWaiting: false,
         addModal: false,
         addModalError: false,
         addModalFaildMessage: "",
         addModalSuccess: false,
         addForm: {
+          name: "",
           email: "",
+          phoneNumber: "",
+          password: "",
+          confirmPassword: "",
           perms: []
         },
-        addModalPerm: {
-          form: {
-              "email": "User Email",
-              "perms": "Permissions",
-              "orders": "Orders",
-              "products": "Products",
-              "transactions": "Transactions",
-              "paymentIntegrations": "Payment Integrations",
-              "iframes": "Iframes",
-              "users": "Users",
-              "transfers":"Transfers"
-          }
-      },
         //public
         publicError: false,
         logout: false,
@@ -233,9 +275,11 @@ class Staff extends Component {
             <div className="x_title">
               <h2>Staff</h2>
               <div className="ButtonsDiv">
-                <button onClick={this.toggleAddModal} type="button" className="btn">
-                  New Staff
-                </button>
+                {JSON.parse(localStorage.userData).permissions.includes("101")?
+                  <button onClick={this.toggleAddModal} type="button" className="btn">
+                    New Staff
+                  </button>:null
+                }
               </div>  
             </div>
             <div className="x_content">
@@ -272,9 +316,12 @@ class Staff extends Component {
     )
   }
   //add modal
-  toggleAddModal(){
+  toggleAddModal(e){
+    e.preventDefault();
     let addFormData = this.state.addForm;
     addFormData.email= "";
+    addFormData.password= "";
+    addFormData.confirmPassword = "";
     addFormData.perms= [];
     this.setState({
       addModal: !this.state.addModal,
@@ -298,41 +345,59 @@ class Staff extends Component {
     }else{
       addFormData.perms.push(value);
     }
-    if(addFormData.perms.includes("can create products") || addFormData.perms.includes("can update products") || addFormData.perms.includes("can delete products")){
-      if(!addFormData.perms.includes("can view products")){
-        addFormData.perms.push("can view products");
+    if(addFormData.perms.includes("101") || addFormData.perms.includes("102") || addFormData.perms.includes("103")){
+      if(!addFormData.perms.includes("100")){
+        addFormData.perms.push("100");
       }
     }
-    if(addFormData.perms.includes("can create staff") || addFormData.perms.includes("can update staff") || addFormData.perms.includes("can delete staff")){
-      if(!addFormData.perms.includes("can view staff")){
-        addFormData.perms.push("can view staff");
+    if(addFormData.perms.includes("105") || addFormData.perms.includes("106") || addFormData.perms.includes("107")){
+      if(!addFormData.perms.includes("104")){
+        addFormData.perms.push("104");
       }
     }
-    if(addFormData.perms.includes("can create payment integration") || addFormData.perms.includes("can update payment integration")){
-      if(!addFormData.perms.includes("can view payment integration")){
-        addFormData.perms.push("can view payment integration");
+    if(addFormData.perms.includes("109") || addFormData.perms.includes("110")){
+      if(!addFormData.perms.includes("108")){
+        addFormData.perms.push("108");
       }
     }
-    if(addFormData.perms.includes("can create iframe") || addFormData.perms.includes("can update iframe") || addFormData.perms.includes("can delete iframe")){
-      if(!addFormData.perms.includes("can view iframe")){
-        addFormData.perms.push("can view iframe");
+    if(addFormData.perms.includes("112") || addFormData.perms.includes("113") || addFormData.perms.includes("114")){
+      if(!addFormData.perms.includes("111")){
+        addFormData.perms.push("111");
       }
     }
-    if(addFormData.perms.includes("can create orders") || addFormData.perms.includes("can view products") || addFormData.perms.includes("can view transactions") || addFormData.perms.includes("can view orders")){
-      if(!addFormData.perms.includes("can view payment integration")){
-        addFormData.perms.push("can view payment integration");
+    if(addFormData.perms.includes("116") || addFormData.perms.includes("117") || addFormData.perms.includes("118")){
+      if(!addFormData.perms.includes("115")){
+        addFormData.perms.push("115");
       }
     }
-    
+    if(addFormData.perms.includes("120") || addFormData.perms.includes("121") || addFormData.perms.includes("122")){
+      if(!addFormData.perms.includes("119")){
+        addFormData.perms.push("119");
+      }
+    }
+    if(addFormData.perms.includes("124") || addFormData.perms.includes("125") || addFormData.perms.includes("126")){
+      if(!addFormData.perms.includes("123")){
+        addFormData.perms.push("123");
+      }
+    }
+    if(addFormData.perms.includes("128") || addFormData.perms.includes("129") || addFormData.perms.includes("130")){
+      if(!addFormData.perms.includes("127")){
+        addFormData.perms.push("127");
+      }
+    }
     this.setState({addForm: addFormData},()=>{
+      console.log(this.state.addForm)
     })
   }
   handleAddProductSubmit(event){
     //get form data
     let userObj = {
+      "name": this.state.addForm.name,
       "email": this.state.addForm.email,
-      "group": "custom",
-      "custom": this.state.addForm.perms
+      "phoneNumber": this.state.addForm.phoneNumber,
+      "password": this.state.addForm.password,
+      "permissions": this.state.addForm.perms.join(),
+      "branches": "test"
     };
     let userData = JSON.stringify(userObj);
     //start waiting
@@ -342,11 +407,11 @@ class Staff extends Component {
         headers: {
           //"Cache-Control": "no-cache",
           "Content-Type": "application/json",
-          "Authorization": "Bearer " + auth.getMerchantToken()
+          "x-auth": auth.getMerchantToken()
         }
       }
       httpClient.post(
-          this.state.usersTablePath,
+          this.state.addStaffPath,
           config,
           userData,
           (resp) => {
@@ -358,10 +423,11 @@ class Staff extends Component {
           },
           (error) => {
             if(error.response){
+              console.log(error.response)
               if(error.response.status === 401){
                 this.setState({logout: true});
               }else if(error.response.status === 400){
-                this.setState({addModalWaiting: false, addModalError: true, addModalFaildMessage: "Please enter valid email."});
+                this.setState({addModalWaiting: false, addModalError: true, addModalFaildMessage: error.response.data.message});
               }else{
                 this.setState({publicError: true});
               }
@@ -373,10 +439,13 @@ class Staff extends Component {
     });
     event.preventDefault();
   }
-  addModalReset(){
+  addModalReset(e){
+    e.preventDefault();
     let addFormData= this.state.addForm;
-    addFormData.email= "";
-    addFormData.perms= [];
+    // addFormData.email= "";
+    // addFormData.password= "";
+    // addFormData.confirmPassword = "";
+    // addFormData.perms= [];
     this.setState({
       addForm: addFormData,
       addModalWaiting: false, 
@@ -387,7 +456,7 @@ class Staff extends Component {
   }
   renderAddModal(){
     return(
-      <Modal className="usersModal" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
+      <Modal className="usersModal modal-lg" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
         <VForm onSubmit={this.handleAddProductSubmit} >
           <ModalHeader toggle={this.toggleAddModal}>
             <span className="fa fa-plus"></span>
@@ -403,85 +472,151 @@ class Staff extends Component {
           :
             <div >
               {this.state.addModalSuccess?
-                <Alert color="success">
-                  Staff Added Successfully.
-                </Alert>
+                <div className="staffSuccesDiv">
+                  <img src={successImg} alt="succes"/>
+                  <h1>Congratulations</h1>
+                  <p>your Staff has been created successfully.</p>
+                </div>
               :
                 <div >
                 {this.state.addModalWaiting?
-                  <Waiting height="150px" />
+                  <Waiting height="250px" />
                 :
                   <div className="addModalBody">
                     <br/>
-                    <FormGroup>
-                      <Row>
-                        <Col sm="3">
-                          <Label htmlFor="fullName" className="usersLabel">Email</Label>
-                        </Col>
-                        <Col sm="8" className="inputeDiv">
-                          <VInput type="text" className="accept-input full-width-input"
+                    <Row>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            autoFocus={true}
+                            name="name"
+                            value={this.state.addForm.name}
+                            onChange={(e) => this.handleAddInputChange("name", e)}
+                            validations={[required, fullName]}
+                            placeholder="Full Name"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
                             autoComplete="off"
                             name="email"
                             value={this.state.addForm.email}
                             onChange={(e) => this.handleAddInputChange("email",e)}
                             validations={[required, email]} 
-                            placeholder="Enter Staff Email"
+                            placeholder="Email"
                           />
-                        </Col>
-                      </Row>
-                    </FormGroup>
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            name="phoneNumber"
+                            value={this.state.addForm.phoneNumber}
+                            onChange={(e) => this.handleAddInputChange("phoneNumber",e)}
+                            validations={[required, phoneNumber]} 
+                            placeholder="phone Number"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="password" className="tradket_b_i"
+                            id="addPassword"
+                            autoComplete="off"
+                            name="password"
+                            value={this.state.addForm.password}
+                            onChange={(e) => this.handleAddInputChange("password",e)}
+                            validations={[required, Password]} 
+                            placeholder="Staff password"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="password" className="tradket_b_i"
+                            autoComplete="off"
+                            name="confirmPassword"
+                            value={this.state.addForm.confirmPassword}
+                            onChange={(e) => this.handleAddInputChange("confirmPassword",e)}
+                            validations={[required, RePassword]} 
+                            placeholder="Confirm password"
+                          />
+                        </div>
+                      </Col>
+                    </Row>
                     <VInput type="hidden" validations={[this.oneOfMany]} />
                     <Row>
-                        <Col sm="3">
-                          <Label htmlFor="fullName" className="usersLabel">Permsions</Label>
-                        </Col>
-                        <Col sm="8" className="inputeDiv">
+                        
+                        <Col sm="12" className="inputeDiv">
                           <br/>
-                          {Object.keys(permsObj).map((key)=>{
-                            return(
-                              <div key={key}>
-                                <Label htmlFor="fullName">{this.state.addModalPerm.form[key]}</Label>
-                                {permsObj[key].map((perm)=>{
-                                  return(
-                                    <FormGroup key={perm} >
-                                      <AppSwitch className={'mx-1'} variant={'pill'} color={'info'}
-                                        onChange={(e) => this.handleAddPermsChange(perm,e)}
-                                        checked={this.state.addForm.perms.includes(perm)}
-                                        disabled={
-                                            (perm === "can view payment integration"? 
-                                              ((this.state.addForm.perms.includes("can create orders") || this.state.addForm.perms.includes("can view products") || this.state.addForm.perms.includes("can view transactions") || this.state.addForm.perms.includes("can view orders"))? true: false) 
-                                            : 
-                                              false) 
-                                          ||
-                                            (perm === "can view products"? 
-                                              ((this.state.addForm.perms.includes("can create products") || this.state.addForm.perms.includes("can update products") || this.state.addForm.perms.includes("can delete products"))? true: false) 
-                                            : 
-                                              false)
-                                          ||
-                                            (perm === "can view staff"? 
-                                              ((this.state.addForm.perms.includes("can create staff") || this.state.addForm.perms.includes("can update staff") || this.state.addForm.perms.includes("can delete staff"))? true: false) 
-                                            : 
-                                              false)
-                                          ||
-                                            (perm === "can view payment integration"? 
-                                              ((this.state.addForm.perms.includes("can create payment integration") || this.state.addForm.perms.includes("can update payment integration"))? true: false) 
-                                            : 
-                                              false)
-                                          ||
-                                            (perm === "can view iframe"? 
-                                              ((this.state.addForm.perms.includes("can create iframe") || this.state.addForm.perms.includes("can update iframe") || this.state.addForm.perms.includes("can delete iframe"))? true: false) 
-                                            : 
-                                              false)
-                                        }
-                                        name={perm}
-                                      />
-                                      {dependencies.permsName(perm)}
-                                    </FormGroup>
-                                  )
-                                })}
-                              </div>
-                            )
-                          })}
+                          <Row className="perms_div">
+                            {Object.keys(permsObj).map((key)=>{
+                              return(
+                                <Col key={key} sm="6" className="inputeDiv">
+                                  <div className="perms_group">
+                                    <div className="head">{key}</div>
+                                    {permsObj[key].map((perm)=>{
+                                      return(
+                                        <FormGroup key={perm.id} >
+                                          <AppSwitch className={'mx-1'} variant={'pill'} color={'info'}
+                                            onChange={(e) => this.handleAddPermsChange(perm.id,e)}
+                                            checked={this.state.addForm.perms.includes(perm.id)}
+                                            disabled={
+                                              (perm.id === "100"? 
+                                                ((this.state.addForm.perms.includes("101") || this.state.addForm.perms.includes("102") || this.state.addForm.perms.includes("103"))? true: false) 
+                                              : 
+                                                false) 
+                                            ||
+                                              (perm.id === "104"? 
+                                                ((this.state.addForm.perms.includes("105") || this.state.addForm.perms.includes("106") || this.state.addForm.perms.includes("107"))? true: false) 
+                                              : 
+                                                false) 
+                                            ||
+                                              (perm.id === "108"? 
+                                                ((this.state.addForm.perms.includes("109") || this.state.addForm.perms.includes("110"))? true: false) 
+                                              : 
+                                                false) 
+                                            ||
+                                              (perm.id === "111"? 
+                                                ((this.state.addForm.perms.includes("112") || this.state.addForm.perms.includes("113") || this.state.addForm.perms.includes("114"))? true: false) 
+                                              : 
+                                                false) 
+                                            ||
+                                              (perm.id === "115"? 
+                                                ((this.state.addForm.perms.includes("116") || this.state.addForm.perms.includes("117") || this.state.addForm.perms.includes("118"))? true: false) 
+                                              : 
+                                                false) 
+                                            ||
+                                                (perm.id === "119"? 
+                                                  ((this.state.addForm.perms.includes("120") || this.state.addForm.perms.includes("121") || this.state.addForm.perms.includes("122"))? true: false) 
+                                                : 
+                                                  false) 
+                                            ||
+                                                (perm.id === "123"? 
+                                                  ((this.state.addForm.perms.includes("124") || this.state.addForm.perms.includes("125") || this.state.addForm.perms.includes("126"))? true: false) 
+                                                : 
+                                                  false) 
+                                            ||
+                                                (perm.id === "127"? 
+                                                  ((this.state.addForm.perms.includes("128") || this.state.addForm.perms.includes("129") || this.state.addForm.perms.includes("130"))? true: false) 
+                                                : 
+                                                  false) 
+                                          }
+                                            name={perm}
+                                          />
+                                          {perm.name}
+                                        </FormGroup>
+                                      )
+                                    })}
+                                  </div>
+                                </Col>
+                              )
+                            })}
+                          </Row>
                         </Col>
                       </Row>
                   </div>

@@ -140,6 +140,9 @@ body{
     max-width: 100%;
     margin-bottom: 15px;
 }
+.tradketInputGroup.full_width{
+    width: 100%;
+}
 .tradketInputGroup > div{
     position: relative;
 }
@@ -483,9 +486,9 @@ body{
 .x_title > h2{
     display: inline-block;
     color: #555;
-    @include m (767){
-        font-size: 20px;
-    }
+    // @include m (767){
+    //     font-size: 20px;
+    // }
 }
 .x_title.custom_title{
     display: flex;
@@ -506,9 +509,10 @@ body{
     padding-top: 2px;
     display: inline-block;
     float: right;
-    @include m (767){
-        display: none;
-    }
+
+    // @include m (767){
+    //     display: none;
+    // }
 }
 .card-body{
     overflow-x: auto;
@@ -660,5 +664,26 @@ html[dir="rtl"] .TableDiv > select{
 }
 #transDetailsAccordion .orderDetailsCollapseCard table tr > td:first-of-type{
     width: 140px;
+}
+
+
+//modal
+.modal-content{
+    border-radius: 0px;
+
+}
+.modal-header{
+    background-color: #20A8D8;
+    border-radius: 0px;
+    color: #fff;
+    box-shadow: 0px 1px 8px #666;
+    border-bottom: 0px;
+}
+.modal-header h5 span{
+    margin-right: 5px;
+}
+.modal-header .close{
+    color: #fff;
+    font-size: 26px;
 }
 //------------------------ end main portal style ---------------------

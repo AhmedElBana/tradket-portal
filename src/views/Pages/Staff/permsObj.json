@@ -1,42 +1,49 @@
 {
-    "orders": [
-      "can create orders",
-      "can view orders",
-      "can update orders",
-      "can delete orders"
+    "Staff": [
+      {"id":"100", "name": "Can View Staff"},
+      {"id":"101", "name": "Can Create Staff"},
+      {"id":"102", "name": "Can Edit Staff"},
+      {"id":"103", "name": "Can Deactivate Staff"}
     ],
-    "products": [
-      "can view products",
-      "can create products",
-      "can update products",
-      "can delete products"
+    "Branch": [
+      {"id":"104", "name": "Can View Branch"},
+      {"id":"105", "name": "Can Create Branch"},
+      {"id":"106", "name": "Can Edit Branch"},
+      {"id":"107", "name": "Can Deactivate Branch"}
     ],
-    "transactions": [
-      "can view transactions",
-      "can capture transactions",
-      "can void transactions",
-      "can refund transactions",
-      "can create transactions",
-      "can delete transactions"
+    "Category": [
+      {"id":"108", "name": "Can View Category"},
+      {"id":"109", "name": "Can Create Category"},
+      {"id":"110", "name": "Can Delete Category"}
     ],
-    "paymentIntegrations": [
-      "can view payment integration",
-      "can create payment integration",
-      "can update payment integration"
+    "Feature": [
+      {"id":"111", "name": "Can View Feature"},
+      {"id":"112", "name": "Can Create Feature"},
+      {"id":"113", "name": "Can Edit Feature"},
+      {"id":"114", "name": "Can Delete Feature"}
     ],
-    "iframes": [
-      "can view iframe",
-      "can create iframe",
-      "can update iframe",
-      "can delete iframe"
+    "Product": [
+      {"id":"115", "name": "Can View Product"},
+      {"id":"116", "name": "Can Create Product"},
+      {"id":"117", "name": "Can Edit Product"},
+      {"id":"118", "name": "Can Deactivate Product"}
     ],
-    "users": [
-      "can view staff",
-      "can create staff",
-      "can update staff",
-      "can delete staff"
+    "Transfer": [
+      {"id":"119", "name": "Can View Transfer"},
+      {"id":"120", "name": "Can Create Transfer"},
+      {"id":"121", "name": "Can Edit Transfer"},
+      {"id":"122", "name": "Can Cancel Transfer"}
     ],
-    "transfers":[
-      "can view transfers"
+    "Order": [
+      {"id":"123", "name": "Can View Order"},
+      {"id":"124", "name": "Can Create Order"},
+      {"id":"125", "name": "Can Cancel Order"},
+      {"id":"126", "name": "Can Return Order"}
+    ],
+    "Promo": [
+      {"id":"127", "name": "Can View Promo"},
+      {"id":"128", "name": "Can Create Promo"},
+      {"id":"129", "name": "Can Activate Promo"},
+      {"id":"130", "name": "Can Deactivate Promo"}
     ]
   }
