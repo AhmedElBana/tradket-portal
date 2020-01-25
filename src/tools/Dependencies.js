@@ -1,5 +1,19 @@
 import text from "./Dependencies.json";
 class Dependencies {
+    branchesName(ids,fullBranches){
+        let id_name = {};
+        fullBranches.map((branch)=>{
+            id_name[branch._id] = branch
+        })
+        let names = [];
+        ids.map((id)=>{
+            names.push(id_name[id].name)
+        })
+        return names
+    }
+
+
+
     getUserData(){
         return JSON.parse(localStorage.userData)
     }
@@ -40,15 +54,7 @@ class Dependencies {
     }
     
     permsName(perm){
-        if(localStorage.lang == "ar"){
-            if(text[localStorage.lang].perms[perm]){
-                return text[localStorage.lang].perms[perm];
-            }else{
-                return perm;
-            }
-        }else{
-            return perm
-        }
+        return text["perms"][perm]? text["perms"][perm] : perm
     }
      
 

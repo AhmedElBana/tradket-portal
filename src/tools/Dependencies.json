@@ -1,4 +1,37 @@
-{
+{   
+    "perms": {
+        "100":"Can View Staff",
+        "101":"Can Create Staff",
+        "102":"Can Edit Staff",
+        "103":"Can Deactivate Staff",
+        "104":"Can View Branch",
+        "105":"Can Create Branch",
+        "106":"Can Edit Branch",
+        "107":"Can Deactivate Branch",
+        "108":"Can Create Category",
+        "109":"Can Edit Category",
+        "110":"Can Delete Category",
+        "111":"Can View Feature",
+        "112":"Can Create Feature",
+        "113":"Can Edit Feature",
+        "114":"Can Delete Feature",
+        "115":"Can View Product",
+        "116":"Can Create Product",
+        "117":"Can Edit Product",
+        "118":"Can Deactivate Product",
+        "119":"Can View Transfer",
+        "120":"Can Create Transfer",
+        "121":"Can accept Transfer",
+        "122":"Can Cancel Transfer",
+        "123":"Can View Order",
+        "124":"Can Create Order",
+        "125":"Can Cancel Order",
+        "126":"Can return Order",
+        "127":"Can View Promo",
+        "128":"Can Create Promo",
+        "129":"Can Activate Promo",
+        "130":"Can Deactivate Promo"
+    },
     "en": {
         "currencies": {
             "EGP": "EGP",

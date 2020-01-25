@@ -120,6 +120,28 @@ body{
     outline: none;
     box-shadow: none;
 }
+.rw-multiselect>.rw-widget-picker{
+    min-height: 50px;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    padding: 1px 15px;
+    font-size: 16px;
+}
+.rw-multiselect>.rw-widget-picker input{
+    padding: 0px;
+    font-size: 20px;
+}
+.rw-multiselect>.rw-widget-picker input::placeholder {
+    color: #757575;
+  }
+.rw-multiselect-taglist{
+    vertical-align: super !important;
+}
+#rw_1_listbox_active_option{
+    outline: none;
+    background-color: #20A8D8;
+    color: #fff;
+}
 .tradket_b_i{
     width: 100%;
     height: 50px;
@@ -528,7 +550,58 @@ body{
     font-weight: 500;
     margin:20px 0 20px 0;
 }
+
+
+
+
+
+
+
+.x_title.details {
+    border-bottom: 2px solid #E6E9ED;
+    padding: 1px 5px 6px;
+    @include m (767){
+        position: relative;
+        height: 100px;
+    }
+}
+.x_title.details .ButtonsDiv{
+    padding-top: 2px;
+    display: inline-block;
+    float: right;
+
+    @include m (767){
+        margin-top: 5px;
+        padding-top: 5px;
+        width: 100%;
+        text-align: center;
+        border-top: 1px solid #ccc;
+    }
+}
+.x_title.details .ButtonsDiv .btn{
+    margin-left: 5px;
+}
+
+.x_title.details .ButtonsDiv .close_btn{
+    border: 0px;
+    @include m (767){
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+}
+
+
+
+
 /*table*/
+.table_block{
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #ddd;
+    border-radius: 10px;
+    margin: 5px;
+}
 table{
     border: 1px solid #c8ced3;
 }
@@ -686,4 +759,21 @@ html[dir="rtl"] .TableDiv > select{
     color: #fff;
     font-size: 26px;
 }
+.modal_details{
+    display: block;
+}
+.modal_details .title{
+    position: relative;
+    display: inline-block;
+    padding-left: 15px;
+    color: #666;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 30px;
+}
+.modal_details .title::after {
+    position: absolute;
+    right: 3px;
+    content: " : ";
+  }
 //------------------------ end main portal style ---------------------

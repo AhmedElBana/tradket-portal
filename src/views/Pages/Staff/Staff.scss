@@ -1,3 +1,20 @@
+//media mixin
+@mixin m($width) {
+    @media(max-width:#{$width}px) {
+        @content;
+    }
+}
+// Lang mixin
+@mixin en {
+    html[dir="ltr"] & {
+        @content;
+    }
+}
+@mixin ar {
+    html[dir="rtl"] & {
+        @content;
+    }
+}
 .perms_div .perms_group{
     min-height: 234px;
     padding: 0px;
@@ -44,4 +61,8 @@
 }
 .staffSuccesDiv img{
     margin-bottom: 30px;
+}
+
+.modal_details .title{
+    min-width: 100px;
 }
