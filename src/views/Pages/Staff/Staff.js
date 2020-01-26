@@ -111,7 +111,6 @@ class Staff extends Component {
           headers: ["User name","Email","Phone Number","Branches","Active"]
         },
         usersTablePath: "/api/staff/list",
-        integData: [],
         totalLength: 0,
         PageNumber: 0,
         PageSize: 10,
@@ -262,7 +261,6 @@ class Staff extends Component {
         "/api/branch/list",
         config,
         (resp) => {
-          console.log(resp.data.data.result)
           let branches = [];
           resp.data.data.result.map((branch)=>{
             branches.push({"id": branch._id, "name": branch.name})
@@ -332,7 +330,6 @@ class Staff extends Component {
         config,
         (resp) => {
           let users = resp.data.data.result;
-          console.log(resp.data)
           this.setState({usersData: users, totalLength: resp.data.data.total, usersWaiting: false},()=>{
           });
         },
@@ -459,16 +456,13 @@ class Staff extends Component {
     })
   }
   onSelectBranchAddForm(optionsList) {
-    console.log(optionsList)
     let addForm = this.state.addForm;
     let optionsArr = [];
     optionsList.map((ele)=>{
       optionsArr.push(ele.id)
     })
     addForm.branches = optionsArr;
-    this.setState({addForm: addForm},()=>{
-      console.log(this.state.addForm.branches)
-    })
+    this.setState({addForm: addForm})
   }
   handleAddPermsChange(value){
     let addFormData = this.state.addForm;
@@ -523,9 +517,7 @@ class Staff extends Component {
         addFormData.perms.push("104");
       }
     }
-    this.setState({addForm: addFormData},()=>{
-      console.log(this.state.addForm)
-    })
+    this.setState({addForm: addFormData})
   }
   handleAddProductSubmit(event){
     //get form data
@@ -561,7 +553,6 @@ class Staff extends Component {
           },
           (error) => {
             if(error.response){
-              console.log(error.response)
               if(error.response.status === 401){
                 this.setState({logout: true});
               }else if(error.response.status === 400){
@@ -805,7 +796,6 @@ class Staff extends Component {
    //edit modal
   toggleEditModal(e){
     e.preventDefault();
-    console.log(this.state.selectedUser)
     let editFormData = this.state.editForm;
     editFormData.name= this.state.selectedUser.name;
     editFormData.email= this.state.selectedUser.email;
@@ -821,7 +811,7 @@ class Staff extends Component {
       editModalSuccess: false, 
       editModalError: false, 
       editModalFaildMessage: ""
-    },()=>{console.log(this.state)});
+    });
   }
   handleEditInputChange(inputName,event){
     let editFormData = this.state.editForm;
@@ -830,16 +820,13 @@ class Staff extends Component {
     })
   }
   onSelectBranchEditForm(optionsList) {
-    console.log(optionsList)
     let editForm = this.state.editForm;
     let optionsArr = [];
     optionsList.map((ele)=>{
       optionsArr.push(ele.id)
     })
     editForm.branches = optionsArr;
-    this.setState({editForm: editForm},()=>{
-      console.log(this.state.editForm.branches)
-    })
+    this.setState({editForm: editForm})
   }
   handleEditPermsChange(value){
     let editFormData = this.state.editForm;
@@ -894,9 +881,7 @@ class Staff extends Component {
         editFormData.perms.push("104");
       }
     }
-    this.setState({editForm: editFormData},()=>{
-      console.log(this.state.editForm)
-    })
+    this.setState({editForm: editFormData})
   }
   handleEditUserSubmit(event){
     //get form data
@@ -935,7 +920,6 @@ class Staff extends Component {
           },
           (error) => {
             if(error.response){
-              console.log(error.response)
               if(error.response.status === 401){
                 this.setState({logout: true});
               }else if(error.response.status === 400){

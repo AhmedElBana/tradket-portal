@@ -586,7 +586,7 @@ body{
 }
 
 .x_title.details .ButtonsDiv .close_btn{
-    border: 0px;
+    border: 1px solid transparent;
     @include m (767){
         position: absolute;
         top: 5px;

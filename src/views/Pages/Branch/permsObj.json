@@ -1,0 +1,49 @@
+{
+    "Staff": [
+      {"id":"100", "name": "Can View Staff"},
+      {"id":"101", "name": "Can Create Staff"},
+      {"id":"102", "name": "Can Edit Staff"},
+      {"id":"103", "name": "Can Deactivate Staff"}
+    ],
+    "Branch": [
+      {"id":"104", "name": "Can View Branch"},
+      {"id":"105", "name": "Can Create Branch"},
+      {"id":"106", "name": "Can Edit Branch"},
+      {"id":"107", "name": "Can Deactivate Branch"}
+    ],
+    "Category": [
+      {"id":"108", "name": "Can View Category"},
+      {"id":"109", "name": "Can Create Category"},
+      {"id":"110", "name": "Can Delete Category"}
+    ],
+    "Feature": [
+      {"id":"111", "name": "Can View Feature"},
+      {"id":"112", "name": "Can Create Feature"},
+      {"id":"113", "name": "Can Edit Feature"},
+      {"id":"114", "name": "Can Delete Feature"}
+    ],
+    "Product": [
+      {"id":"115", "name": "Can View Product"},
+      {"id":"116", "name": "Can Create Product"},
+      {"id":"117", "name": "Can Edit Product"},
+      {"id":"118", "name": "Can Deactivate Product"}
+    ],
+    "Transfer": [
+      {"id":"119", "name": "Can View Transfer"},
+      {"id":"120", "name": "Can Create Transfer"},
+      {"id":"121", "name": "Can Edit Transfer"},
+      {"id":"122", "name": "Can Cancel Transfer"}
+    ],
+    "Order": [
+      {"id":"123", "name": "Can View Order"},
+      {"id":"124", "name": "Can Create Order"},
+      {"id":"125", "name": "Can Cancel Order"},
+      {"id":"126", "name": "Can Return Order"}
+    ],
+    "Promo": [
+      {"id":"127", "name": "Can View Promo"},
+      {"id":"128", "name": "Can Create Promo"},
+      {"id":"129", "name": "Can Activate Promo"},
+      {"id":"130", "name": "Can Deactivate Promo"}
+    ]
+  }
