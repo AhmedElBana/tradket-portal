@@ -27,8 +27,8 @@ const listData = [
     url: '/home',
     icon: 'icon-home',
   },
-  ...staffObj,
-  ...branchObj
+  ...branchObj,
+  ...staffObj
 ]
 
 export default {

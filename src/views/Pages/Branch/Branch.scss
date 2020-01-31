@@ -15,36 +15,6 @@
         @content;
     }
 }
-.perms_div .perms_group{
-    min-height: 234px;
-    padding: 0px;
-    border: 1px solid #eee;
-    overflow: hidden;
-    margin-bottom: 15px;
-    transition: all .3s ease-in-out;
-}
-.perms_div .perms_group:hover{
-    transform: translate(0px,-5px);
-    box-shadow: 3px 3px 8px #ddd;
-}
-.perms_div .perms_group .head{
-    border-bottom: 1px solid #eee;
-    margin-bottom: 15px;
-    text-align: center;
-    padding: 5px;
-    color: #20A8D8;
-    font-weight: bold;
-    font-size: 20px;
-    box-shadow: 1px 3px 8px #ddd;
-
-}
-.perms_div .perms_group .switch{
-    vertical-align: middle;
-}
-.perms_div .perms_group .form-group{
-    color: #666;
-    font-size: 18px;
-}
 
 .staffSuccesDiv{
     text-align: center;
@@ -64,5 +34,5 @@
 }
 
 .modal_details .title{
-    min-width: 100px;
+    min-width: 85px;
 }
