@@ -12,8 +12,8 @@
       {"id":"107", "name": "Can Deactivate Branch"}
     ],
     "Category": [
-      {"id":"108", "name": "Can View Category"},
-      {"id":"109", "name": "Can Create Category"},
+      {"id":"108", "name": "Can Create Category"},
+      {"id":"109", "name": "Can Edit Category"},
       {"id":"110", "name": "Can Delete Category"}
     ],
     "Feature": [

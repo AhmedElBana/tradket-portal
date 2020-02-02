@@ -35,16 +35,18 @@ const Typography = React.lazy(() => import('./views/Theme/Typography'));
 const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
-const Branch = React.lazy(() => import('./views/Pages/Branch/Branch'));
 
 const Home = React.lazy(() => import('./views/Pages/Home/Home'));
+const Branch = React.lazy(() => import('./views/Pages/Branch/Branch'));
 const Staff = React.lazy(() => import('./views/Pages/Staff/Staff'));
+const Category = React.lazy(() => import('./views/Pages/Category/Category'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/home', name: 'Home', component: Home },
-  { path: '/staff', name: 'Staff', component: Staff },
   { path: '/branch', name: 'Branch', component: Branch },
+  { path: '/staff', name: 'Staff', component: Staff },
+  { path: '/category', name: 'Category', component: Category },
 
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },

@@ -3,17 +3,14 @@ import { Alert, Col, Input, Table, Row, Modal, ModalBody, ModalFooter, ModalHead
 import {auth} from '../../../tools/Auth';
 import {dependencies} from '../../../tools/Dependencies';
 import ReactPaginate from 'react-paginate';
-import { AppSwitch } from '@coreui/react';
 import VForm from 'react-validation/build/form';
 import VInput from 'react-validation/build/input';
 import VSelect from 'react-validation/build/select';
 import VButton from 'react-validation/build/button';
 import 'react-widgets/dist/css/react-widgets.css';
-import Multiselect from 'react-widgets/lib/Multiselect';
 import {httpClient} from './../../../tools/HttpClient';
 import validator from 'validator';
 import "./Branch.scss";
-import permsObj from "./permsObj.json";
 import successImg from "./../../../assets/img/success.png"
 
 import Waiting from "./../../../views/Waiting/waiting";
