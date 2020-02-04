@@ -95,6 +95,16 @@ class Staff extends Component {
         addForm: {
           name: ""
         },
+        //subAdd modal
+        subAddPath: "/api/subCategory/create",
+        subAddModalWaiting: false,
+        subAddModal: false,
+        subAddModalError: false,
+        subAddModalFaildMessage: "",
+        subAddModalSuccess: false,
+        subAddForm: {
+          name: ""
+        },
         //edit modal
         editPath: "/api/category/edit",
         editModalWaiting: false,
@@ -139,6 +149,12 @@ class Staff extends Component {
     this.handleAddInputChange = this.handleAddInputChange.bind(this);
     this.handleAddProductSubmit = this.handleAddProductSubmit.bind(this);
     this.addModalReset = this.addModalReset.bind(this);
+    //subAdd user
+    this.renderSubAddModal = this.renderSubAddModal.bind(this);
+    this.toggleSubAddModal = this.toggleSubAddModal.bind(this);
+    this.handleSubAddInputChange = this.handleSubAddInputChange.bind(this);
+    this.handleSubAddProductSubmit = this.handleSubAddProductSubmit.bind(this);
+    this.subAddModalReset = this.subAddModalReset.bind(this);
     //edit user
     this.renderEditModal = this.renderEditModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -384,6 +400,11 @@ class Staff extends Component {
                     Edit
                   </button>:null
               }
+              {JSON.parse(localStorage.userData).permissions.includes("108")?
+                  <button onClick={this.toggleSubAddModal} type="button" className="btn">
+                    Add Subcategory
+                  </button>:null
+              }
               {/* {JSON.parse(localStorage.userData).permissions.includes("107")?
                   <span>
                     {this.state.selectedUser.active?
@@ -577,6 +598,153 @@ class Staff extends Component {
                 null
               }
               <button className="accept-btn btn btn-default" onClick={this.toggleAddModal}>Cancel</button>
+            </ModalFooter>
+          }
+        </VForm>
+      </Modal>
+    )
+  }  
+  //subAdd modal
+  toggleSubAddModal(e){
+    e.preventDefault();
+    let subAddFormData = this.state.subAddForm;
+    subAddFormData.name= "";
+    this.setState({
+      subAddModal: !this.state.subAddModal,
+      subAddForm: subAddFormData,
+      subAddModalWaiting: false, 
+      subAddModalSuccess: false, 
+      subAddModalError: false, 
+      subAddModalFaildMessage: ""
+    });
+  }
+  handleSubAddInputChange(inputName,event){
+    let subAddFormData = this.state.subAddForm;
+    subAddFormData[inputName] = event.target.value;
+    this.setState({subAddForm: subAddFormData})
+  }
+  handleSubAddProductSubmit(event){
+    //get form data
+    let userObj = {
+      "category_id": this.state.selectedUser._id,
+      "name": this.state.subAddForm.name
+    };
+    let userData = JSON.stringify(userObj);
+    //start waiting
+    this.setState({subAddModalWaiting: true},()=>{
+      //send request
+      let config = {
+        headers: {
+          //"Cache-Control": "no-cache",
+          "Content-Type": "application/json",
+          "x-auth": auth.getMerchantToken()
+        }
+      }
+      httpClient.post(
+          this.state.subAddPath,
+          config,
+          userData,
+          (resp) => {
+            this.setState({subAddModalSuccess: true ,subAddModalWaiting:false},()=>{
+              setTimeout(()=>{
+                window.location.reload();
+              }, 3000);
+            });
+          },
+          (error) => {
+            if(error.response){
+              if(error.response.status === 401){
+                this.setState({logout: true});
+              }else if(error.response.status === 400){
+                this.setState({subAddModalWaiting: false, subAddModalError: true, subAddModalFaildMessage: error.response.data.message});
+              }else{
+                this.setState({publicError: true});
+              }
+            }else{
+              this.setState({publicError: true});
+            }
+          }
+      )
+    });
+    event.preventDefault();
+  }
+  subAddModalReset(e){
+    e.preventDefault();
+    let subAddFormData= this.state.subAddForm;
+    this.setState({
+      subAddForm: subAddFormData,
+      subAddModalWaiting: false, 
+      subAddModalSuccess: false, 
+      subAddModalError: false, 
+      subAddModalFaildMessage: ""
+    });
+  }
+  renderSubAddModal(){
+    return(
+      <Modal className="usersModal" isOpen={this.state.subAddModal} toggle={this.toggleSubAddModal}>
+        <VForm onSubmit={this.handleSubAddProductSubmit} >
+          <ModalHeader toggle={this.toggleSubAddModal}>
+            New Subcategory
+          </ModalHeader>
+          <ModalBody>
+          {this.state.subAddModalError?
+              <div>
+                <Alert color="danger">
+                  {this.state.subAddModalFaildMessage}
+                </Alert>
+              </div>
+          :
+            <div >
+              {this.state.subAddModalSuccess?
+                <div className="staffSuccesDiv">
+                  <img src={successImg} alt="succes"/>
+                  <h1>Congratulations</h1>
+                  <p>Your Subcategory has been Created Successfully.</p>
+                </div>
+              :
+                <div >
+                {this.state.subAddModalWaiting?
+                  <Waiting height="250px" />
+                :
+                  <div className="addModalBody">
+                    <br/>
+                    <Row>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            autoFocus={true}
+                            name="name"
+                            value={this.state.subAddForm.name}
+                            onChange={(e) => this.handleSubAddInputChange("name", e)}
+                            validations={[required]}
+                            placeholder="Subcategory Name"
+                          />
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                }
+                </div>
+              }
+            </div>
+          }
+          </ModalBody>
+          {this.state.subAddModalSuccess || this.state.subAddModalWaiting?
+            null
+          : 
+            <ModalFooter>
+              {this.state.subAddModalSuccess || this.state.subAddModalWaiting || this.state.subAddModalError?
+                null
+              : 
+                <VButton className="btn btn-info">Add</VButton>
+              }
+              {this.state.subAddModalError?
+                <button className="accept-btn btn btn-default" onClick={this.subAddModalReset}>Try again</button>
+              :
+                null
+              }
+              <button className="accept-btn btn btn-default" onClick={this.toggleSubAddModal}>Cancel</button>
             </ModalFooter>
           }
         </VForm>
@@ -971,6 +1139,7 @@ class Staff extends Component {
             {this.renderUsersBlock()}
             {this.renderAddModal()}
             {this.renderEditModal()}
+            {this.renderSubAddModal()}
             {this.renderDeactivateModal()}
             {this.renderActivateModal()}
           </div>
