@@ -40,6 +40,7 @@ const Home = React.lazy(() => import('./views/Pages/Home/Home'));
 const Branch = React.lazy(() => import('./views/Pages/Branch/Branch'));
 const Staff = React.lazy(() => import('./views/Pages/Staff/Staff'));
 const Category = React.lazy(() => import('./views/Pages/Category/Category'));
+const Product = React.lazy(() => import('./views/Pages/Product/Product'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -47,6 +48,7 @@ const routes = [
   { path: '/branch', name: 'Branch', component: Branch },
   { path: '/staff', name: 'Staff', component: Staff },
   { path: '/category', name: 'Category', component: Category },
+  { path: '/product', name: 'Product', component: Product },
 
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },

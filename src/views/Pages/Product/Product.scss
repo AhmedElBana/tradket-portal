@@ -1,0 +1,45 @@
+//media mixin
+@mixin m($width) {
+    @media(max-width:#{$width}px) {
+        @content;
+    }
+}
+// Lang mixin
+@mixin en {
+    html[dir="ltr"] & {
+        @content;
+    }
+}
+@mixin ar {
+    html[dir="rtl"] & {
+        @content;
+    }
+}
+
+.staffSuccesDiv{
+    text-align: center;
+    margin-top: 30px;
+    color: #20A8D8;
+}
+.staffSuccesDiv h1{
+    font-size: 34px;
+    margin-bottom: 30px;
+}
+.staffSuccesDiv p{
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+.staffSuccesDiv img{
+    margin-bottom: 30px;
+}
+
+.modal_details .title{
+    min-width: 125px;
+}
+
+.product_map{
+    padding: 0px 15px;
+}
+.product_map table > tbody > tr:hover{
+    cursor: text;
+}

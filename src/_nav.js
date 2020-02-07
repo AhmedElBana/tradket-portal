@@ -24,9 +24,18 @@ if(perms.includes("100") || perms.includes("101") || perms.includes("102") || pe
 let categoryObj = []
 if(perms.includes("108") || perms.includes("109") || perms.includes("110")){
   categoryObj.push({
-    name: 'Category',
+    name: 'Categories',
     url: '/category',
     icon: 'icon-layers',
+    });
+}
+//Product
+let productObj = []
+if(perms.includes("115") || perms.includes("116") || perms.includes("117") || perms.includes("118")){
+  productObj.push({
+    name: 'Products',
+    url: '/product',
+    icon: 'fa fa-cubes',
     });
 }
 
@@ -38,7 +47,8 @@ const listData = [
   },
   ...branchObj,
   ...staffObj,
-  ...categoryObj
+  ...categoryObj,
+  ...productObj
 ]
 
 export default {
