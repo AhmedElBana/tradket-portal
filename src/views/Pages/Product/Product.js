@@ -928,9 +928,9 @@ class Product extends Component {
           userData,
           (resp) => {
             this.setState({addMoreModalSuccess: true ,addMoreModalWaiting:false},()=>{
-              // setTimeout(()=>{
-              //   window.location.reload();
-              // }, 3000);
+              setTimeout(()=>{
+                window.location.reload();
+              }, 3000);
             });
           },
           (error) => {
