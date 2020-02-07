@@ -36,3 +36,29 @@
 .modal_details .title{
     min-width: 122px;
 }
+.subcategory{
+    position: relative;
+    padding-right: 45px;
+}
+.subcategory::after{
+    content: " ";
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    right: 35px;
+    width: 1px;
+    background-color: #999;
+}
+.subcategory .edit_btn{
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    font-size: 16px;
+    color: #777;
+    transition: all .3s ease-in-out;
+}
+.subcategory .edit_btn:hover{
+    cursor: pointer;
+    color: #444;
+    transform: scale(1.2,1.2);
+}

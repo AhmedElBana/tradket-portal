@@ -8,7 +8,7 @@ if(perms.includes("104") || perms.includes("105") || perms.includes("106") || pe
   branchObj.push({
     name: 'Branches',
     url: '/branch',
-    icon: 'icon-layers',
+    icon: 'icon-grid',
     });
 }
 //Staff
@@ -26,7 +26,7 @@ if(perms.includes("108") || perms.includes("109") || perms.includes("110")){
   categoryObj.push({
     name: 'Category',
     url: '/category',
-    icon: 'icon-grid',
+    icon: 'icon-layers',
     });
 }
 

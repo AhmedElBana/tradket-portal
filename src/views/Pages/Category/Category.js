@@ -72,20 +72,19 @@ class Staff extends Component {
         table: {
           headers: ["ID","Category name"]
         },
-        usersTablePath: "/api/category/list",
-        integData: [],
+        CategoriesTablePath: "/api/category/list",
         totalLength: 0,
         PageNumber: 0,
         PageSize: 10,
-        usersWaiting: true,
-        showUsersDetails: false,
-        selectedUser: {},
+        CategoriesWaiting: true,
+        showCategoriesDetails: false,
+        selectedCategory: {},
         //details
         SubcategoriesPath: "/api/subCategory/list",
         detailsWaiting:true,
         subcategories: [],
         //add modal
-        addStaffPath: "/api/category/create",
+        addCategoryPath: "/api/category/create",
         addModalWaiting: false,
         addModal: false,
         addModalError: false,
@@ -112,66 +111,60 @@ class Staff extends Component {
         editModalError: false,
         editModalFaildMessage: "",
         editModalSuccess: false,
-        editBranches: [],
         editForm: {
           name: ""
         },
-        //deactivate modal
-        deactivateModalWaiting: false,
-        deactivateModal: false,
-        deactivateModalError: false,
-        deactivateModalFaildMessage: "",
-        deactivateModalSuccess: false,
-        //activate modal
-        activateModalWaiting: false,
-        activateModal: false,
-        activateModalError: false,
-        activateModalFaildMessage: "",
-        activateModalSuccess: false,
+        //editSub modal
+        editSubPath: "/api/subCategory/edit",
+        selectedSubcategory: {},
+        editSubModalWaiting: false,
+        editSubModal: false,
+        editSubModalError: false,
+        editSubModalFaildMessage: "",
+        editSubModalSuccess: false,
+        editSubForm: {
+          name: ""
+        },
         //public
         publicError: false,
         logout: false,
     };
-    //list user
-    this.requestUsers = this.requestUsers.bind(this);
-    this.renderUsersBlock = this.renderUsersBlock.bind(this);
-    this.userDetailsRef = React.createRef();
+    //list Categories
+    this.requestCategories = this.requestCategories.bind(this);
+    this.renderCategoriesBlock = this.renderCategoriesBlock.bind(this);
+    this.categoryDetailsRef = React.createRef();
     this.handelRowClick = this.handelRowClick.bind(this);
-    this.renderUsersTable = this.renderUsersTable.bind(this);
-    this.renderUserDetails = this.renderUserDetails.bind(this);
+    this.renderCategoriesTable = this.renderCategoriesTable.bind(this);
+    this.renderCategoryDetails = this.renderCategoryDetails.bind(this);
     this.handleTablePageChange = this.handleTablePageChange.bind(this);
     this.handleTableSizeChange = this.handleTableSizeChange.bind(this);
     //details
     this.requestSubcategories = this.requestSubcategories.bind(this);
-    //add user
+    //add Category
     this.renderAddModal = this.renderAddModal.bind(this);
     this.toggleAddModal = this.toggleAddModal.bind(this);
     this.handleAddInputChange = this.handleAddInputChange.bind(this);
-    this.handleAddProductSubmit = this.handleAddProductSubmit.bind(this);
+    this.handleAddCategorySubmit = this.handleAddCategorySubmit.bind(this);
     this.addModalReset = this.addModalReset.bind(this);
-    //subAdd user
+    //add Subcategory
     this.renderSubAddModal = this.renderSubAddModal.bind(this);
     this.toggleSubAddModal = this.toggleSubAddModal.bind(this);
     this.handleSubAddInputChange = this.handleSubAddInputChange.bind(this);
-    this.handleSubAddProductSubmit = this.handleSubAddProductSubmit.bind(this);
+    this.handleSubAddCategorySubmit = this.handleSubAddCategorySubmit.bind(this);
     this.subAddModalReset = this.subAddModalReset.bind(this);
-    //edit user
+    //edit Category
     this.renderEditModal = this.renderEditModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
     this.handleEditInputChange = this.handleEditInputChange.bind(this);
-    this.handleEditUserSubmit = this.handleEditUserSubmit.bind(this);
+    this.handleEditCategorySubmit = this.handleEditCategorySubmit.bind(this);
     this.editModalReset = this.editModalReset.bind(this);
-    //deactivate modal
-    this.renderDeactivateModal = this.renderDeactivateModal.bind(this);
-    this.toggleDeactivateModal = this.toggleDeactivateModal.bind(this);
-    this.handleDeactivateUserSubmit = this.handleDeactivateUserSubmit.bind(this);
-    this.DeactivateModalReset = this.DeactivateModalReset.bind(this);
-    //activate modal
-    this.renderActivateModal = this.renderActivateModal.bind(this);
-    this.toggleActivateModal = this.toggleActivateModal.bind(this);
-    this.handleActivateUserSubmit = this.handleActivateUserSubmit.bind(this);
-    this.ActivateModalReset = this.ActivateModalReset.bind(this);
-
+    //edit Subcategory
+    this.handelSubClick = this.handelSubClick.bind(this);
+    this.renderEditSubModal = this.renderEditSubModal.bind(this);
+    this.toggleEditSubModal = this.toggleEditSubModal.bind(this);
+    this.handleEditSubInputChange = this.handleEditSubInputChange.bind(this);
+    this.handleEditSubCategorySubmit = this.handleEditSubCategorySubmit.bind(this);
+    this.editSubModalReset = this.editSubModalReset.bind(this);
 
     this.loadDefaultData();
     
@@ -182,41 +175,41 @@ class Staff extends Component {
       "page": this.state.PageNumber + 1,
       "page_size": this.state.PageSize
     }
-    this.requestUsers(startFilters);
+    this.requestCategories(startFilters);
   }
   handleTablePageChange(page) {
-    this.setState({PageNumber: page.selected, usersWaiting: true, showUsersDetails: false},()=>{
+    this.setState({PageNumber: page.selected, CategoriesWaiting: true, showCategoriesDetails: false},()=>{
       let filters = {
         page: this.state.PageNumber + 1,
         page_size: this.state.PageSize,
         token: auth.getMerchantToken()
       }
-      this.requestUsers(filters);
+      this.requestCategories(filters);
     });
   }
   handleTableSizeChange(event){
     let maxPageNum = Math.ceil(this.state.totalLength/event.target.value) - 1;
     if(this.state.PageNumber > maxPageNum){
-      this.setState({PageSize: event.target.value, PageNumber: maxPageNum, usersWaiting: true},()=>{
+      this.setState({PageSize: event.target.value, PageNumber: maxPageNum, CategoriesWaiting: true},()=>{
         let filters = {
           page: this.state.PageNumber + 1,
           page_size: this.state.PageSize,
           token: auth.getMerchantToken()
         }
-        this.requestUsers(filters);
+        this.requestCategories(filters);
       });
     }else{
-      this.setState({PageSize: event.target.value, usersWaiting: true},()=>{
+      this.setState({PageSize: event.target.value, CategoriesWaiting: true},()=>{
         let filters = {
           page: this.state.PageNumber + 1,
           page_size: this.state.PageSize,
           token: auth.getMerchantToken()
         }
-        this.requestUsers(filters);
+        this.requestCategories(filters);
       });
     }
   }
-  requestUsers(filters){
+  requestCategories(filters){
     //request data
     let config = {
       headers: {
@@ -229,12 +222,11 @@ class Staff extends Component {
       }
     }
     httpClient.get(
-        this.state.usersTablePath,
+        this.state.CategoriesTablePath,
         config,
         (resp) => {
-          let users = resp.data.data.result;
-          console.log(resp.data.data)
-          this.setState({usersData: users, totalLength: resp.data.data.total, usersWaiting: false},()=>{
+          let categories = resp.data.data.result;
+          this.setState({CategoriesData: categories, totalLength: resp.data.data.total, CategoriesWaiting: false},()=>{
           });
         },
         (error) => {
@@ -250,7 +242,7 @@ class Staff extends Component {
         }
     )
   }
-  renderUsersTable(){
+  renderCategoriesTable(){
     return(
       <div>
         <Table className="usersTable mainTable">
@@ -262,9 +254,9 @@ class Staff extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.usersData.map((ele,index)=>{
+            {this.state.CategoriesData.map((ele,index)=>{
               return(
-                <tr key={ele._id}  onClick={()=> this.handelRowClick(ele,index)} className={this.state.showUserDetails && (ele._id == this.state.selectedUser._id)? "selectedRow": ""}>
+                <tr key={ele._id}  onClick={()=> this.handelRowClick(ele,index)} className={this.state.showCategoriesDetails && (ele._id == this.state.selectedCategory._id)? "selectedRow": ""}>
                   <td>{ele._id}</td>
                   <td>{ele.name}</td>
                 </tr>
@@ -275,7 +267,7 @@ class Staff extends Component {
       </div>
     )
   }
-  renderUsersBlock(){
+  renderCategoriesBlock(){
     return(
       <div>
         <Row>
@@ -291,7 +283,7 @@ class Staff extends Component {
               </div>  
             </div>
             <div className="x_content">
-              {this.state.usersWaiting?
+              {this.state.CategoriesWaiting?
                 <Waiting height="605px" />
               : 
                 <div className="">
@@ -304,7 +296,7 @@ class Staff extends Component {
                         </select>
                     </div>
                       <div className="currentTableDiv">
-                        {this.renderUsersTable()}
+                        {this.renderCategoriesTable()}
                       </div>
                       <ReactPaginate
                         pageCount={Math.ceil(this.state.totalLength/this.state.PageSize)}
@@ -320,8 +312,8 @@ class Staff extends Component {
             </div>
           </div>
         </Row>
-        {this.state.showUserDetails?
-          this.renderUserDetails()
+        {this.state.showCategoriesDetails?
+          this.renderCategoryDetails()
         :
           null
         }
@@ -331,25 +323,25 @@ class Staff extends Component {
   //dedtails
   handelRowClick(user,index){
     //reset collapse open 
-      if(this.state.showUserDetails){
-        if(user._id === this.state.selectedUser._id){
-          this.setState({showUserDetails: false});
+      if(this.state.showCategoriesDetails){
+        if(user._id === this.state.selectedCategory._id){
+          this.setState({showCategoriesDetails: false});
         }else{
-          this.setState({selectedUser: user, detailsWaiting: true},()=>{
+          this.setState({selectedCategory: user, detailsWaiting: true},()=>{
             this.requestSubcategories(user._id);
             //scroll to transaction details
             window.scrollTo({
-              top:this.userDetailsRef.current.offsetTop, 
+              top:this.categoryDetailsRef.current.offsetTop, 
               behavior: "smooth"   // Optional, adds animation
             })
           });
         }
       }else{
-        this.setState({selectedUser: user, showUserDetails: true, detailsWaiting: true},()=>{
+        this.setState({selectedCategory: user, showCategoriesDetails: true, detailsWaiting: true},()=>{
           //scroll to transaction details
           this.requestSubcategories(user._id);
           window.scrollTo({
-            top:this.userDetailsRef.current.offsetTop, 
+            top:this.categoryDetailsRef.current.offsetTop, 
             behavior: "smooth"   // Optional, adds animation
           })
         });
@@ -388,12 +380,12 @@ class Staff extends Component {
         }
     )
   }
-  renderUserDetails(){
+  renderCategoryDetails(){
     return(
       <Row>
-        <div className="x_panel"  ref={this.userDetailsRef}>
+        <div className="x_panel"  ref={this.categoryDetailsRef}>
           <div className="x_title details">
-            <h2>{this.state.selectedUser.name}</h2>
+            <h2>{this.state.selectedCategory.name}</h2>
             <div className="ButtonsDiv">
               {JSON.parse(localStorage.userData).permissions.includes("109")?
                   <button onClick={this.toggleEditModal} type="button" className="btn">
@@ -405,20 +397,7 @@ class Staff extends Component {
                     Add Subcategory
                   </button>:null
               }
-              {/* {JSON.parse(localStorage.userData).permissions.includes("107")?
-                  <span>
-                    {this.state.selectedUser.active?
-                      <button onClick={this.toggleDeactivateModal} type="button" className="btn">
-                        Deacttivate
-                      </button>
-                    :
-                      <button onClick={this.toggleActivateModal} type="button" className="btn">
-                        Acttivate
-                      </button>
-                    }
-                  </span>:null
-              } */}
-              <button onClick={() => this.setState({showUserDetails:false})} type="button" className="accept-btn btn btn-secondary close_btn">
+              <button onClick={() => this.setState({showCategoriesDetails:false})} type="button" className="accept-btn btn btn-secondary close_btn">
                 <i className="fa fa-times" aria-hidden="true"></i>
               </button>
             </div>           
@@ -430,10 +409,10 @@ class Staff extends Component {
               :
               <div>
                 <div className="modal_details">
-                  <span className="title">ID</span><span className="value">{this.state.selectedUser._id}</span>
+                  <span className="title">ID</span><span className="value">{this.state.selectedCategory._id}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Name</span><span className="value">{this.state.selectedUser.name}</span>
+                  <span className="title">Name</span><span className="value">{this.state.selectedCategory.name}</span>
                 </div>
                 <div className="modal_details">
                   <span className="title">Subcategories</span><span className="value">
@@ -443,7 +422,10 @@ class Staff extends Component {
                       <span>
                         {this.state.subcategories.map((subcategory)=>{
                           return(
-                            <span className="table_block">{subcategory.name}</span>
+                            <span className="table_block subcategory">
+                              {subcategory.name}
+                              <i className="fa fa-pencil edit_btn" onClick={(e)=>{this.handelSubClick(subcategory,e)}} ></i>
+                            </span>
                           )
                         })}
                       </span>
@@ -477,7 +459,7 @@ class Staff extends Component {
     addFormData[inputName] = event.target.value;
     this.setState({addForm: addFormData})
   }
-  handleAddProductSubmit(event){
+  handleAddCategorySubmit(event){
     //get form data
     let userObj = {
       "name": this.state.addForm.name
@@ -494,7 +476,7 @@ class Staff extends Component {
         }
       }
       httpClient.post(
-          this.state.addStaffPath,
+          this.state.addCategoryPath,
           config,
           userData,
           (resp) => {
@@ -535,7 +517,7 @@ class Staff extends Component {
   renderAddModal(){
     return(
       <Modal className="usersModal" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
-        <VForm onSubmit={this.handleAddProductSubmit} >
+        <VForm onSubmit={this.handleAddCategorySubmit} >
           <ModalHeader toggle={this.toggleAddModal}>
             New Category
           </ModalHeader>
@@ -623,10 +605,10 @@ class Staff extends Component {
     subAddFormData[inputName] = event.target.value;
     this.setState({subAddForm: subAddFormData})
   }
-  handleSubAddProductSubmit(event){
+  handleSubAddCategorySubmit(event){
     //get form data
     let userObj = {
-      "category_id": this.state.selectedUser._id,
+      "category_id": this.state.selectedCategory._id,
       "name": this.state.subAddForm.name
     };
     let userData = JSON.stringify(userObj);
@@ -682,7 +664,7 @@ class Staff extends Component {
   renderSubAddModal(){
     return(
       <Modal className="usersModal" isOpen={this.state.subAddModal} toggle={this.toggleSubAddModal}>
-        <VForm onSubmit={this.handleSubAddProductSubmit} >
+        <VForm onSubmit={this.handleSubAddCategorySubmit} >
           <ModalHeader toggle={this.toggleSubAddModal}>
             New Subcategory
           </ModalHeader>
@@ -755,7 +737,7 @@ class Staff extends Component {
   toggleEditModal(e){
     e.preventDefault();
     let editFormData = this.state.editForm;
-    editFormData.name= this.state.selectedUser.name;
+    editFormData.name= this.state.selectedCategory.name;
     this.setState({
       editModal: !this.state.editModal,
       editForm: editFormData,
@@ -770,10 +752,10 @@ class Staff extends Component {
     editFormData[inputName] = event.target.value;
     this.setState({editForm: editFormData})
   }
-  handleEditUserSubmit(event){
+  handleEditCategorySubmit(event){
     //get form data
     let userObj = {
-      "category_id": this.state.selectedUser._id,
+      "category_id": this.state.selectedCategory._id,
       "name": this.state.editForm.name
     };
     let userData = JSON.stringify(userObj);
@@ -829,7 +811,7 @@ class Staff extends Component {
   renderEditModal(){
     return(
       <Modal className="usersModal modal-lg" isOpen={this.state.editModal} toggle={this.toggleEditModal}>
-        <VForm onSubmit={this.handleEditUserSubmit} >
+        <VForm onSubmit={this.handleEditCategorySubmit} >
           <ModalHeader toggle={this.toggleEditModal}>
             Edit Category
           </ModalHeader>
@@ -898,24 +880,40 @@ class Staff extends Component {
       </Modal>
     )
   }  
-  //deactivate modal
-  toggleDeactivateModal(){
+  //editSub modal
+  handelSubClick(subcategory,e){
+    this.setState({selectedSubcategory: subcategory},()=>{
+      this.toggleEditSubModal(e)
+    })
+  }
+  toggleEditSubModal(e){
+    e.preventDefault();
+    let editSubFormData = this.state.editSubForm;
+    editSubFormData.name= this.state.selectedSubcategory.name;
     this.setState({
-      deactivateModal: !this.state.deactivateModal,
-      deactivateModalWaiting: false,
-      deactivateModalSuccess: false,
-      deactivateModalError: false,
-      deactivateModalFaildMessage: ""
+      editSubModal: !this.state.editSubModal,
+      editSubForm: editSubFormData,
+      editSubModalWaiting: false, 
+      editSubModalSuccess: false, 
+      editSubModalError: false, 
+      editSubModalFaildMessage: ""
     });
   }
-  handleDeactivateUserSubmit(event){
+  handleEditSubInputChange(inputName,event){
+    let editSubFormData = this.state.editSubForm;
+    editSubFormData[inputName] = event.target.value;
+    this.setState({editSubForm: editSubFormData})
+  }
+  handleEditSubCategorySubmit(event){
+    //get form data
+    let userObj = {
+      "subCategory_id": this.state.selectedSubcategory._id,
+      "name": this.state.editSubForm.name
+    };
+    let userData = JSON.stringify(userObj);
     //start waiting
-    this.setState({deactivateModalWaiting: true},()=>{
+    this.setState({editSubModalWaiting: true},()=>{
       //send request
-      let userObj = {
-        "branch_id": this.state.selectedUser._id,
-        "active": "false"
-      };
       let config = {
         headers: {
           //"Cache-Control": "no-cache",
@@ -924,11 +922,11 @@ class Staff extends Component {
         }
       }
       httpClient.post(
-          this.state.editPath,
+          this.state.editSubPath,
           config,
-          userObj,
+          userData,
           (resp) => {
-            this.setState({deactivateModalSuccess: true ,deactivateModalWaiting:false},()=>{
+            this.setState({editSubModalSuccess: true ,editSubModalWaiting:false},()=>{
               setTimeout(()=>{
                 window.location.reload();
               }, 3000);
@@ -938,6 +936,8 @@ class Staff extends Component {
             if(error.response){
               if(error.response.status === 401){
                 this.setState({logout: true});
+              }else if(error.response.status === 400){
+                this.setState({editSubModalWaiting: false, editSubModalError: true, editSubModalFaildMessage: error.response.data.message});
               }else{
                 this.setState({publicError: true});
               }
@@ -949,158 +949,61 @@ class Staff extends Component {
     });
     event.preventDefault();
   }
-  DeactivateModalReset(){
+  editSubModalReset(e){
+    e.preventDefault();
+    let editSubFormData= this.state.editSubForm;
     this.setState({
-      deactivateModalWaiting: false,
-      deactivateModalSuccess: false,
-      deactivateModalError: false,
-      deactivateModalFaildMessage: ""
+      editSubForm: editSubFormData,
+      editSubModalWaiting: false, 
+      editSubModalSuccess: false, 
+      editSubModalError: false, 
+      editSubModalFaildMessage: ""
     });
   }
-  renderDeactivateModal(){
+  renderEditSubModal(){
     return(
-      <Modal isOpen={this.state.deactivateModal} toggle={this.toggleDeactivateModal}>
-        <VForm >
-          <ModalHeader toggle={this.toggleDeactivateModal}>
-            Deactivate
+      <Modal className="usersModal modal-lg" isOpen={this.state.editSubModal} toggle={this.toggleEditSubModal}>
+        <VForm onSubmit={this.handleEditSubCategorySubmit} >
+          <ModalHeader toggle={this.toggleEditSubModal}>
+            Edit SubCategory
           </ModalHeader>
           <ModalBody>
-          {this.state.deactivateModalError?
+          {this.state.editSubModalError?
               <div>
                 <Alert color="danger">
-                  Oops! Something went wrong. If this problem persists, please contact your service provider.
+                  {this.state.editSubModalFaildMessage}
                 </Alert>
               </div>
           :
             <div >
-              {this.state.deactivateModalSuccess?
+              {this.state.editSubModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
                   <h1>Congratulations</h1>
-                  <p>your Branch has been Deactivated Successfully.</p>
+                  <p>Your SubCategory has been Edited Successfully.</p>
                 </div>
               :
                 <div >
-                {this.state.deactivateModalWaiting?
-                  <Waiting height="150px" />
+                {this.state.editSubModalWaiting?
+                  <Waiting height="250px" />
                 :
-                  <div className="deactivateModalBody">
-                      <br/>
-                <p>You are about to Deactivate Branch <b>{this.state.selectedUser.name}</b> . Please confirm deactivation or press cancel.</p>
-                  </div>
-                }
-                </div>
-              }
-            </div>
-          }
-          </ModalBody>
-          <ModalFooter>
-            {this.state.deactivateModalSuccess || this.state.deactivateModalWaiting || this.state.deactivateModalError?
-              null
-            : 
-              <VButton className="btn btn-danger" onClick={this.handleDeactivateUserSubmit} >Deactivate</VButton>
-            }
-            {this.state.deactivateModalError?
-              <button className="accept-btn btn btn-default" onClick={this.deactivateModalReset}>Try Again</button>
-            :
-              null
-            }
-            <span className="accept-btn btn btn-default" onClick={this.toggleDeactivateModal}>Cancel</span>
-          </ModalFooter>
-        </VForm>
-      </Modal>
-    )
-  }
-  //activate modal
-  toggleActivateModal(){
-    this.setState({
-      activateModal: !this.state.activateModal,
-      activateModalWaiting: false,
-      activateModalSuccess: false,
-      activateModalError: false,
-      activateModalFaildMessage: ""
-    });
-  }
-  handleActivateUserSubmit(event){
-    //start waiting
-    this.setState({activateModalWaiting: true},()=>{
-      //send request
-      let userObj = {
-        "branch_id": this.state.selectedUser._id,
-        "active": "true"
-      };
-      let config = {
-        headers: {
-          //"Cache-Control": "no-cache",
-          "Content-Type": "application/json",
-          "x-auth": auth.getMerchantToken()
-        }
-      }
-      let data= {};
-      httpClient.post(
-          this.state.editPath,
-          config,
-          userObj,
-          (resp) => {
-            this.setState({activateModalSuccess: true ,activateModalWaiting:false},()=>{
-              setTimeout(()=>{
-                window.location.reload();
-              }, 3000);
-            });
-          },
-          (error) => {
-            if(error.response){
-              if(error.response.status === 401){
-                this.setState({logout: true});
-              }else{
-                this.setState({publicError: true});
-              }
-            }else{
-              this.setState({publicError: true});
-            }
-          }
-      )
-    });
-    event.preventDefault();
-  }
-  ActivateModalReset(){
-    this.setState({
-      activateModalWaiting: false,
-      activateModalSuccess: false,
-      activateModalError: false,
-      activateModalFaildMessage: ""
-    });
-  }
-  renderActivateModal(){
-    return(
-      <Modal isOpen={this.state.activateModal} toggle={this.toggleActivateModal}>
-        <VForm >
-          <ModalHeader toggle={this.toggleActivateModal}>
-            Activate
-          </ModalHeader>
-          <ModalBody>
-          {this.state.activateModalError?
-              <div>
-                <Alert color="danger">
-                  Oops! Something went wrong. If this problem persists, please contact your service provider.
-                </Alert>
-              </div>
-          :
-            <div >
-              {this.state.activateModalSuccess?
-                <div className="staffSuccesDiv">
-                  <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>Your Branch has been Activated Successfully.</p>
-                </div>
-              :
-                <div >
-                {this.state.activateModalWaiting?
-                  <Waiting height="150px" />
-                :
-                  <div className="activateModalBody">
+                  <div className="editSubModalBody">
                     <br/>
-                    <p>You are about to Activate user <b>{this.state.selectedUser.name}</b> . Please confirm activation or press cancel.</p>
+                    <Row>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            autoFocus={true}
+                            name="name"
+                            value={this.state.editSubForm.name}
+                            onChange={(e) => this.handleEditSubInputChange("name", e)}
+                            validations={[required]}
+                            placeholder="SubCategory Name"
+                          />
+                        </div>
+                      </Col>
+                    </Row>
                   </div>
                 }
                 </div>
@@ -1108,19 +1011,23 @@ class Staff extends Component {
             </div>
           }
           </ModalBody>
-          <ModalFooter>
-            {this.state.activateModalSuccess || this.state.activateModalWaiting || this.state.activateModalError?
-              null
-            : 
-              <VButton className="btn btn-danger" onClick={this.handleActivateUserSubmit} >Activate</VButton>
-            }
-            {this.state.activateModalError?
-              <button className="accept-btn btn btn-default" onClick={this.activateModalReset}>Try Again</button>
-            :
-              null
-            }
-            <span className="accept-btn btn btn-default" onClick={this.toggleActivateModal}>Cancel</span>
-          </ModalFooter>
+          {this.state.editSubModalSuccess || this.state.editSubModalWaiting?
+            null
+          : 
+            <ModalFooter>
+              {this.state.editSubModalSuccess || this.state.editSubModalWaiting || this.state.editSubModalError?
+                null
+              : 
+                <VButton className="btn btn-info">Edit</VButton>
+              }
+              {this.state.editSubModalError?
+                <button className="accept-btn btn btn-default" onClick={this.editSubModalReset}>Try again</button>
+              :
+                null
+              }
+              <button className="accept-btn btn btn-default" onClick={this.toggleEditSubModal}>Cancel</button>
+            </ModalFooter>
+          }
         </VForm>
       </Modal>
     )
@@ -1136,12 +1043,11 @@ class Staff extends Component {
           </div>
         :
           <div>
-            {this.renderUsersBlock()}
+            {this.renderCategoriesBlock()}
             {this.renderAddModal()}
             {this.renderEditModal()}
+            {this.renderEditSubModal()}
             {this.renderSubAddModal()}
-            {this.renderDeactivateModal()}
-            {this.renderActivateModal()}
           </div>
         }
       </div>
