@@ -62,6 +62,18 @@ const phoneNumber = (value) => {
           </div>;
   }
 }
+let NumberError = "Please enter valid number  (more than 0)."
+const NumberV = (value) => {
+  // var patt = new RegExp("^(01)([0-9]*)$");
+  if (isNaN(value) || value <= 0) {
+    return <div className="simple-alert">
+            <i className="fa fa-exclamation-circle"></i>
+            <Alert color="danger">
+              {NumberError}
+            </Alert>
+          </div>;
+  }
+}
 
 
 class Product extends Component {
@@ -110,6 +122,17 @@ class Product extends Component {
           phoneNumber: "",
           type: ""
         },
+        //addMore modal
+        addMoreStaffPath: "/api/product/add",
+        addMoreModalWaiting: false,
+        addMoreModal: false,
+        addMoreModalError: false,
+        addMoreModalFaildMessage: "",
+        addMoreModalSuccess: false,
+        addMoreForm: {
+          quantity: "",
+          branch: ""
+        },
         //deactivate modal
         deactivateModalWaiting: false,
         deactivateModal: false,
@@ -151,6 +174,12 @@ class Product extends Component {
     this.handleEditInputChange = this.handleEditInputChange.bind(this);
     this.handleEditUserSubmit = this.handleEditUserSubmit.bind(this);
     this.editModalReset = this.editModalReset.bind(this);
+    //addMore user
+    this.renderAddMoreModal = this.renderAddMoreModal.bind(this);
+    this.toggleAddMoreModal = this.toggleAddMoreModal.bind(this);
+    this.handleAddMoreInputChange = this.handleAddMoreInputChange.bind(this);
+    this.handleAddMoreProductSubmit = this.handleAddMoreProductSubmit.bind(this);
+    this.addMoreModalReset = this.addMoreModalReset.bind(this);
     //deactivate modal
     this.renderDeactivateModal = this.renderDeactivateModal.bind(this);
     this.toggleDeactivateModal = this.toggleDeactivateModal.bind(this);
@@ -388,12 +417,18 @@ class Product extends Component {
           <div className="x_title details">
             <h2>{this.state.selectedUser.name}</h2>
             <div className="ButtonsDiv">
-              {/* {JSON.parse(localStorage.userData).permissions.includes("106")?
+              {JSON.parse(localStorage.userData).permissions.includes("116")?
+                  <button onClick={this.toggleAddMoreModal} type="button" className="btn">
+                    More Quantity
+                  </button>:null
+              }
+              {/* 
+                {JSON.parse(localStorage.userData).permissions.includes("116")?
                   <button onClick={this.toggleEditModal} type="button" className="btn">
                     Edit
                   </button>:null
-              }
-              {JSON.parse(localStorage.userData).permissions.includes("107")?
+                }
+                {JSON.parse(localStorage.userData).permissions.includes("107")?
                   <span>
                     {this.state.selectedUser.active?
                       <button onClick={this.toggleDeactivateModal} type="button" className="btn">
@@ -847,6 +882,173 @@ class Product extends Component {
       </Modal>
     )
   }  
+  //addMore modal
+  toggleAddMoreModal(e){
+    e.preventDefault();
+    let addMoreFormData = this.state.addMoreForm;
+    addMoreFormData.quantity= "";
+    addMoreFormData.branch= "";
+    this.setState({
+      addMoreModal: !this.state.addMoreModal,
+      addMoreForm: addMoreFormData,
+      addMoreModalWaiting: false, 
+      addMoreModalSuccess: false, 
+      addMoreModalError: false, 
+      addMoreModalFaildMessage: ""
+    });
+  }
+  handleAddMoreInputChange(inputName,event){
+    let addMoreFormData = this.state.addMoreForm;
+    addMoreFormData[inputName] = event.target.value;
+    this.setState({addMoreForm: addMoreFormData},()=>{
+      console.log(this.state.addMoreForm)
+    })
+  }
+  handleAddMoreProductSubmit(event){
+    //get form data
+    let userObj = {
+      "_id": this.state.selectedUser._id,
+      "quantity": this.state.addMoreForm.quantity,
+      "branch_id": this.state.addMoreForm.branch
+    };
+    let userData = JSON.stringify(userObj);
+    //start waiting
+    this.setState({addMoreModalWaiting: true},()=>{
+      //send request
+      let config = {
+        headers: {
+          //"Cache-Control": "no-cache",
+          "Content-Type": "application/json",
+          "x-auth": auth.getMerchantToken()
+        }
+      }
+      httpClient.post(
+          this.state.addMoreStaffPath,
+          config,
+          userData,
+          (resp) => {
+            this.setState({addMoreModalSuccess: true ,addMoreModalWaiting:false},()=>{
+              // setTimeout(()=>{
+              //   window.location.reload();
+              // }, 3000);
+            });
+          },
+          (error) => {
+            if(error.response){
+              if(error.response.status === 401){
+                this.setState({logout: true});
+              }else if(error.response.status === 400){
+                this.setState({addMoreModalWaiting: false, addMoreModalError: true, addMoreModalFaildMessage: error.response.data.message});
+              }else{
+                this.setState({publicError: true});
+              }
+            }else{
+              this.setState({publicError: true});
+            }
+          }
+      )
+    });
+    event.preventDefault();
+  }
+  addMoreModalReset(e){
+    e.preventDefault();
+    let addMoreFormData= this.state.addMoreForm;
+    this.setState({
+      addMoreForm: addMoreFormData,
+      addMoreModalWaiting: false, 
+      addMoreModalSuccess: false, 
+      addMoreModalError: false, 
+      addMoreModalFaildMessage: ""
+    });
+  }
+  renderAddMoreModal(){
+    return(
+      <Modal className="usersModal" isOpen={this.state.addMoreModal} toggle={this.toggleAddMoreModal}>
+        <VForm onSubmit={this.handleAddMoreProductSubmit} >
+          <ModalHeader toggle={this.toggleAddMoreModal}>
+            More Quantity
+          </ModalHeader>
+          <ModalBody>
+          {this.state.addMoreModalError?
+              <div>
+                <Alert color="danger">
+                  {this.state.addMoreModalFaildMessage}
+                </Alert>
+              </div>
+          :
+            <div >
+              {this.state.addMoreModalSuccess?
+                <div className="staffSuccesDiv">
+                  <img src={successImg} alt="succes"/>
+                  <h1>Congratulations</h1>
+                  <p>Quantity Added to the Selected Branch Successfully.</p>
+                </div>
+              :
+                <div >
+                {this.state.addMoreModalWaiting?
+                  <Waiting height="250px" />
+                :
+                  <div className="addMoreModalBody">
+                    <br/>
+                    <Row>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            autoFocus={true}
+                            name="quantity"
+                            value={this.state.addMoreForm.quantity}
+                            onChange={(e) => this.handleAddMoreInputChange("quantity", e)}
+                            validations={[required, NumberV]}
+                            placeholder="Quantity"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VSelect type="select" name="type" className="tradket_b_s"
+                            value={this.state.addMoreForm.branch}
+                            onChange={(e) => this.handleAddMoreInputChange("branch",e)}
+                            validations={[required]} 
+                          >
+                            <option value="" disabled>Select Type</option>
+                            {this.state.fullBranchs.map((branch)=>{
+                              return(
+                                <option value={branch._id}>{branch.name}</option>
+                              )
+                            })}
+                          </VSelect>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                }
+                </div>
+              }
+            </div>
+          }
+          </ModalBody>
+          {this.state.addMoreModalSuccess || this.state.addMoreModalWaiting?
+            null
+          : 
+            <ModalFooter>
+              {this.state.addMoreModalSuccess || this.state.addMoreModalWaiting || this.state.addMoreModalError?
+                null
+              : 
+                <VButton className="btn btn-info">Add</VButton>
+              }
+              {this.state.addMoreModalError?
+                <button className="accept-btn btn btn-default" onClick={this.addMoreModalReset}>Try again</button>
+              :
+                null
+              }
+              <button className="accept-btn btn btn-default" onClick={this.toggleAddMoreModal}>Cancel</button>
+            </ModalFooter>
+          }
+        </VForm>
+      </Modal>
+    )
+  } 
   //deactivate modal
   toggleDeactivateModal(){
     this.setState({
@@ -1087,6 +1289,7 @@ class Product extends Component {
           <div>
             {this.renderUsersBlock()}
             {this.renderAddModal()}
+            {this.renderAddMoreModal()}
             {this.renderEditModal()}
             {this.renderDeactivateModal()}
             {this.renderActivateModal()}

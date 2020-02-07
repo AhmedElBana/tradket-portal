@@ -38,7 +38,8 @@
 }
 
 .product_map{
-    padding: 0px 15px;
+    padding: 5px 15px;
+    overflow-x: auto;
 }
 .product_map table > tbody > tr:hover{
     cursor: text;
