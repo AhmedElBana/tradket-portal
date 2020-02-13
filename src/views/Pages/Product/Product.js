@@ -104,6 +104,8 @@ class Product extends Component {
         addModalSuccess: false,
         branches: [],
         selectedFeatures: [],
+        selectedSubProductFeatures: ["5e432510729b9c2480d50ed0","5e432532729b9c2480d50ed1"],
+        SubProducts: [],
         addForm: {
           _id: "",
           name: "",
@@ -188,6 +190,8 @@ class Product extends Component {
     this.handleAddProductSubmit = this.handleAddProductSubmit.bind(this);
     this.addModalReset = this.addModalReset.bind(this);
     this.onSelectFeaturesForm = this.onSelectFeaturesForm.bind(this);
+    this.onSelectSubProductForm = this.onSelectSubProductForm.bind(this);
+    this.renderAddFormSubProducts = this.renderAddFormSubProducts.bind(this);
     //edit user
     this.renderEditModal = this.renderEditModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -730,7 +734,6 @@ class Product extends Component {
     });
   }
   onSelectFeaturesForm(optionsList) {
-    let addForm = this.state.addForm;
     let optionsArr = [];
     optionsList.map((ele)=>{
       optionsArr.push(ele._id)
@@ -738,6 +741,59 @@ class Product extends Component {
     this.setState({selectedFeatures: optionsArr},()=>{
       console.log(this.state)
     })
+  }
+  onSelectSubProductForm(optionsList) {
+    let optionsArr = [];
+    optionsList.map((ele)=>{
+      optionsArr.push(ele._id)
+    })
+    this.setState({selectedSubProductFeatures: optionsArr},()=>{
+      console.log(this.state)
+    })
+  }
+  renderAddFormSubProducts(){
+    let optionsNumber = 1;
+    this.state.selectedSubProductFeatures.map((feature_id)=>{
+      if(this.state.features_ids[feature_id]){
+        optionsNumber *= this.state.features_ids[feature_id].options.length;
+        this.state.features_ids[feature_id].options.map((option)=>{
+          console.log(option)
+        })
+      }
+    })
+    let opttionsArr = [];
+    //"features": {"size": 44,"color": "black"}
+    for(let n = 0; n < optionsNumber; n++){
+      opttionsArr.push({"features": {}})
+    }
+    this.state.selectedSubProductFeatures.map((feature_id,index)=>{
+      if(this.state.features_ids[feature_id]){
+        let prevSize = 1;
+        if(index > 0){
+          this.state.selectedSubProductFeatures.map((subFeature_id,subIndex)=>{
+            if(subIndex < index){
+              prevSize *= this.state.features_ids[subFeature_id].options.length;
+            }
+          })
+        }
+        let patchSize = optionsNumber / (this.state.features_ids[feature_id].options.length * prevSize);
+        console.log("prevSize: " + prevSize)
+        console.log("patchSize: " + patchSize)
+        console.log("option: " + this.state.features_ids[feature_id].options.length)
+        for(let z = 0; z < prevSize; z++){
+          this.state.features_ids[feature_id].options.map((option, optionIndex)=>{
+            for(let x = 0; x < patchSize; x++){
+              opttionsArr[(z * patchSize * this.state.features_ids[feature_id].options.length) + (optionIndex * patchSize) + x].features[this.state.features_ids[feature_id].name] = option;
+            }
+          })
+        }
+      }
+    })
+    console.log(opttionsArr)
+    opttionsArr.map((ele)=>{
+      console.log(ele.features)
+    })
+    return (<div>{optionsNumber} <br/> </div>)
   }
   renderAddModal(){
     return(
@@ -925,7 +981,20 @@ class Product extends Component {
                           )
                         })}
                       </div>
-                      
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                        <Multiselect
+                          data={this.state.fullFeatures}
+                          valueField='_id'
+                          textField='name'
+                          placeholder="Sub Products (optional)"
+                          onChange={this.onSelectSubProductForm}
+                          required
+                          defaultValue={this.state.selectedSubProductFeatures}
+                        />
+                        </div>
+                      </Col>
+                      {this.renderAddFormSubProducts()}
                       {/* <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
                           <VInput type="text" className="tradket_b_i"
