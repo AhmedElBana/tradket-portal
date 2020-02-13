@@ -7,6 +7,7 @@ import VForm from 'react-validation/build/form';
 import VInput from 'react-validation/build/input';
 import VSelect from 'react-validation/build/select';
 import VButton from 'react-validation/build/button';
+import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import {httpClient} from './../../../tools/HttpClient';
 import validator from 'validator';
@@ -95,18 +96,24 @@ class Product extends Component {
         showUsersDetails: false,
         selectedUser: {},
         //add modal
-        addStaffPath: "/api/branch/create",
+        addStaffPath: "/api/productGroup/create",
         addModalWaiting: false,
         addModal: false,
         addModalError: false,
         addModalFaildMessage: "",
         addModalSuccess: false,
         branches: [],
+        selectedFeatures: [],
         addForm: {
+          _id: "",
           name: "",
-          address: "",
-          phoneNumber: "",
-          type: ""
+          branch_id: "",
+          category_id: "",
+          subCategory_id: "",
+          price: "",
+          quantity: "",
+          description: "",
+          features: {}
         },
         //edit modal
         editPath: "/api/branch/edit",
@@ -149,6 +156,18 @@ class Product extends Component {
         brancesLoaded: false,
         branchName: {},
         fullBranchs: [],
+        //categories
+        categoriesLoaded: false,
+        categoriesName: {},
+        fullCategories: [],
+        //subCategories
+        subCategoriesLoaded: false,
+        subCategoriesName: {},
+        fullSubCategories: [],
+        //features
+        featuresLoaded: false,
+        fullFeatures: [],
+        features_ids: {},
         //public
         publicError: false,
         logout: false,
@@ -168,6 +187,7 @@ class Product extends Component {
     this.handleAddInputChange = this.handleAddInputChange.bind(this);
     this.handleAddProductSubmit = this.handleAddProductSubmit.bind(this);
     this.addModalReset = this.addModalReset.bind(this);
+    this.onSelectFeaturesForm = this.onSelectFeaturesForm.bind(this);
     //edit user
     this.renderEditModal = this.renderEditModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -191,7 +211,10 @@ class Product extends Component {
     this.handleActivateUserSubmit = this.handleActivateUserSubmit.bind(this);
     this.ActivateModalReset = this.ActivateModalReset.bind(this);
 
-    this.requestBranches = this.requestBranches.bind(this); 
+    this.requestBranches = this.requestBranches.bind(this);
+    this.requestCategories = this.requestCategories.bind(this);
+    this.requestSubCategories = this.requestSubCategories.bind(this);
+    this.requestFeatures = this.requestFeatures.bind(this);
     this.loadDefaultData();
     
   }
@@ -203,6 +226,9 @@ class Product extends Component {
     }
     this.requestUsers(startFilters);
     this.requestBranches();
+    this.requestCategories();
+    this.requestSubCategories();
+    this.requestFeatures();
   }
   requestBranches(){
     //request data
@@ -224,6 +250,108 @@ class Product extends Component {
             branches[branch._id] = branch.name;
           })
           this.setState({branchName: branches, fullBranchs: resp.data.data.result, brancesLoaded: true});
+        },
+        (error) => {
+          if(error.response){
+            if(error.response.status === 401){
+              this.setState({logout: true});
+            }else{
+              this.setState({publicError: true});
+            }
+          }else{
+            this.setState({publicError: true});
+          }
+        }
+    )
+  }
+  requestCategories(){
+    //request data
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth": auth.getMerchantToken()
+      },
+      params: {
+        "page_size": "1000"
+      }
+    }
+    httpClient.get(
+        "/api/category/list",
+        config,
+        (resp) => {
+          let categories = {};
+          resp.data.data.result.map((category)=>{
+            categories[category._id] = category.name;
+          })
+          this.setState({categoriesName: categories, fullCategories: resp.data.data.result, categoriesLoaded: true});
+        },
+        (error) => {
+          if(error.response){
+            if(error.response.status === 401){
+              this.setState({logout: true});
+            }else{
+              this.setState({publicError: true});
+            }
+          }else{
+            this.setState({publicError: true});
+          }
+        }
+    )
+  }
+  requestSubCategories(){
+    //request data
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth": auth.getMerchantToken()
+      },
+      params: {
+        "page_size": "10000"
+      }
+    }
+    httpClient.get(
+        "/api/subCategory/list",
+        config,
+        (resp) => {
+          let subCategories = {};
+          resp.data.data.result.map((subCategory)=>{
+            subCategories[subCategory._id] = subCategory.name;
+          })
+          this.setState({subCategoriesName: subCategories, fullSubCategories: resp.data.data.result, subCategoriesLoaded: true});
+        },
+        (error) => {
+          if(error.response){
+            if(error.response.status === 401){
+              this.setState({logout: true});
+            }else{
+              this.setState({publicError: true});
+            }
+          }else{
+            this.setState({publicError: true});
+          }
+        }
+    )
+  }
+  requestFeatures(){
+    //request data
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth": auth.getMerchantToken()
+      },
+      params: {
+        "page_size": "1000"
+      }
+    }
+    httpClient.get(
+        "/api/feature/list",
+        config,
+        (resp) => {
+          let features = {}
+          resp.data.data.result.map((feature)=>{
+            features[feature._id] = feature
+          })
+          this.setState({features_ids: features,fullFeatures: resp.data.data.result, featuresLoaded: true});
         },
         (error) => {
           if(error.response){
@@ -339,13 +467,13 @@ class Product extends Component {
           <div className="x_panel">
             <div className="x_title">
               <h2>Products</h2>
-              {/* <div className="ButtonsDiv">
-                {JSON.parse(localStorage.userData).permissions.includes("105")?
+              <div className="ButtonsDiv">
+                {JSON.parse(localStorage.userData).permissions.includes("116")?
                   <button onClick={this.toggleAddModal} type="button" className="btn">
                     New Product
                   </button>:null
                 }
-              </div>   */}
+              </div>  
             </div>
             <div className="x_content">
               {this.state.usersWaiting || !this.state.brancesLoaded?
@@ -506,10 +634,14 @@ class Product extends Component {
   toggleAddModal(e){
     e.preventDefault();
     let addFormData = this.state.addForm;
+    addFormData._id= "";
     addFormData.name= "";
-    addFormData.address= "";
-    addFormData.phoneNumber= "";
-    addFormData.type= "";
+    addFormData.branch_id= "";
+    addFormData.category_id= "";
+    addFormData.subCategory_id= "";
+    addFormData.price= "";
+    addFormData.quantity= "";
+    addFormData.description= "";
     this.setState({
       addModal: !this.state.addModal,
       addForm: addFormData,
@@ -527,27 +659,41 @@ class Product extends Component {
   }
   handleAddProductSubmit(event){
     //get form data
-    let userObj = {
-      "name": this.state.addForm.name,
-      "address": this.state.addForm.address,
-      "phoneNumber": this.state.addForm.phoneNumber,
-      "type": this.state.addForm.type
-    };
-    let userData = JSON.stringify(userObj);
+    var bodyFormData = new FormData();
+    bodyFormData.set('name', this.state.addForm.name);
+    bodyFormData.set('branch_id', this.state.addForm.branch_id);
+    bodyFormData.set('category_id', this.state.addForm.category_id);
+    bodyFormData.set('price', this.state.addForm.price);
+    bodyFormData.set('quantity', this.state.addForm.quantity);
+    bodyFormData.set('description', this.state.addForm.description);
+    if(this.state.addForm._id !== ""){
+      bodyFormData.set('_id', this.state.addForm._id);
+    }
+    if(this.state.addForm.subCategory_id !== ""){
+      bodyFormData.set('subCategory_id', this.state.addForm.subCategory_id);
+    }
+    let features = {}
+    if(document.querySelectorAll("#addFormFeatures select").length > 0){
+      let elements = document.querySelectorAll("#addFormFeatures select");
+      elements.forEach.call(elements, function(ele) {
+        features[ele.name] = ele.value;
+      });
+      console.log(JSON.stringify(features))
+      bodyFormData.set('features',JSON.stringify(features) );
+    }
     //start waiting
     this.setState({addModalWaiting: true},()=>{
       //send request
       let config = {
         headers: {
           //"Cache-Control": "no-cache",
-          "Content-Type": "application/json",
           "x-auth": auth.getMerchantToken()
         }
       }
       httpClient.post(
           this.state.addStaffPath,
           config,
-          userData,
+          bodyFormData,
           (resp) => {
             this.setState({addModalSuccess: true ,addModalWaiting:false},()=>{
               setTimeout(()=>{
@@ -583,12 +729,22 @@ class Product extends Component {
       addModalFaildMessage: ""
     });
   }
+  onSelectFeaturesForm(optionsList) {
+    let addForm = this.state.addForm;
+    let optionsArr = [];
+    optionsList.map((ele)=>{
+      optionsArr.push(ele._id)
+    })
+    this.setState({selectedFeatures: optionsArr},()=>{
+      console.log(this.state)
+    })
+  }
   renderAddModal(){
     return(
       <Modal className="usersModal" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
         <VForm onSubmit={this.handleAddProductSubmit} >
           <ModalHeader toggle={this.toggleAddModal}>
-            New Branch
+            New Product
           </ModalHeader>
           <ModalBody>
           {this.state.addModalError?
@@ -603,7 +759,7 @@ class Product extends Component {
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
                   <h1>Congratulations</h1>
-                  <p>Your Branch has been created successfully.</p>
+                  <p>Your Product has been created successfully.</p>
                 </div>
               :
                 <div >
@@ -618,15 +774,159 @@ class Product extends Component {
                           <VInput type="text" className="tradket_b_i"
                             autoComplete="off"
                             autoFocus={true}
-                            name="name"
-                            value={this.state.addForm.name}
-                            onChange={(e) => this.handleAddInputChange("name", e)}
-                            validations={[required]}
-                            placeholder="Branch Name"
+                            name="id"
+                            value={this.state.addForm._id}
+                            onChange={(e) => this.handleAddInputChange("_id", e)}
+                            validations={[]}
+                            placeholder="Prouct ID (optional)"
                           />
                         </div>
                       </Col>
                       <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            name="name"
+                            value={this.state.addForm.name}
+                            onChange={(e) => this.handleAddInputChange("name", e)}
+                            validations={[required]}
+                            placeholder="Prouct Name"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VSelect type="select" name="branch" className="tradket_b_s"
+                            value={this.state.addForm.branch_id}
+                            onChange={(e) => this.handleAddInputChange("branch_id",e)}
+                            validations={[required]} 
+                          >
+                            <option value="" disabled>Select Branch</option>
+                            {this.state.fullBranchs.map((branch)=>{
+                              return(
+                                <option key={branch._id} value={branch._id}>{branch.name}</option>
+                              )
+                            })}
+                          </VSelect>
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VSelect type="select" name="category" className="tradket_b_s"
+                            value={this.state.addForm.category_id}
+                            onChange={(e) => this.handleAddInputChange("category_id",e)}
+                            validations={[required]} 
+                          >
+                            <option value="" disabled>Select Category</option>
+                            {this.state.fullCategories.map((category)=>{
+                              return(
+                                <option key={category._id} value={category._id}>{category.name}</option>
+                              )
+                            })}
+                          </VSelect>
+                        </div>
+                      </Col>
+                      {this.state.addForm.category_id == ""?
+                        <Col sm="12" className="inputeDiv">
+                          <div className="tradketInputGroup full_width">
+                            <VSelect type="select" name="subCategory" className="tradket_b_s"
+                            >
+                              <option value="" disabled>Select Category First</option>
+                            </VSelect>
+                          </div>
+                        </Col>
+                      :
+                        <Col sm="12" className="inputeDiv">
+                          <div className="tradketInputGroup full_width">
+                            <VSelect type="select" name="subCategory" className="tradket_b_s"
+                              value={this.state.addForm.subCategory_id}
+                              onChange={(e) => this.handleAddInputChange("subCategory_id",e)}
+                              validations={[]} 
+                            >
+                              <option value="" disabled>Select SubCategory (optional)</option>
+                              {this.state.fullSubCategories.map((subCategory)=>{
+                                if(this.state.addForm.category_id == subCategory.category_id){
+                                  return(<option key={subCategory._id} value={subCategory._id}>{subCategory.name}</option>)
+                                }
+                              })}
+                            </VSelect>
+                          </div>
+                        </Col>
+                      }
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            name="price"
+                            value={this.state.addForm.price}
+                            onChange={(e) => this.handleAddInputChange("price", e)}
+                            validations={[required, NumberV]}
+                            placeholder="Price"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            name="quantity"
+                            value={this.state.addForm.quantity}
+                            onChange={(e) => this.handleAddInputChange("quantity", e)}
+                            validations={[required, NumberV]}
+                            placeholder="Quantity"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            name="description"
+                            value={this.state.addForm.description}
+                            onChange={(e) => this.handleAddInputChange("description", e)}
+                            validations={[required]}
+                            placeholder="Description"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                        <Multiselect
+                          data={this.state.fullFeatures}
+                          valueField='_id'
+                          textField='name'
+                          placeholder="Features (optional)"
+                          onChange={this.onSelectFeaturesForm}
+                          required
+                          defaultValue={this.state.selectedFeatures}
+                        />
+                        </div>
+                      </Col>
+                      <div id="addFormFeatures" className="addFormFeatures">
+                        {this.state.selectedFeatures.map((feature_id) => {
+                          return(
+                            <div key={feature_id} className="singleFeature">
+                              <Col xs="12" className="inputeDiv">
+                                <div className="tradketInputGroup full_width">
+                                  <VSelect type="select" className="tradket_b_s"
+                                    // value={this.state.addForm.type}
+                                    // onChange={(e) => this.handleAddInputChange("type",e)}
+                                    validations={[required]} 
+                                    name={this.state.features_ids[feature_id].name}
+                                  >
+                                    <option value="" disabled>Select {this.state.features_ids[feature_id].name}</option>
+                                    {this.state.features_ids[feature_id].options.map((option)=>{
+                                      return (<option key={option} value={option}>{option}</option>)
+                                    })}
+                                  </VSelect>
+                                </div>
+                              </Col>
+                            </div>
+                          )
+                        })}
+                      </div>
+                      
+                      {/* <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
                           <VInput type="text" className="tradket_b_i"
                             autoComplete="off"
@@ -662,7 +962,7 @@ class Product extends Component {
                             <option value="warehouse">Warehouse</option>
                           </VSelect>
                         </div>
-                      </Col>
+                      </Col> */}
                     </Row>
                   </div>
                 }
@@ -1014,7 +1314,7 @@ class Product extends Component {
                             <option value="" disabled>Select Type</option>
                             {this.state.fullBranchs.map((branch)=>{
                               return(
-                                <option value={branch._id}>{branch.name}</option>
+                                <option key={branch._id} value={branch._id}>{branch.name}</option>
                               )
                             })}
                           </VSelect>
