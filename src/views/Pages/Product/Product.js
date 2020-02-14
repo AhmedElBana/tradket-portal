@@ -75,6 +75,17 @@ const NumberV = (value) => {
           </div>;
   }
 }
+const NumberNR = (value) => {
+  // var patt = new RegExp("^(01)([0-9]*)$");
+  if ( value.length > 0 && (isNaN(value) || value <= 0) ) {
+    return <div className="simple-alert">
+            <i className="fa fa-exclamation-circle"></i>
+            <Alert color="danger">
+              {NumberError}
+            </Alert>
+          </div>;
+  }
+}
 
 
 class Product extends Component {
@@ -102,6 +113,8 @@ class Product extends Component {
         addModalError: false,
         addModalFaildMessage: "",
         addModalSuccess: false,
+        addFormSubError: false,
+        addFormSubErrorMessage: "Fields (Price,  quantity) are required for each sub product.",
         branches: [],
         selectedFeatures: [],
         selectedSubProductFeatures: [],
@@ -194,6 +207,7 @@ class Product extends Component {
     this.onSelectSubProductForm = this.onSelectSubProductForm.bind(this);
     this.onSelectSubProductForm2 = this.onSelectSubProductForm2.bind(this);
     this.renderAddFormSubProducts = this.renderAddFormSubProducts.bind(this);
+    this.subProductInputChange = this.subProductInputChange.bind(this);
     //edit user
     this.renderEditModal = this.renderEditModal.bind(this);
     this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -687,41 +701,75 @@ class Product extends Component {
       console.log(JSON.stringify(features))
       bodyFormData.set('features',JSON.stringify(features) );
     }
-    //start waiting
-    this.setState({addModalWaiting: true},()=>{
-      //send request
-      let config = {
-        headers: {
-          //"Cache-Control": "no-cache",
-          "x-auth": auth.getMerchantToken()
+    let formError = false;
+    if(document.querySelectorAll("#addFormSubProductsDiv .singleSubProduct").length > 0){
+      let productMap = [];
+      
+      let elements = document.querySelectorAll("#addFormSubProductsDiv .singleSubProduct");
+      elements.forEach.call(elements, function(ele) {
+        let subProduct = {}
+        //{"price": 100, "quantity": 5, "features": {"size": 44,"color": "black"}}
+        subProduct.features = JSON.parse(ele.querySelectorAll('input[name="features"]')[0].value);
+        if(ele.querySelectorAll('input[name="id"]')[0].value !== ""){
+          subProduct._id = ele.querySelectorAll('input[name="id"]')[0].value;
         }
+        if(ele.querySelectorAll('input[name="price"]')[0].value !== ""){
+          subProduct.price = ele.querySelectorAll('input[name="price"]')[0].value;
+        }else{
+          formError = true;
+        }
+        if(ele.querySelectorAll('input[name="quantity"]')[0].value !== ""){
+          subProduct.quantity = ele.querySelectorAll('input[name="quantity"]')[0].value;
+        }else{
+          formError = true;
+        }
+        productMap.push(subProduct)
+      });
+      console.log(productMap)
+      console.log(formError)
+      if(formError){
+        this.setState({addFormSubError: true})
+      }else{
+        bodyFormData.set('productMap',JSON.stringify(productMap));
       }
-      httpClient.post(
-          this.state.addStaffPath,
-          config,
-          bodyFormData,
-          (resp) => {
-            this.setState({addModalSuccess: true ,addModalWaiting:false},()=>{
-              setTimeout(()=>{
-                window.location.reload();
-              }, 3000);
-            });
-          },
-          (error) => {
-            if(error.response){
-              if(error.response.status === 401){
-                this.setState({logout: true});
-              }else if(error.response.status === 400){
-                this.setState({addModalWaiting: false, addModalError: true, addModalFaildMessage: error.response.data.message});
+    }
+    if(!formError){
+      //start waiting
+      this.setState({addModalWaiting: true},()=>{
+        //send request
+        let config = {
+          headers: {
+            //"Cache-Control": "no-cache",
+            "x-auth": auth.getMerchantToken()
+          }
+        }
+        httpClient.post(
+            this.state.addStaffPath,
+            config,
+            bodyFormData,
+            (resp) => {
+              this.setState({addModalSuccess: true ,addModalWaiting:false},()=>{
+                setTimeout(()=>{
+                  window.location.reload();
+                }, 3000);
+              });
+            },
+            (error) => {
+              if(error.response){
+                if(error.response.status === 401){
+                  this.setState({logout: true});
+                }else if(error.response.status === 400){
+                  this.setState({addModalWaiting: false, addModalError: true, addModalFaildMessage: error.response.data.message});
+                }else{
+                  this.setState({publicError: true});
+                }
               }else{
                 this.setState({publicError: true});
               }
-            }else{
-              this.setState({publicError: true});
             }
-          }
-      )
-    });
+        )
+      });
+    }
     event.preventDefault();
   }
   addModalReset(e){
@@ -749,14 +797,15 @@ class Product extends Component {
     optionsList.map((ele)=>{
       optionsArr.push(ele._id)
     })
-    // let custom_features_ids_new = this.state.custom_features_ids;
-    // Object.keys(custom_features_ids_new).map((key)=>{
-    //   if(!optionsArr.includes(key)){
-    //     custom_features_ids_new[key].options = []
-    //   }
-    // })
+    let custom_features_ids_new = this.state.custom_features_ids;
+    Object.keys(custom_features_ids_new).map((key)=>{
+      if(!optionsArr.includes(key)){
+        delete custom_features_ids_new[key];
+      }
+    })
     //, custom_features_ids: custom_features_ids_new
     // console.log(custom_features_ids_new)
+
     this.setState({selectedSubProductFeatures: optionsArr},()=>{
       console.log(this.state)
     })
@@ -775,6 +824,9 @@ class Product extends Component {
     this.setState({custom_features_ids: custom_features_ids_new},()=>{
       console.log(this.state)
     })
+  }
+  subProductInputChange(){
+    this.setState({addFormSubError: false})
   }
   renderAddFormSubProducts(){
     let optionsNumber = 1;
@@ -848,18 +900,19 @@ class Product extends Component {
           <Col id="addFormSubProductsDiv">
             {opttionsArr.map((ele, index)=>{
               console.log(ele.features)
+              console.log(this.state.custom_features_ids)
               return(
-                <div key={JSON.stringify(ele.features) + index} className="singleSubProduct">
+                <div key={JSON.stringify(ele.features)} className="singleSubProduct">
                   <p className="title">
-                    Product with Features : 
+                    Product : 
                     {Object.keys(ele.features).map((key,subIndex)=>{
                       return(<span key={JSON.stringify(ele.features) + index + "" + subIndex} className="feature table_block">{key} : <span>{ele.features[key]}</span></span>)
                     })}
                   </p>
-                  <input type="hidden" value={JSON.stringify(ele.features)} disabled readOnly={true}/>
+                  <input type="hidden" name="features" value={JSON.stringify(ele.features)} disabled readOnly={true}/>
                   <Row>
                     <Col sm="4" className="inputeDiv">
-                      <div className="tradketInputGroup full_width">
+                      <div className="tradketInputGroup xsInput full_width">
                         <VInput type="text" className="tradket_b_i_xs"
                           autoComplete="off"
                           name="id"
@@ -869,25 +922,25 @@ class Product extends Component {
                       </div>
                     </Col>
                     <Col sm="4" className="inputeDiv">
-                      <div className="tradketInputGroup full_width">
+                      <div className="tradketInputGroup xsInput full_width">
                         <VInput type="text" className="tradket_b_i_xs"
                           autoComplete="off"
                           name="price"
                           // value={this.state.addForm.price}
-                          // onChange={(e) => this.handleAddInputChange("price", e)}
-                          validations={[required, NumberV]}
+                          onChange={this.subProductInputChange}
+                          validations={[NumberNR]}
                           placeholder="Price"
                         />
                       </div>
                     </Col>
                     <Col sm="4" className="inputeDiv">
-                      <div className="tradketInputGroup full_width">
+                      <div className="tradketInputGroup xsInput full_width">
                         <VInput type="text" className="tradket_b_i_xs"
                           autoComplete="off"
                           name="quantity"
                           // value={this.state.addForm.quantity}
-                          // onChange={(e) => this.handleAddInputChange("quantity", e)}
-                          validations={[required, NumberV]}
+                          onChange={this.subProductInputChange}
+                          validations={[NumberNR]}
                           placeholder="Quantity"
                         />
                       </div>
@@ -1099,7 +1152,7 @@ class Product extends Component {
                           data={this.state.fullFeatures}
                           valueField='_id'
                           textField='name'
-                          placeholder="Select product Features"
+                          placeholder="Products Features"
                           onChange={this.onSelectSubProductForm}
                           required
                           defaultValue={this.state.selectedSubProductFeatures}
@@ -1107,6 +1160,13 @@ class Product extends Component {
                         </div>
                       </Col>
                       {this.state.selectedSubProductFeatures.length !== 0 ? this.renderAddFormSubProducts() : null}
+                      {this.state.addFormSubError?
+                        <Col>
+                          <div className="alert alert-danger fade show fullWidth">{this.state.addFormSubErrorMessage}</div>
+                        </Col>
+                      :
+                        null
+                      }
                       {/* <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
                           <VInput type="text" className="tradket_b_i"
