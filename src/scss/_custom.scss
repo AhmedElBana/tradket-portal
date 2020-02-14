@@ -20,6 +20,9 @@
         @content;
     }
 }
+.fullWidth{
+    width: 100%;
+}
 body{
     font-family: GilroyRegular;
 }
@@ -155,6 +158,20 @@ body{
     overflow: hidden;
 }
 .tradket_b_i:focus{
+    border-color: #00A2DA;
+    outline: none;
+    box-shadow: none;
+}
+.tradket_b_i_xs{
+    width: 100%;
+    height: 40px;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    padding: 15px 15px;
+    font-size: 16px;
+    overflow: hidden;
+}
+.tradket_b_i_xs:focus{
     border-color: #00A2DA;
     outline: none;
     box-shadow: none;

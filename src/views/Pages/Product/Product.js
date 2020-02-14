@@ -104,8 +104,9 @@ class Product extends Component {
         addModalSuccess: false,
         branches: [],
         selectedFeatures: [],
-        selectedSubProductFeatures: ["5e432510729b9c2480d50ed0","5e432532729b9c2480d50ed1"],
+        selectedSubProductFeatures: [],
         SubProducts: [],
+        custom_features_ids: {},
         addForm: {
           _id: "",
           name: "",
@@ -191,6 +192,7 @@ class Product extends Component {
     this.addModalReset = this.addModalReset.bind(this);
     this.onSelectFeaturesForm = this.onSelectFeaturesForm.bind(this);
     this.onSelectSubProductForm = this.onSelectSubProductForm.bind(this);
+    this.onSelectSubProductForm2 = this.onSelectSubProductForm2.bind(this);
     this.renderAddFormSubProducts = this.renderAddFormSubProducts.bind(this);
     //edit user
     this.renderEditModal = this.renderEditModal.bind(this);
@@ -747,16 +749,39 @@ class Product extends Component {
     optionsList.map((ele)=>{
       optionsArr.push(ele._id)
     })
+    // let custom_features_ids_new = this.state.custom_features_ids;
+    // Object.keys(custom_features_ids_new).map((key)=>{
+    //   if(!optionsArr.includes(key)){
+    //     custom_features_ids_new[key].options = []
+    //   }
+    // })
+    //, custom_features_ids: custom_features_ids_new
+    // console.log(custom_features_ids_new)
     this.setState({selectedSubProductFeatures: optionsArr},()=>{
+      console.log(this.state)
+    })
+  }
+  onSelectSubProductForm2(optionsList, featre) {
+    console.log("####################")
+    console.log(optionsList)
+    console.log(featre)
+    let custom_features_ids_new = this.state.custom_features_ids;
+    if(optionsList.length !== 0){
+      custom_features_ids_new[featre._id] = {...featre};
+      custom_features_ids_new[featre._id].options = [...optionsList];
+    }else{
+      delete custom_features_ids_new[featre._id];
+    }
+    this.setState({custom_features_ids: custom_features_ids_new},()=>{
       console.log(this.state)
     })
   }
   renderAddFormSubProducts(){
     let optionsNumber = 1;
     this.state.selectedSubProductFeatures.map((feature_id)=>{
-      if(this.state.features_ids[feature_id]){
-        optionsNumber *= this.state.features_ids[feature_id].options.length;
-        this.state.features_ids[feature_id].options.map((option)=>{
+      if(this.state.custom_features_ids[feature_id]){
+        optionsNumber *= this.state.custom_features_ids[feature_id].options.length;
+        this.state.custom_features_ids[feature_id].options.map((option)=>{
           console.log(option)
         })
       }
@@ -767,37 +792,123 @@ class Product extends Component {
       opttionsArr.push({"features": {}})
     }
     this.state.selectedSubProductFeatures.map((feature_id,index)=>{
-      if(this.state.features_ids[feature_id]){
+      if(this.state.custom_features_ids[feature_id]){
         let prevSize = 1;
         if(index > 0){
           this.state.selectedSubProductFeatures.map((subFeature_id,subIndex)=>{
             if(subIndex < index){
-              prevSize *= this.state.features_ids[subFeature_id].options.length;
+              prevSize *= this.state.custom_features_ids[subFeature_id].options.length;
             }
           })
         }
-        let patchSize = optionsNumber / (this.state.features_ids[feature_id].options.length * prevSize);
+        let patchSize = optionsNumber / (this.state.custom_features_ids[feature_id].options.length * prevSize);
         console.log("prevSize: " + prevSize)
         console.log("patchSize: " + patchSize)
-        console.log("option: " + this.state.features_ids[feature_id].options.length)
+        console.log("option: " + this.state.custom_features_ids[feature_id].options.length)
         for(let z = 0; z < prevSize; z++){
-          this.state.features_ids[feature_id].options.map((option, optionIndex)=>{
+          this.state.custom_features_ids[feature_id].options.map((option, optionIndex)=>{
             for(let x = 0; x < patchSize; x++){
-              opttionsArr[(z * patchSize * this.state.features_ids[feature_id].options.length) + (optionIndex * patchSize) + x].features[this.state.features_ids[feature_id].name] = option;
+              opttionsArr[(z * patchSize * this.state.custom_features_ids[feature_id].options.length) + (optionIndex * patchSize) + x].features[this.state.custom_features_ids[feature_id].name] = option;
             }
           })
         }
       }
     })
-    console.log(opttionsArr)
-    opttionsArr.map((ele)=>{
-      console.log(ele.features)
-    })
-    return (<div>{optionsNumber} <br/> </div>)
+    // console.log(opttionsArr)
+    let calcValues = (feature_id) =>{
+      if(this.state.custom_features_ids[feature_id]){
+        return this.state.custom_features_ids[feature_id].options
+      }else{
+        return []
+      }
+    }
+    return (
+      <div className="fullWidth">
+        <Col>
+          <Row>
+            {this.state.selectedSubProductFeatures.map((feature_id)=>{
+              return(
+                <Col key={feature_id} sm="6" className="inputeDiv">
+                  <div className="tradketInputGroup full_width">
+                  <Multiselect
+                    data={this.state.features_ids[feature_id].options}
+                    valueField='_id'
+                    textField='name'
+                    placeholder={"Select " + this.state.features_ids[feature_id].name}
+                    onChange={(e) => this.onSelectSubProductForm2(e,this.state.features_ids[feature_id])}
+                    defaultValue={calcValues(feature_id)}
+                  />
+                  </div>
+                </Col>
+              )
+            })}
+          </Row>
+        </Col>
+        { Object.keys(this.state.custom_features_ids).length !== 0?
+          <Col id="addFormSubProductsDiv">
+            {opttionsArr.map((ele, index)=>{
+              console.log(ele.features)
+              return(
+                <div key={JSON.stringify(ele.features) + index} className="singleSubProduct">
+                  <p className="title">
+                    Product with Features : 
+                    {Object.keys(ele.features).map((key,subIndex)=>{
+                      return(<span key={JSON.stringify(ele.features) + index + "" + subIndex} className="feature table_block">{key} : <span>{ele.features[key]}</span></span>)
+                    })}
+                  </p>
+                  <input type="hidden" value={JSON.stringify(ele.features)} disabled readOnly={true}/>
+                  <Row>
+                    <Col sm="4" className="inputeDiv">
+                      <div className="tradketInputGroup full_width">
+                        <VInput type="text" className="tradket_b_i_xs"
+                          autoComplete="off"
+                          name="id"
+                          validations={[]}
+                          placeholder="ID (optional)"
+                        />
+                      </div>
+                    </Col>
+                    <Col sm="4" className="inputeDiv">
+                      <div className="tradketInputGroup full_width">
+                        <VInput type="text" className="tradket_b_i_xs"
+                          autoComplete="off"
+                          name="price"
+                          // value={this.state.addForm.price}
+                          // onChange={(e) => this.handleAddInputChange("price", e)}
+                          validations={[required, NumberV]}
+                          placeholder="Price"
+                        />
+                      </div>
+                    </Col>
+                    <Col sm="4" className="inputeDiv">
+                      <div className="tradketInputGroup full_width">
+                        <VInput type="text" className="tradket_b_i_xs"
+                          autoComplete="off"
+                          name="quantity"
+                          // value={this.state.addForm.quantity}
+                          // onChange={(e) => this.handleAddInputChange("quantity", e)}
+                          validations={[required, NumberV]}
+                          placeholder="Quantity"
+                        />
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              )
+            })}
+          </Col>
+        :
+          null
+        }
+      </div>
+    )
+    // return (
+    
+    // )
   }
   renderAddModal(){
     return(
-      <Modal className="usersModal" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
+      <Modal className="usersModal modal-lg" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
         <VForm onSubmit={this.handleAddProductSubmit} >
           <ModalHeader toggle={this.toggleAddModal}>
             New Product
@@ -981,20 +1092,21 @@ class Product extends Component {
                           )
                         })}
                       </div>
+                      <p className="subproductsTxt">Sub Products (optional)</p>
                       <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
                         <Multiselect
                           data={this.state.fullFeatures}
                           valueField='_id'
                           textField='name'
-                          placeholder="Sub Products (optional)"
+                          placeholder="Select product Features"
                           onChange={this.onSelectSubProductForm}
                           required
                           defaultValue={this.state.selectedSubProductFeatures}
                         />
                         </div>
                       </Col>
-                      {this.renderAddFormSubProducts()}
+                      {this.state.selectedSubProductFeatures.length !== 0 ? this.renderAddFormSubProducts() : null}
                       {/* <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
                           <VInput type="text" className="tradket_b_i"

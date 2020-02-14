@@ -48,3 +48,39 @@
 .addFormFeatures{
     width: 100%;
 }
+.singleSubProduct{
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0px;
+}
+.singleSubProduct:last-of-type{
+    border-bottom: 0px;
+}
+.singleSubProduct .title{
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+.singleSubProduct .title span.feature{
+    font-weight: bold;
+    font-size: 16px;
+}
+.singleSubProduct .title span.feature span{
+    color: #444;
+    font-size: 14px;
+}
+.singleSubProduct .row{
+    margin: 0px;
+}
+.singleSubProduct .col-sm-4{
+    padding: 0px 5px;
+}
+.subproductsTxt{
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+    color: #555;
+}
