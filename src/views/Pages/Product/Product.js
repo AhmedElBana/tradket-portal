@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Col, Input, Table, Row, Modal, ModalBody, ModalFooter, ModalHeader, FormGroup,Label} from 'reactstrap';
+import { Alert, Col, Input, Table, Row, Modal, ModalBody, ModalFooter, ModalHeader,Card,CardBody,Collapse,CardHeader, FormGroup,Label} from 'reactstrap';
 import {auth} from '../../../tools/Auth';
 import {dependencies} from '../../../tools/Dependencies';
 import ReactPaginate from 'react-paginate';
@@ -94,10 +94,10 @@ class Product extends Component {
     this.state = {
         //users
         table: {
-          headers: ["ID","name","Price","Quantity","Active"]
+          headers: ["ID","name","Category","SubCategory","Created At","Active"]
         },
         detailsHeaders: ["Branch ID","Branch Name","Quantity"],
-        usersTablePath: "/api/product/list",
+        usersTablePath: "/api/productGroup/list",
         integData: [],
         totalLength: 0,
         PageNumber: 0,
@@ -106,6 +106,11 @@ class Product extends Component {
         detailsWaiting:false,
         showUsersDetails: false,
         selectedUser: {},
+        //details
+        SubcategoriesPath: "/api/productGroup/fullProduct",
+        detailsWaiting:true,
+        subcategories: [],
+        accordion: [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
         //add modal
         addStaffPath: "/api/productGroup/create",
         addModalWaiting: false,
@@ -153,6 +158,7 @@ class Product extends Component {
         addMoreModalFaildMessage: "",
         addMoreModalSuccess: false,
         addMoreForm: {
+          product: {},
           quantity: "",
           branch: ""
         },
@@ -191,12 +197,15 @@ class Product extends Component {
     //list user
     this.requestUsers = this.requestUsers.bind(this);
     this.renderUsersBlock = this.renderUsersBlock.bind(this);
-    this.userDetailsRef = React.createRef();
+    this.categoryDetailsRef = React.createRef();
     this.handelRowClick = this.handelRowClick.bind(this);
     this.renderUsersTable = this.renderUsersTable.bind(this);
-    this.renderUserDetails = this.renderUserDetails.bind(this);
+    this.renderCategoryDetails = this.renderCategoryDetails.bind(this);
     this.handleTablePageChange = this.handleTablePageChange.bind(this);
     this.handleTableSizeChange = this.handleTableSizeChange.bind(this);
+    //details
+    this.requestSubcategories = this.requestSubcategories.bind(this);
+    this.toggleAccordion = this.toggleAccordion.bind(this);
     //add user
     this.renderAddModal = this.renderAddModal.bind(this);
     this.toggleAddModal = this.toggleAddModal.bind(this);
@@ -469,8 +478,9 @@ class Product extends Component {
                 <tr key={ele._id}  onClick={()=> this.handelRowClick(ele,index)} className={this.state.showUserDetails && (ele._id == this.state.selectedUser._id)? "selectedRow": ""}>
                   <td>{ele._id}</td>
                   <td>{ele.name}</td>
-                  <td>{ele.price}</td>
-                  <td>{ele.quantity}</td>
+                  <td>{this.state.categoriesName[ele.category_id]}</td>
+                  <td>{this.state.subCategoriesName[ele.subCategory_id]}</td>
+                  <td>{dependencies.custom_date_format(ele.createdAt)}</td>
                   <td>{dependencies.boolName(ele.active)}</td>
                 </tr>
               )
@@ -526,7 +536,7 @@ class Product extends Component {
           </div>
         </Row>
         {this.state.showUserDetails?
-          this.renderUserDetails()
+          this.renderCategoryDetails()
         :
           null
         }
@@ -540,108 +550,207 @@ class Product extends Component {
         if(user._id === this.state.selectedUser._id){
           this.setState({showUserDetails: false});
         }else{
-          this.setState({selectedUser: user},()=>{
+          this.setState({selectedUser: user, detailsWaiting: true},()=>{
+            this.requestSubcategories(user._id);
             //scroll to transaction details
             window.scrollTo({
-              top:this.userDetailsRef.current.offsetTop, 
+              top:this.categoryDetailsRef.current.offsetTop, 
               behavior: "smooth"   // Optional, adds animation
             })
           });
         }
       }else{
-        this.setState({selectedUser: user, showUserDetails: true},()=>{
+        this.setState({selectedUser: user, showUserDetails: true, detailsWaiting: true},()=>{
           //scroll to transaction details
+          this.requestSubcategories(user._id);
           window.scrollTo({
-            top:this.userDetailsRef.current.offsetTop, 
+            top:this.categoryDetailsRef.current.offsetTop, 
             behavior: "smooth"   // Optional, adds animation
           })
         });
       }
   }
-  renderUserDetails(){
+  requestSubcategories(categoryId){
+    //request data
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth": auth.getMerchantToken()
+    },
+      params: {
+        "page_size": 1000,
+        "_id": categoryId
+      }
+    }
+    httpClient.get(
+        this.state.SubcategoriesPath,
+        config,
+        (resp) => {
+          let subcategories = resp.data.data;
+          console.log(subcategories)
+          this.setState({subcategories: subcategories, detailsWaiting: false});
+        },
+        (error) => {
+          if(error.response){
+            if(error.response.status === 401){
+              this.setState({logout: true});
+            }else{
+              this.setState({publicError: true});
+            }
+          }else{
+            this.setState({publicError: true});
+          }
+        }
+    )
+  }
+  toggleAccordion(tab) {
+    const prevState = this.state.accordion;
+    const state = prevState.map((x, index) => tab === index ? !x : false);
+
+    this.setState({
+      accordion: state,
+    });
+  }
+  renderCategoryDetails(){
+    let fullQuantity = 0;
+    if(this.state.subcategories.products){
+      this.state.subcategories.products.map((product)=>{
+        fullQuantity += product.quantity
+      })
+    }
     return(
       <Row>
-        <div className="x_panel"  ref={this.userDetailsRef}>
+        <div className="x_panel"  ref={this.categoryDetailsRef}>
           <div className="x_title details">
             <h2>{this.state.selectedUser.name}</h2>
             <div className="ButtonsDiv">
-              {JSON.parse(localStorage.userData).permissions.includes("116")?
-                  <button onClick={this.toggleAddMoreModal} type="button" className="btn">
-                    More Quantity
-                  </button>:null
-              }
-              {/* 
-                {JSON.parse(localStorage.userData).permissions.includes("116")?
+              {/* {JSON.parse(localStorage.userData).permissions.includes("109")?
                   <button onClick={this.toggleEditModal} type="button" className="btn">
                     Edit
                   </button>:null
-                }
-                {JSON.parse(localStorage.userData).permissions.includes("107")?
-                  <span>
-                    {this.state.selectedUser.active?
-                      <button onClick={this.toggleDeactivateModal} type="button" className="btn">
-                        Deacttivate
-                      </button>
-                    :
-                      <button onClick={this.toggleActivateModal} type="button" className="btn">
-                        Acttivate
-                      </button>
-                    }
-                  </span>:null
+              }
+              {JSON.parse(localStorage.userData).permissions.includes("108")?
+                  <button onClick={this.toggleSubAddModal} type="button" className="btn">
+                    Add Subcategory
+                  </button>:null
               } */}
-              <button onClick={() => this.setState({showUserDetails:false})} type="button" className="accept-btn btn btn-secondary close_btn">
+              <button onClick={() => this.setState({showCategoriesDetails:false})} type="button" className="accept-btn btn btn-secondary close_btn">
                 <i className="fa fa-times" aria-hidden="true"></i>
               </button>
             </div>           
           </div>
-          <div className="x_content">
+          <div className="x_content product">
             <br/>
             {this.state.detailsWaiting?
-              <Waiting height="300px" />
+              <Waiting height="150px" />
               :
               <div>
                 <div className="modal_details">
-                  <span className="title">Product ID</span><span className="value">{this.state.selectedUser._id}</span>
+                  <span className="title">ID</span><span className="value">{this.state.subcategories._id}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Group ID</span><span className="value">{this.state.selectedUser.group_id}</span>
+                  <span className="title">Name</span><span className="value">{this.state.subcategories.name}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Name</span><span className="value">{this.state.selectedUser.name}</span>
+                  <span className="title">Category</span><span className="value">{this.state.categoriesName[this.state.subcategories.category_id]}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Price</span><span className="value">{this.state.selectedUser.price}</span>
+                  <span className="title">SubCategory</span><span className="value">{this.state.subcategories.subCategory_id ? this.state.subCategoriesName[this.state.subcategories.subCategory_id] : " - "}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Quantity</span><span className="value">{this.state.selectedUser.quantity}</span>
+                  <span className="title">Full Quantity</span><span className="value">{fullQuantity}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Active</span><span className="value">{dependencies.boolName(this.state.selectedUser.active)}</span>
+                  <span className="title">Created At</span><span className="value">{dependencies.custom_date_format(this.state.subcategories.createdAt)}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Branches Map</span>
-                  <div className="product_map">
-                    <Table className="usersTable mainTable">
-                      <thead>
-                        <tr>
-                          {this.state.detailsHeaders.map((ele,index)=>{
-                            return <th key={index}>{ele}</th>
-                          })}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {Object.keys(this.state.selectedUser["map"]).map((_id,index)=>{
+                  <span className="title">Description</span><span className="value">{this.state.subcategories.description}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">Active</span><span className="value">{dependencies.boolName(this.state.subcategories.active)}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">Features</span><span className="value">
+                    {!this.state.subcategories.features?
+                      <span> - </span>
+                    :
+                      <span>
+                        {Object.keys(this.state.subcategories.features).map((feature)=>{
                           return(
-                            <tr key={_id}>
-                              <td>{_id}</td>
-                              <td>{this.state.branchName[_id]}</td>
-                              <td>{this.state.selectedUser["map"][_id]}</td>
-                            </tr>
+                            <span key={feature} className="table_block">
+                              {feature} : {this.state.subcategories.features[feature]}
+                            </span>
                           )
                         })}
-                      </tbody>
-                    </Table>
-                  </div>
+                      </span>
+                    }
+                  </span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">Products</span>
+                    {this.state.subcategories.products.map((product, index)=>{
+                      return(
+                        <Card key={product._id} className="detailsCollapseCard">
+                          <CardHeader id={product._id + "headingOne"} onClick={() => this.toggleAccordion(index)} aria-expanded={this.state.accordion[index]} aria-controls={product._id + "collapseOne"}>
+                            <h5 className="m-0 p-0">{product.name}</h5>
+                          </CardHeader>
+                          <Collapse isOpen={this.state.accordion[index]} data-parent="#accordion" id={product._id + "collapseOne"} aria-labelledby={product._id + "headingOne"}>
+                            <CardBody>
+                            <div className="subHeader">
+                              {JSON.parse(localStorage.userData).permissions.includes("116")?
+                                  <button onClick={(e)=>{this.toggleAddMoreModal(e,product)}} type="button" className="btn">
+                                    More Quantity
+                                  </button>:null
+                              }
+                            </div>
+                            <div className="modal_details">
+                              <span className="title">Product ID</span><span className="value">{product._id}</span>
+                            </div>
+                            <div className="modal_details">
+                              <span className="title">Group ID</span><span className="value">{product.group_id}</span>
+                            </div>
+                            <div className="modal_details">
+                              <span className="title">Name</span><span className="value">{product.name}</span>
+                            </div>
+                            <div className="modal_details">
+                              <span className="title">Price</span><span className="value">{product.price}</span>
+                            </div>
+                            <div className="modal_details">
+                              <span className="title">Quantity</span><span className="value">{product.quantity}</span>
+                            </div>
+                            <div className="modal_details">
+                              <span className="title">Active</span><span className="value">{dependencies.boolName(product.active)}</span>
+                            </div>
+                            <div className="modal_details">
+                              <span className="title">Branches Map</span>
+                              <div className="product_map">
+                                <Table className="usersTable mainTable">
+                                  <thead>
+                                    <tr>
+                                      {this.state.detailsHeaders.map((ele,index)=>{
+                                        return <th key={index}>{ele}</th>
+                                      })}
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {Object.keys(product["map"]).map((_id,index)=>{
+                                      return(
+                                        <tr key={_id}>
+                                          <td>{_id}</td>
+                                          <td>{this.state.branchName[_id]}</td>
+                                          <td>{product["map"][_id]}</td>
+                                        </tr>
+                                      )
+                                    })}
+                                  </tbody>
+                                </Table>
+                              </div>
+                            </div>
+                            </CardBody>
+                          </Collapse>
+                        </Card>
+                      )
+                    })}
                 </div>
               </div>
             }
@@ -1424,9 +1533,10 @@ class Product extends Component {
     )
   }  
   //addMore modal
-  toggleAddMoreModal(e){
+  toggleAddMoreModal(e,product){
     e.preventDefault();
     let addMoreFormData = this.state.addMoreForm;
+    addMoreFormData.product = product;
     addMoreFormData.quantity= "";
     addMoreFormData.branch= "";
     this.setState({
@@ -1448,7 +1558,7 @@ class Product extends Component {
   handleAddMoreProductSubmit(event){
     //get form data
     let userObj = {
-      "_id": this.state.selectedUser._id,
+      "_id": this.state.addMoreForm.product._id,
       "quantity": this.state.addMoreForm.quantity,
       "branch_id": this.state.addMoreForm.branch
     };

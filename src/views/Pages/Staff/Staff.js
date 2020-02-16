@@ -1444,7 +1444,7 @@ class Staff extends Component {
               </button>
             </div>           
           </div>
-          <div className="x_content">
+          <div className="x_content staff">
             <br/>
             {this.state.detailsWaiting?
               <Waiting height="300px" />

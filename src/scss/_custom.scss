@@ -575,6 +575,7 @@ body{
 }
 .card-body{
     overflow-x: auto;
+    padding: 15px;
 }
 .x_title .ButtonsDiv > *{
     vertical-align: top;
@@ -591,9 +592,27 @@ body{
 
 
 
-
-
-
+.detailsCollapseCard{
+    margin: 0px;
+    border-radius: 0px;
+    border-bottom: 0px;
+}
+.detailsCollapseCard:last-of-type{
+    border-bottom: 1px solid #c8ced3;
+}
+.detailsCollapseCard .card-header{
+    border-radius: 0px;
+    cursor: pointer;
+}
+.detailsCollapseCard .subHeader{
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    text-align: right;
+    @include m (767){
+        text-align: center;
+    }
+}
 .x_title.details {
     border-bottom: 2px solid #E6E9ED;
     padding: 1px 5px 6px;
@@ -803,7 +822,6 @@ html[dir="rtl"] .TableDiv > select{
 .modal_details .title{
     position: relative;
     display: inline-block;
-    padding-left: 15px;
     color: #666;
     font-weight: bold;
     font-size: 16px;

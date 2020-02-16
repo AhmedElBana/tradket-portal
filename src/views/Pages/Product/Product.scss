@@ -33,12 +33,12 @@
     margin-bottom: 30px;
 }
 
-.modal_details .title{
-    min-width: 125px;
+.product .modal_details .title{
+    min-width: 110px !important;
 }
 
 .product_map{
-    padding: 5px 15px;
+    padding: 5px 0px;
     overflow-x: auto;
 }
 .product_map table > tbody > tr:hover{
