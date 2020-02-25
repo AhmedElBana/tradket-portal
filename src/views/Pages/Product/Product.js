@@ -1662,7 +1662,7 @@ class Product extends Component {
                             onChange={(e) => this.handleAddMoreInputChange("branch",e)}
                             validations={[required]} 
                           >
-                            <option value="" disabled>Select Type</option>
+                            <option value="" disabled>Select Branch</option>
                             {this.state.fullBranchs.map((branch)=>{
                               return(
                                 <option key={branch._id} value={branch._id}>{branch.name}</option>

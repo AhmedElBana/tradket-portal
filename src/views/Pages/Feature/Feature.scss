@@ -1,0 +1,88 @@
+//media mixin
+@mixin m($width) {
+    @media(max-width:#{$width}px) {
+        @content;
+    }
+}
+// Lang mixin
+@mixin en {
+    html[dir="ltr"] & {
+        @content;
+    }
+}
+@mixin ar {
+    html[dir="rtl"] & {
+        @content;
+    }
+}
+
+.staffSuccesDiv{
+    text-align: center;
+    margin-top: 30px;
+    color: #20A8D8;
+}
+.staffSuccesDiv h1{
+    font-size: 34px;
+    margin-bottom: 30px;
+}
+.staffSuccesDiv p{
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+.staffSuccesDiv img{
+    margin-bottom: 30px;
+}
+
+.branches .modal_details .title{
+    min-width: 70px !important;
+}
+
+.feature_block{
+    position: relative;
+    padding-right: 45px;
+}
+.feature_block::after{
+    content: " ";
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    right: 35px;
+    width: 1px;
+    background-color: #999;
+}
+.feature_block .delete_btn{
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    font-size: 16px;
+    color: #777;
+    transition: all .3s ease-in-out;
+}
+.feature_block .delete_btn:hover{
+    cursor: pointer;
+    color: #444;
+    transform: scale(1.2,1.2);
+}
+
+.featureGroup{
+    position: relative;
+}
+.featureGroup .add_btn{
+    position: absolute;
+    top: 7px;
+    right: 15px;
+    padding: 0px;
+    background: none !important;
+    color: #20A8D8 !important;
+    font-size: 26px;
+}
+.featureGroup .add_btn:hover{
+    box-shadow: none;
+    transform: none;
+    transform: scale(1.2,1.2);
+}
+.featureGroup .alert {
+    padding: 5px 15px;
+    margin: 0px;
+    margin-top: 5px;
+}

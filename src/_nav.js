@@ -29,6 +29,15 @@ if(perms.includes("108") || perms.includes("109") || perms.includes("110")){
     icon: 'icon-layers',
     });
 }
+//Feature
+let featureObj = []
+if(perms.includes("111") || perms.includes("112") || perms.includes("113") || perms.includes("114")){
+  featureObj.push({
+    name: 'Features',
+    url: '/feature',
+    icon: 'fa fa-puzzle-piece',
+    });
+}
 //Product
 let productObj = []
 if(perms.includes("115") || perms.includes("116") || perms.includes("117") || perms.includes("118")){
@@ -48,6 +57,7 @@ const listData = [
   ...branchObj,
   ...staffObj,
   ...categoryObj,
+  ...featureObj,
   ...productObj
 ]
 
