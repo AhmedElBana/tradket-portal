@@ -47,6 +47,15 @@ if(perms.includes("115") || perms.includes("116") || perms.includes("117") || pe
     icon: 'fa fa-cubes',
     });
 }
+//order
+let orderObj = []
+if(perms.includes("123")){
+  orderObj.push({
+    name: 'Orders',
+    url: '/order',
+    icon: 'fa fa-qrcode',
+    });
+}
 
 const listData = [
   {
@@ -58,7 +67,8 @@ const listData = [
   ...staffObj,
   ...categoryObj,
   ...featureObj,
-  ...productObj
+  ...productObj,
+  ...orderObj
 ]
 
 export default {
