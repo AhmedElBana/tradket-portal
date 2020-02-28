@@ -259,13 +259,6 @@ class Order extends Component {
           <div className="x_panel">
             <div className="x_title">
               <h2>Orders</h2>
-              <div className="ButtonsDiv">
-                {JSON.parse(localStorage.userData).permissions.includes("105")?
-                  <button onClick={this.toggleAddModal} type="button" className="btn">
-                    New Branch
-                  </button>:null
-                }
-              </div>  
             </div>
             <div className="x_content">
               {this.state.usersWaiting || !this.state.brancesLoaded?
@@ -341,7 +334,7 @@ class Order extends Component {
     }
     return(
       <Row>
-        <div className="x_panel"  ref={this.userDetailsRef}>
+        <div className="x_panel ordersDetails"  ref={this.userDetailsRef}>
           <div className="x_title details">
             <h2>Order Details</h2>
             <div className="ButtonsDiv">
@@ -404,6 +397,20 @@ class Order extends Component {
                 <div className="modal_details">
                   <span className="title">Total</span><span className="value">{this.state.selectedUser.total}</span>
                 </div>
+                {this.state.selectedUser.type == "Return"?
+                  <div className="modal_details">
+                    <span className="title">Returned Amount</span><span className="value">{this.state.selectedUser.returnAmount}</span>
+                  </div>
+                :
+                  null
+                }
+                {this.state.selectedUser.parentOrder?
+                  <div className="modal_details">
+                    <span className="title">Parent Order</span><span className="value">{this.state.selectedUser.parentOrder}</span>
+                  </div>
+                :
+                  null
+                }
                 <div className="modal_details">
                   <span className="title">Bill</span>
                   <div className="product_map">

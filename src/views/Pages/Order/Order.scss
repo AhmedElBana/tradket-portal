@@ -34,5 +34,20 @@
 }
 
 .orders .modal_details .title{
-    min-width: 125px !important;
+    min-width: 135px !important;
+}
+.ordersDetails .product_map{
+    overflow-x: auto;
+}
+.orders .modal_details .title{
+    @include m (767){
+        min-width: 0px !important;
+        padding-right: 15px !important;
+    }
+}
+.ordersDetails .x_title.details{
+    @include m (767){
+        height: auto;
+        border: none;
+    }
 }

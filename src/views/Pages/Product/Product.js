@@ -634,7 +634,7 @@ class Product extends Component {
                     Add Subcategory
                   </button>:null
               } */}
-              <button onClick={() => this.setState({showCategoriesDetails:false})} type="button" className="accept-btn btn btn-secondary close_btn">
+              <button onClick={() => this.setState({showUserDetails:false})} type="button" className="accept-btn btn btn-secondary close_btn">
                 <i className="fa fa-times" aria-hidden="true"></i>
               </button>
             </div>           
