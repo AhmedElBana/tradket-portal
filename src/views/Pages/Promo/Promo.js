@@ -3,17 +3,20 @@ import { Alert, Col, Input, Table, Row, Modal, ModalBody, ModalFooter, ModalHead
 import {auth} from '../../../tools/Auth';
 import {dependencies} from '../../../tools/Dependencies';
 import ReactPaginate from 'react-paginate';
+import { AppSwitch } from '@coreui/react';
 import VForm from 'react-validation/build/form';
 import VInput from 'react-validation/build/input';
 import VSelect from 'react-validation/build/select';
 import VButton from 'react-validation/build/button';
+import DateTimePicker from 'react-datetime-picker';
 import 'react-widgets/dist/css/react-widgets.css';
 import {httpClient} from './../../../tools/HttpClient';
 import validator from 'validator';
-import "./Branch.scss";
+import "./Promo.scss";
 import successImg from "./../../../assets/img/success.png"
 
 import Waiting from "./../../../views/Waiting/waiting";
+import { number } from 'prop-types';
 
 let requiredError = "This field is required."
 const required = (value) => {
@@ -62,17 +65,39 @@ const phoneNumber = (value) => {
           </div>;
   }
 }
-
-
-class Staff extends Component {
+let NumberError = "Please enter valid number  (more than 0)."
+const NumberV = (value) => {
+  // var patt = new RegExp("^(01)([0-9]*)$");
+  if (isNaN(value) || value <= 0) {
+    return <div className="simple-alert">
+            <i className="fa fa-exclamation-circle"></i>
+            <Alert color="danger">
+              {NumberError}
+            </Alert>
+          </div>;
+  }
+}
+let IntegerError = "Please enter valid Integer  (more than 0)."
+const IntegerV = (value) => {
+  var patt = new RegExp("^([0-9]*)$");
+  if (isNaN(value) || !patt.test(value) || value <= 0) {
+    return <div className="simple-alert">
+            <i className="fa fa-exclamation-circle"></i>
+            <Alert color="danger">
+              {IntegerError}
+            </Alert>
+          </div>;
+  }
+}
+class Promo extends Component {
   constructor(props){
     super(props);
     this.state = {
         //users
         table: {
-          headers: ["Branch name","Phone Number","Type","Active"]
+          headers: ["ID","Name","Value","Start Date","End Date","SMS","Active"]
         },
-        usersTablePath: "/api/branch/list",
+        usersTablePath: "/api/promo/list",
         integData: [],
         totalLength: 0,
         PageNumber: 0,
@@ -82,18 +107,23 @@ class Staff extends Component {
         showUsersDetails: false,
         selectedUser: {},
         //add modal
-        addStaffPath: "/api/branch/create",
+        addStaffPath: "/api/promo/create",
         addModalWaiting: false,
         addModal: false,
         addModalError: false,
         addModalFaildMessage: "",
         addModalSuccess: false,
         branches: [],
+        AddFormDateSelected: true,
         addForm: {
           name: "",
-          address: "",
-          phoneNumber: "",
-          type: ""
+          limit: "",
+          discountType: "",
+          discountValue: "",
+          validTimesPerCustomer: "",
+          startDate: null,
+          endDate: null,
+          sms: false
         },
         //edit modal
         editPath: "/api/branch/edit",
@@ -218,6 +248,7 @@ class Staff extends Component {
         config,
         (resp) => {
           let users = resp.data.data.result;
+          console.log(users)
           this.setState({usersData: users, totalLength: resp.data.data.total, usersWaiting: false},()=>{
           });
         },
@@ -249,9 +280,12 @@ class Staff extends Component {
             {this.state.usersData.map((ele,index)=>{
               return(
                 <tr key={ele._id}  onClick={()=> this.handelRowClick(ele,index)} className={this.state.showUserDetails && (ele._id == this.state.selectedUser._id)? "selectedRow": ""}>
+                  <td>{ele._id}</td>
                   <td>{ele.name}</td>
-                  <td>{ele.phoneNumber}</td>
-                  <td>{ele.type}</td>
+                  <td>{ele.discountValue} {ele.discountType == "PERCENTAGE"? "%": "$"}</td>
+                  <td>{dependencies.custom_date_format(ele.startDate)}</td>
+                  <td>{dependencies.custom_date_format(ele.endDate)}</td>
+                  <td>{dependencies.boolName(ele.sms)}</td>
                   <td>{dependencies.boolName(ele.active)}</td>
                 </tr>
               )
@@ -267,11 +301,11 @@ class Staff extends Component {
         <Row>
           <div className="x_panel">
             <div className="x_title">
-              <h2>Branches</h2>
+              <h2>Gifts</h2>
               <div className="ButtonsDiv">
                 {JSON.parse(localStorage.userData).permissions.includes("105")?
                   <button onClick={this.toggleAddModal} type="button" className="btn">
-                    New Branch
+                    New Gift
                   </button>:null
                 }
               </div>  
@@ -346,7 +380,7 @@ class Staff extends Component {
           <div className="x_title details">
             <h2>{this.state.selectedUser.name}</h2>
             <div className="ButtonsDiv">
-              {JSON.parse(localStorage.userData).permissions.includes("106")?
+              {/* {JSON.parse(localStorage.userData).permissions.includes("106")?
                   <button onClick={this.toggleEditModal} type="button" className="btn">
                     Edit
                   </button>:null
@@ -363,13 +397,13 @@ class Staff extends Component {
                       </button>
                     }
                   </span>:null
-              }
+              } */}
               <button onClick={() => this.setState({showUserDetails:false})} type="button" className="accept-btn btn btn-secondary close_btn">
                 <i className="fa fa-times" aria-hidden="true"></i>
               </button>
             </div>           
           </div>
-          <div className="x_content branches">
+          <div className="x_content promos">
             <br/>
             {this.state.detailsWaiting?
               <Waiting height="300px" />
@@ -382,10 +416,37 @@ class Staff extends Component {
                   <span className="title">Name</span><span className="value">{this.state.selectedUser.name}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Phone</span><span className="value">{this.state.selectedUser.phoneNumber}</span>
+                  <span className="title">Limit</span><span className="value">{this.state.selectedUser.limit}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Address</span><span className="value">{this.state.selectedUser.address}</span>
+                  <span className="title">Discount Value</span><span className="value">{this.state.selectedUser.discountValue} {this.state.selectedUser.discountValue == "PERCENTAGE"? "%": "$"}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">Created Date</span><span className="value">{dependencies.custom_date_format(this.state.selectedUser.createdDate)}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">Start Date</span><span className="value">{dependencies.custom_date_format(this.state.selectedUser.startDate)}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">End Date</span><span className="value">{dependencies.custom_date_format(this.state.selectedUser.endDate)}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">valid Times Per Customer</span><span className="value">{this.state.selectedUser.validTimesPerCustomer}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">Customer Type</span><span className="value">{this.state.selectedUser.customerType}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">Branches Type</span><span className="value">{this.state.selectedUser.branchesType}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">Products Type</span><span className="value">{this.state.selectedUser.productsType}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">SMS</span><span className="value">{dependencies.boolName(this.state.selectedUser.sms)}</span>
+                </div>
+                <div className="modal_details">
+                  <span className="title">Creator ID</span><span className="value">{this.state.selectedUser.creator_id}</span>
                 </div>
                 <div className="modal_details">
                   <span className="title">Active</span><span className="value">{dependencies.boolName(this.state.selectedUser.active)}</span>
@@ -415,56 +476,83 @@ class Staff extends Component {
     });
   }
   handleAddInputChange(inputName,event){
+    if(inputName == "sms"){
+      let addFormData = this.state.addForm;
+      addFormData["sms"] = !addFormData.sms;
+      this.setState({addForm: addFormData},()=>{
+        console.log(this.state.addForm)
+      })
+    }else{
+      let addFormData = this.state.addForm;
+      addFormData[inputName] = event.target.value;
+      this.setState({addForm: addFormData},()=>{
+      })
+    }
+  }
+  handleAddDateChange(inputName,date){
     let addFormData = this.state.addForm;
-    addFormData[inputName] = event.target.value;
-    this.setState({addForm: addFormData},()=>{
+    addFormData[inputName] = new Date(date);
+    this.setState({addForm: addFormData, AddFormDateSelected: true},()=>{
+      console.log(this.state.AddFormDateSelected)
     })
   }
   handleAddProductSubmit(event){
-    //get form data
-    let userObj = {
-      "name": this.state.addForm.name,
-      "address": this.state.addForm.address,
-      "phoneNumber": this.state.addForm.phoneNumber,
-      "type": this.state.addForm.type
-    };
-    let userData = JSON.stringify(userObj);
-    //start waiting
-    this.setState({addModalWaiting: true},()=>{
-      //send request
-      let config = {
-        headers: {
-          //"Cache-Control": "no-cache",
-          "Content-Type": "application/json",
-          "x-auth": auth.getMerchantToken()
+    if(this.state.addForm.startDate == null || this.state.addForm.endDate == null){
+      this.setState({AddFormDateSelected: false})
+    }else{
+      //get form data
+      let userObj = {
+        "name": this.state.addForm.name,
+        "type": "DOL",
+        "limit": this.state.addForm.limit,
+        "discountType": this.state.addForm.discountType,
+        "discountValue": this.state.addForm.discountValue,
+        "startDate": this.state.addForm.startDate,
+        "endDate": this.state.addForm.endDate,
+        "validTimesPerCustomer": this.state.addForm.validTimesPerCustomer,
+        "customerType": "ALL",
+        "branchesType": "ALL",
+        "productsType": "ALL",
+        "sms": this.state.addForm.sms.toString()
+      };
+      let userData = JSON.stringify(userObj);
+      //start waiting
+      this.setState({addModalWaiting: true},()=>{
+        //send request
+        let config = {
+          headers: {
+            //"Cache-Control": "no-cache",
+            "Content-Type": "application/json",
+            "x-auth": auth.getMerchantToken()
+          }
         }
-      }
-      httpClient.post(
-          this.state.addStaffPath,
-          config,
-          userData,
-          (resp) => {
-            this.setState({addModalSuccess: true ,addModalWaiting:false},()=>{
-              setTimeout(()=>{
-                window.location.reload();
-              }, 3000);
-            });
-          },
-          (error) => {
-            if(error.response){
-              if(error.response.status === 401){
-                this.setState({logout: true});
-              }else if(error.response.status === 400){
-                this.setState({addModalWaiting: false, addModalError: true, addModalFaildMessage: error.response.data.message});
+        httpClient.post(
+            this.state.addStaffPath,
+            config,
+            userData,
+            (resp) => {
+              this.setState({addModalSuccess: true ,addModalWaiting:false},()=>{
+                setTimeout(()=>{
+                  window.location.reload();
+                }, 3000);
+              });
+            },
+            (error) => {
+              if(error.response){
+                if(error.response.status === 401){
+                  this.setState({logout: true});
+                }else if(error.response.status === 400){
+                  this.setState({addModalWaiting: false, addModalError: true, addModalFaildMessage: error.response.data.message});
+                }else{
+                  this.setState({publicError: true});
+                }
               }else{
                 this.setState({publicError: true});
               }
-            }else{
-              this.setState({publicError: true});
             }
-          }
-      )
-    });
+        )
+      });
+    }
     event.preventDefault();
   }
   addModalReset(e){
@@ -480,10 +568,10 @@ class Staff extends Component {
   }
   renderAddModal(){
     return(
-      <Modal className="usersModal" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
+      <Modal className="usersModal modal-lg" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
         <VForm onSubmit={this.handleAddProductSubmit} >
           <ModalHeader toggle={this.toggleAddModal}>
-            New Branch
+            New Gift
           </ModalHeader>
           <ModalBody>
           {this.state.addModalError?
@@ -498,7 +586,7 @@ class Staff extends Component {
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
                   <h1>Congratulations</h1>
-                  <p>Your Branch has been created successfully.</p>
+                  <p>Your Gift has been created successfully.</p>
                 </div>
               :
                 <div >
@@ -517,7 +605,7 @@ class Staff extends Component {
                             value={this.state.addForm.name}
                             onChange={(e) => this.handleAddInputChange("name", e)}
                             validations={[required]}
-                            placeholder="Branch Name"
+                            placeholder="Gift Name"
                           />
                         </div>
                       </Col>
@@ -525,40 +613,115 @@ class Staff extends Component {
                         <div className="tradketInputGroup full_width">
                           <VInput type="text" className="tradket_b_i"
                             autoComplete="off"
-                            name="address"
-                            value={this.state.addForm.address}
-                            onChange={(e) => this.handleAddInputChange("address",e)}
-                            validations={[required]} 
-                            placeholder="Address"
+                            name="limit"
+                            value={this.state.addForm.limit}
+                            onChange={(e) => this.handleAddInputChange("limit",e)}
+                            validations={[required, NumberV]} 
+                            placeholder="Min Order Amount to Get Gift"
                           />
                         </div>
                       </Col>
                       <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
-                          <VInput type="text" className="tradket_b_i"
-                            autoComplete="off"
-                            name="phoneNumber"
-                            value={this.state.addForm.phoneNumber}
-                            onChange={(e) => this.handleAddInputChange("phoneNumber",e)}
-                            validations={[required, phoneNumber]} 
-                            placeholder="phone Number"
-                          />
-                        </div>
-                      </Col>
-                      <Col sm="12" className="inputeDiv">
-                        <div className="tradketInputGroup full_width">
-                          <VSelect type="select" name="type" className="tradket_b_s"
-                            value={this.state.addForm.type}
-                            onChange={(e) => this.handleAddInputChange("type",e)}
+                          <VSelect type="select" name="discountType" className="tradket_b_s"
+                            value={this.state.addForm.discountType}
+                            onChange={(e) => this.handleAddInputChange("discountType",e)}
                             validations={[required]} 
                           >
-                            <option value="" disabled>Select Type</option>
-                            <option value="branch">Branch</option>
-                            <option value="warehouse">Warehouse</option>
+                            <option value="" disabled>Select Discount Type</option>
+                            <option value="VALUE">Value</option>
+                            <option value="PERCENTAGE">Percentage</option>
                           </VSelect>
                         </div>
                       </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            name="discountValue"
+                            value={this.state.addForm.discountValue}
+                            onChange={(e) => this.handleAddInputChange("discountValue",e)}
+                            validations={[required, NumberV]} 
+                            placeholder="Discount Value"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            name="validTimesPerCustomer"
+                            value={this.state.addForm.validTimesPerCustomer}
+                            onChange={(e) => this.handleAddInputChange("validTimesPerCustomer",e)}
+                            validations={[required, IntegerV]} 
+                            placeholder="valid Times Per Customer"
+                          />
+                        </div>
+                      </Col>
+                      <Col>
+                        <Row>
+                          <Col xs="12">
+                            <p className="formLable">Start Date</p>
+                          </Col>
+                          <Col xs="12" className="dateInputgroup">
+                            <div>
+                              <DateTimePicker
+                                onChange={(date) => this.handleAddDateChange("startDate",date)}
+                                value={this.state.addForm.startDate}
+                                disableClock="false"
+                                minutePlaceholder="Minute"
+                                hourPlaceholder="Hour"
+                                dayPlaceholder="Day"
+                                monthPlaceholder="Month"
+                                yearPlaceholder="Year"
+                                calendarClassName="dateTimePicker"
+                                format="yyyy-MM-dd | hh:mm - aaaa"
+                                clearIcon={null}
+                                required
+                              />
+                            </div>
+                          </Col>
+                          <Col xs="12">
+                            <p className="formLable">End Date</p>
+                          </Col>
+                          <Col xs="12" className="dateInputgroup">
+                            <div>
+                              <DateTimePicker
+                                onChange={(date) => this.handleAddDateChange("endDate",date)}
+                                value={this.state.addForm.endDate}
+                                disableClock="false"
+                                minutePlaceholder="Minute"
+                                hourPlaceholder="Hour"
+                                dayPlaceholder="Day"
+                                monthPlaceholder="Month"
+                                yearPlaceholder="Year"
+                                calendarClassName="dateTimePicker"
+                                format="yyyy-MM-dd | hh:mm - aaaa"
+                                clearIcon={null}
+                                required
+                              />
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col xs="12">
+                        <FormGroup className="formGroupSwitch" >
+                          <AppSwitch className={'mx-1'} variant={'pill'} color={'info'}
+                            onChange={(e) => this.handleAddInputChange("sms",e)}
+                            checked={this.state.addForm.sms}
+                            // name={perm}
+                          />
+                          Send SMS to Customers
+                        </FormGroup>
+                      </Col>
                     </Row>
+                    {!this.state.AddFormDateSelected?
+                      <Alert color="danger">
+                        Start Date and End Date Fields are required.
+                      </Alert>
+                    :
+                      null
+                    }
                   </div>
                 }
                 </div>
@@ -1035,4 +1198,4 @@ class Staff extends Component {
   }
 }
 
-export default Staff;
+export default Promo;

@@ -43,6 +43,7 @@ const Category = React.lazy(() => import('./views/Pages/Category/Category'));
 const Feature = React.lazy(() => import('./views/Pages/Feature/Feature'));
 const Product = React.lazy(() => import('./views/Pages/Product/Product'));
 const Order = React.lazy(() => import('./views/Pages/Order/Order'));
+const Promo = React.lazy(() => import('./views/Pages/Promo/Promo'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -53,6 +54,7 @@ const routes = [
   { path: '/feature', name: 'Feature', component: Feature },
   { path: '/product', name: 'Product', component: Product },
   { path: '/order', name: 'Order', component: Order },
+  { path: '/promo', name: 'Promo', component: Promo },
 
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },

@@ -56,6 +56,15 @@ if(perms.includes("123")){
     icon: 'fa fa-qrcode',
     });
 }
+//promo
+let promoObj = []
+if(perms.includes("127") || perms.includes("127") || perms.includes("128") || perms.includes("129") || perms.includes("130")){
+  promoObj.push({
+    name: 'Gifts',
+    url: '/promo',
+    icon: 'fa fa-gift',
+    });
+}
 
 const listData = [
   {
@@ -68,7 +77,8 @@ const listData = [
   ...categoryObj,
   ...featureObj,
   ...productObj,
-  ...orderObj
+  ...orderObj,
+  ...promoObj
 ]
 
 export default {
