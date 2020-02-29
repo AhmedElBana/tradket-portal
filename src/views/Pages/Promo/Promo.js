@@ -384,20 +384,29 @@ class Promo extends Component {
                   <button onClick={this.toggleEditModal} type="button" className="btn">
                     Edit
                   </button>:null
-              }
-              {JSON.parse(localStorage.userData).permissions.includes("107")?
+              } */}
+              {JSON.parse(localStorage.userData).permissions.includes("129")?
                   <span>
                     {this.state.selectedUser.active?
-                      <button onClick={this.toggleDeactivateModal} type="button" className="btn">
-                        Deacttivate
-                      </button>
+                      null
                     :
                       <button onClick={this.toggleActivateModal} type="button" className="btn">
-                        Acttivate
+                        Activate
                       </button>
                     }
                   </span>:null
-              } */}
+              }
+              {JSON.parse(localStorage.userData).permissions.includes("130")?
+                  <span>
+                    {this.state.selectedUser.active?
+                      <button onClick={this.toggleDeactivateModal} type="button" className="btn">
+                        Deactivate
+                      </button>
+                    :
+                      null
+                    }
+                  </span>:null
+              }
               <button onClick={() => this.setState({showUserDetails:false})} type="button" className="accept-btn btn btn-secondary close_btn">
                 <i className="fa fa-times" aria-hidden="true"></i>
               </button>
@@ -954,10 +963,6 @@ class Promo extends Component {
     //start waiting
     this.setState({deactivateModalWaiting: true},()=>{
       //send request
-      let userObj = {
-        "branch_id": this.state.selectedUser._id,
-        "active": "false"
-      };
       let config = {
         headers: {
           //"Cache-Control": "no-cache",
@@ -965,10 +970,9 @@ class Promo extends Component {
           "x-auth": auth.getMerchantToken()
         }
       }
-      httpClient.post(
-          this.state.editPath,
+      httpClient.get(
+        "/api/promo/deactivate?promo_id=" + this.state.selectedUser._id,
           config,
-          userObj,
           (resp) => {
             this.setState({deactivateModalSuccess: true ,deactivateModalWaiting:false},()=>{
               setTimeout(()=>{
@@ -1019,7 +1023,7 @@ class Promo extends Component {
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
                   <h1>Congratulations</h1>
-                  <p>your Branch has been Deactivated Successfully.</p>
+                  <p>your Gift has been Deactivated Successfully.</p>
                 </div>
               :
                 <div >
@@ -1027,8 +1031,8 @@ class Promo extends Component {
                   <Waiting height="150px" />
                 :
                   <div className="deactivateModalBody">
-                      <br/>
-                <p>You are about to Deactivate Branch <b>{this.state.selectedUser.name}</b> . Please confirm deactivation or press cancel.</p>
+                    <br/>
+                    <p>You are about to Deactivate Gift <b>{this.state.selectedUser.name}</b> . Please confirm deactivation or press cancel.</p>
                   </div>
                 }
                 </div>
@@ -1067,10 +1071,6 @@ class Promo extends Component {
     //start waiting
     this.setState({activateModalWaiting: true},()=>{
       //send request
-      let userObj = {
-        "branch_id": this.state.selectedUser._id,
-        "active": "true"
-      };
       let config = {
         headers: {
           //"Cache-Control": "no-cache",
@@ -1078,11 +1078,9 @@ class Promo extends Component {
           "x-auth": auth.getMerchantToken()
         }
       }
-      let data= {};
-      httpClient.post(
-          this.state.editPath,
+      httpClient.get(
+          "/api/promo/activate?promo_id=" + this.state.selectedUser._id,
           config,
-          userObj,
           (resp) => {
             this.setState({activateModalSuccess: true ,activateModalWaiting:false},()=>{
               setTimeout(()=>{
@@ -1133,7 +1131,7 @@ class Promo extends Component {
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
                   <h1>Congratulations</h1>
-                  <p>Your Branch has been Activated Successfully.</p>
+                  <p>Your Gift has been Activated Successfully.</p>
                 </div>
               :
                 <div >
@@ -1142,7 +1140,7 @@ class Promo extends Component {
                 :
                   <div className="activateModalBody">
                     <br/>
-                    <p>You are about to Activate user <b>{this.state.selectedUser.name}</b> . Please confirm activation or press cancel.</p>
+                    <p>You are about to Activate Gift <b>{this.state.selectedUser.name}</b> . Please confirm activation or press cancel.</p>
                   </div>
                 }
                 </div>
