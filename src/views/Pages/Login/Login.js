@@ -94,7 +94,7 @@ class Login extends Component {
       };
       let config = {
           headers: {
-              "Cache-Control": "no-cache",
+              //"Cache-Control": "no-cache",
               "Content-Type": "application/json",
           }
       };

@@ -44,6 +44,15 @@ if(perms.includes("115") || perms.includes("116") || perms.includes("117") || pe
   productObj.push({
     name: 'Products',
     url: '/product',
+    icon: 'fa fa-barcode',
+    });
+}
+//Material
+let materialObj = []
+if(perms.includes("115") || perms.includes("116") || perms.includes("117") || perms.includes("118")){
+  materialObj.push({
+    name: 'Materials',
+    url: '/material',
     icon: 'fa fa-cubes',
     });
 }
@@ -76,6 +85,7 @@ const listData = [
   ...staffObj,
   ...categoryObj,
   ...featureObj,
+  ...materialObj,
   ...productObj,
   ...orderObj,
   ...promoObj

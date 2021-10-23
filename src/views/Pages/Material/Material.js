@@ -11,7 +11,7 @@ import Multiselect from 'react-widgets/lib/Multiselect';
 import 'react-widgets/dist/css/react-widgets.css';
 import {httpClient} from './../../../tools/HttpClient';
 import validator from 'validator';
-import "./Product.scss";
+import "./Material.scss";
 import successImg from "./../../../assets/img/success.png"
 
 import Waiting from "./../../../views/Waiting/waiting";
@@ -88,7 +88,7 @@ const NumberNR = (value) => {
 }
 
 
-class Product extends Component {
+class Material extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -99,7 +99,7 @@ class Product extends Component {
         detailsHeaders: ["Branch ID","Branch Name","Quantity"],
         usersTablePath: "/api/productGroup/list",
         currentFilters: {
-          "is_material": false
+          "is_material": true
         },
         integData: [],
         totalLength: 0,
@@ -499,11 +499,11 @@ class Product extends Component {
         <Row>
           <div className="x_panel">
             <div className="x_title">
-              <h2>Products</h2>
+              <h2>Materials</h2>
               <div className="ButtonsDiv">
                 {JSON.parse(localStorage.userData).permissions.includes("116")?
                   <button onClick={this.toggleAddModal} type="button" className="btn">
-                    New Product
+                    New Material
                   </button>:null
                 }
               </div>  
@@ -707,7 +707,7 @@ class Product extends Component {
                               }
                             </div>
                             <div className="modal_details">
-                              <span className="title">Product ID</span><span className="value">{product._id}</span>
+                              <span className="title">Material ID</span><span className="value">{product._id}</span>
                             </div>
                             <div className="modal_details">
                               <span className="title">Group ID</span><span className="value">{product.group_id}</span>
@@ -792,7 +792,7 @@ class Product extends Component {
   handleAddProductSubmit(event){
     //get form data
     var bodyFormData = new FormData();
-    bodyFormData.set('is_material', false);
+    bodyFormData.set('is_material', true);
     bodyFormData.set('name', this.state.addForm.name);
     bodyFormData.set('branch_id', this.state.addForm.branch_id);
     bodyFormData.set('category_id', this.state.addForm.category_id);
@@ -1017,7 +1017,7 @@ class Product extends Component {
               return(
                 <div key={JSON.stringify(ele.features)} className="singleSubProduct">
                   <p className="title">
-                    Product : 
+                    Material : 
                     {Object.keys(ele.features).map((key,subIndex)=>{
                       return(<span key={JSON.stringify(ele.features) + index + "" + subIndex} className="feature table_block">{key} : <span>{ele.features[key]}</span></span>)
                     })}
@@ -1077,7 +1077,7 @@ class Product extends Component {
       <Modal className="usersModal modal-lg" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
         <VForm onSubmit={this.handleAddProductSubmit} >
           <ModalHeader toggle={this.toggleAddModal}>
-            New Product
+            New Material
           </ModalHeader>
           <ModalBody>
           {this.state.addModalError?
@@ -1092,7 +1092,7 @@ class Product extends Component {
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
                   <h1>Congratulations</h1>
-                  <p>Your Product has been created successfully.</p>
+                  <p>Your Material has been created successfully.</p>
                 </div>
               :
                 <div >
@@ -1111,7 +1111,7 @@ class Product extends Component {
                             value={this.state.addForm._id}
                             onChange={(e) => this.handleAddInputChange("_id", e)}
                             validations={[]}
-                            placeholder="Product ID (optional)"
+                            placeholder="Material ID (optional)"
                           />
                         </div>
                       </Col>
@@ -1123,7 +1123,7 @@ class Product extends Component {
                             value={this.state.addForm.name}
                             onChange={(e) => this.handleAddInputChange("name", e)}
                             validations={[required]}
-                            placeholder="Product Name"
+                            placeholder="Material Name"
                           />
                         </div>
                       </Col>
@@ -1258,14 +1258,14 @@ class Product extends Component {
                           )
                         })}
                       </div>
-                      <p className="subproductsTxt">Sub Products (optional)</p>
+                      <p className="subproductsTxt">Sub Materials (optional)</p>
                       <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
                         <Multiselect
                           data={this.state.fullFeatures}
                           valueField='_id'
                           textField='name'
-                          placeholder="Products Features"
+                          placeholder="Materials Features"
                           onChange={this.onSelectSubProductForm}
                           required
                           defaultValue={this.state.selectedSubProductFeatures}
@@ -1963,4 +1963,4 @@ class Product extends Component {
   }
 }
 
-export default Product;
+export default Material;

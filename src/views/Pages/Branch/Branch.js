@@ -555,6 +555,7 @@ class Staff extends Component {
                             <option value="" disabled>Select Type</option>
                             <option value="branch">Branch</option>
                             <option value="warehouse">Warehouse</option>
+                            <option value="factory">Factory</option>
                           </VSelect>
                         </div>
                       </Col>
@@ -673,7 +674,7 @@ class Staff extends Component {
       <Modal className="usersModal modal-lg" isOpen={this.state.editModal} toggle={this.toggleEditModal}>
         <VForm onSubmit={this.handleEditUserSubmit} >
           <ModalHeader toggle={this.toggleEditModal}>
-            Edit Staff
+            Edit Branch
           </ModalHeader>
           <ModalBody>
           {this.state.editModalError?
@@ -745,6 +746,7 @@ class Staff extends Component {
                             <option value="" disabled>Select Type</option>
                             <option value="branch">Branch</option>
                             <option value="warehouse">Warehouse</option>
+                            <option value="factory">Factory</option>
                           </VSelect>
                         </div>
                       </Col>
