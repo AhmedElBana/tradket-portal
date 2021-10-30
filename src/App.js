@@ -26,10 +26,10 @@ class App extends Component {
           <React.Suspense fallback={loading()}>
             <Switch>
             <Route exact path="/" name="Website Page" render={props => <Website {...props}/>} />
+            <Route exact path="/bill/:id?" name="Bill" render={props => <Bill {...props}/>} />
               <BrowserRouter basename="/portal">
                 <React.Suspense fallback={loading()}>
                   <Switch>
-                    <Route exact path="/bill/:id?" name="Bill" component={Bill} />
                     <Route exact path="/login" name="Login Page" component={!auth.isLoggedIn() ? Login :  DefaultLayout } />
                     <Route exact path="/register" name="Register Page" component={!auth.isLoggedIn() ? Register :  DefaultLayout } />
                     <Route exact path="/forget" name="Reset password" component={!auth.isLoggedIn() ? Forget :  DefaultLayout } />
