@@ -31,6 +31,7 @@
     "react-datetime-picker": "^2.9.0",
     "react-dom": "^16.8.6",
     "react-paginate": "^6.3.2",
+    "react-qr-code": "^2.0.2",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-test-renderer": "^16.8.6",

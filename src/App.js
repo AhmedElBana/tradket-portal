@@ -11,6 +11,7 @@ const DefaultLayout = React.lazy(() => import('./containers/DefaultLayout'));
 
 // Pages
 const Website = React.lazy(() => import('./views/Pages/Website'));
+const Bill = React.lazy(() => import('./views/Pages/Bill/Bill'));
 const Login = React.lazy(() => import('./views/Pages/Login'));
 const Register = React.lazy(() => import('./views/Pages/Register'));
 const Forget = React.lazy(() => import('./views/Pages/Forget'));
@@ -28,6 +29,7 @@ class App extends Component {
               <BrowserRouter basename="/portal">
                 <React.Suspense fallback={loading()}>
                   <Switch>
+                    <Route exact path="/bill/:id?" name="Bill" component={Bill} />
                     <Route exact path="/login" name="Login Page" component={!auth.isLoggedIn() ? Login :  DefaultLayout } />
                     <Route exact path="/register" name="Register Page" component={!auth.isLoggedIn() ? Register :  DefaultLayout } />
                     <Route exact path="/forget" name="Reset password" component={!auth.isLoggedIn() ? Forget :  DefaultLayout } />
