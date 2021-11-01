@@ -1,0 +1,77 @@
+.row_data{
+ color: #141E30;
+ font-size: 15px;
+ font-weight: 400;
+ font-family: "Gotham-Medium";
+}
+.NoDataAvail {
+ font-size: 30px;
+ text-align: center;
+ margin-top: auto;
+}
+.successLable{
+ background: #0BD796;
+ border-radius: 46px;
+ padding: 5px 10px;
+ color: #fff;
+}
+.pendingLable{
+ background: #FFBE0B;
+ border-radius: 46px;
+ padding: 5px 10px;
+ color: #fff;
+}
+.errorLable{
+ background: #FF5C75;
+ border-radius: 46px;
+ padding: 5px 10px;
+ color: #fff;
+}
+.downloadNew{
+ cursor: pointer;
+ text-align: center;
+ font-weight: 800;
+ font-size: 16px;
+letter-spacing: 0.28px;
+border: 1px solid #2469A4;
+color: #FFFFFF;
+background: #2469A4 0% 0% no-repeat padding-box;
+border-radius: 6px;
+padding: 0.5rem 1rem;
+ &:hover{
+ cursor: pointer;
+border: 1px solid #2469A4;
+color: #FFFFFF;
+background: #2469A4 0% 0% no-repeat padding-box;
+}
+}
+
+.redownload{
+ cursor: progress;
+ background: #FFFFFF 0% 0% no-repeat padding-box !important;
+border: 1px solid #E4E7EA !important;
+border-radius: 6px;
+text-align: center;
+font-weight: 800;
+font-size: 16px;
+letter-spacing: 0.28px;
+color: #73879C !important;
+padding: 0.5rem 1rem;
+display: inline-block;
+}
+.refreshContainer{
+ margin: auto 1rem;
+ text-align: center;
+ padding: 0rem;
+ display: inline-block;
+ i{
+   padding: 0.5rem 1rem;
+   border-radius: 6px;
+   border: 1px solid #E4E7EA;
+   cursor: pointer;
+   &:hover{
+     color: #2469A4 ;
+     border: 1px solid #2469A4;
+   }
+ }
+}

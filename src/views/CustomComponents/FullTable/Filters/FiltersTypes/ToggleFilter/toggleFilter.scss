@@ -1,0 +1,38 @@
+@mixin en {
+  html[dir="ltr"] & {
+    @content;
+  }
+}
+@mixin ar {
+  html[dir="rtl"] & {
+    @content;
+  }
+}
+
+.parentDiv {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.toggleName{
+    position: absolute;
+    @include en {
+      left: 0;
+    }
+    @include ar {
+      right: 0;
+    }
+}
+.switch {
+    position: absolute;
+    @include en {
+      right: 0;
+    }
+    @include ar {
+      left: 0;
+    }
+}
+.switch-slider {
+  background-color: #BCCCDC;
+}

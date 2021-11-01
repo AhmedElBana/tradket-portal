@@ -25,6 +25,7 @@
 }
 body{
     font-family: GilroyRegular;
+    background-color: #E4E5E6 !important;
 }
 .neptune_logo{
     height: 30px;
@@ -39,9 +40,9 @@ body{
 }
 .btn{
     display: inline-block;
-    background-color: #20A8D8 !important;
+    background-color: #20A8D8;
     border-radius: 0px;
-    color: #fff !important;
+    color: #fff;
     font-size: 16px;
     padding: 7px 15px;
     padding-top: 6px;
@@ -526,6 +527,7 @@ body{
 }
 .x_panel {
     width: 100%;
+    min-height: 300px;
     padding: 10px 17px;
     display: inline-block;
     background: #fff;
@@ -540,6 +542,7 @@ body{
 .x_title {
     border-bottom: 2px solid #E6E9ED;
     padding: 1px 5px 6px;
+    margin-bottom: 10px;
 }
 
 .x_title > h2{
@@ -831,5 +834,104 @@ html[dir="rtl"] .TableDiv > select{
     position: absolute;
     right: 3px;
     content: " : ";
+}
+td.NEXT_uuid_td{
+    overflow: initial !important;
   }
+  .NEXT_uuid{
+    position: relative;
+    span{
+      display: none;
+      position: absolute;
+      top: -25px;
+      color: #fff;
+      background-color: rgba(0, 0, 0, .8);
+      border-radius: 7px;
+      padding: 2px 7px;
+    }
+  }
+  .NEXT_uuid:hover > span{
+    display: block;
+  }  
+  
 //------------------------ end main portal style ---------------------
+
+.TableDiv{
+    width: 100%;
+    padding: 5px;
+    // margin-top: -48px;
+    .filtersModalDiv{
+        width: 100% !important;
+    }
+    .tagsDiv{
+        width: 100%;
+        text-align: center;
+    }
+    @include en{
+        text-align: right;
+    }
+    @include ar{
+        text-align: left;
+    }
+    @include m(767){
+        margin-top: 0px !important;
+        text-align: center;
+        .filtersModalDiv{
+            text-align: center !important;
+        }
+    }
+}
+.filtersModalDiv{
+    position: relative;
+    margin: 0px;
+    width: 100% !important;
+    @include m(767){
+        text-align: center;
+    }
+}
+.filtersModalDiv .dropdown-menu.show{
+    
+    @include en{
+        left: auto !important;
+        right: 0px !important;
+    }
+    @include ar{
+        left: 0px !important;
+        right: auto !important;
+    }
+    @include m(767){
+        width: 100%;
+        left: 0px !important;
+        right: 0px !important;
+    }
+}
+.filtersModalDiv .btn-group.show{
+    position: static;
+}
+.filtersModalDiv .dropdown-menu.show{
+    box-shadow: 0px 0px 6px #bbb !important;
+}
+.filtersDiv .filtersDivBtn{
+    text-align: right;
+}
+.filtersButtons{
+    text-align: right;
+}
+.filtersForm{
+    padding-top: 15px;
+    .switch{
+        left: 15px;
+        top: 35px;
+    }
+    .toggleName{
+        left: 15px;
+        top: 5px;
+    }
+    .parentDiv{
+        min-height: 60px;
+    }
+}
+
+.modal.fade{
+    opacity: 1;
+}

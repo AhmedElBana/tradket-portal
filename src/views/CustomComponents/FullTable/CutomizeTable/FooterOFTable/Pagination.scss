@@ -1,0 +1,77 @@
+@mixin m($width) {
+ @media(max-width:#{$width}px) {
+   @content;
+ }
+}
+
+// Lang mixin
+@mixin en {
+ html[dir="ltr"] & {
+   @content;
+ }
+}
+
+@mixin ar {
+ html[dir="rtl"] & {
+   @content;
+ }
+}
+.paginationList {
+ list-style: none;
+ padding: 0px;
+ float: right;
+
+ @include ar {
+   float: left;
+ }
+li {
+ display: inline-block;
+
+a {
+ position: relative;
+ float: left;
+ padding: 3px 8px;
+ margin-left: -1px;
+ color: #555;
+ text-decoration: none;
+ background-color: #fff;
+ border: 1px solid #ddd;
+ outline: none;
+ transition: all 0.3s ease-in-out;
+ font-size: 14px;
+ &:hover{
+   color: #000;
+   background-color: #E6E9ED;
+   border-color: #E6E9ED;
+   cursor: pointer;
+ }
+}
+.selected>a {
+ color: #000;
+ background-color: #E6E9ED;
+ border-color: #E6E9ED;
+ cursor: pointer;
+}
+
+.disabled>a:hover {
+ cursor: not-allowed;
+}
+}
+.noCountPagination > li{
+ display: none;
+}
+.noCountPagination > li.next,
+.noCountPagination > li.selected,
+.noCountPagination > li.previous{
+ display: inline-block;
+}
+}
+
+.paginationList.noCountPagination > li{
+  display: none;
+}
+.paginationList.noCountPagination > li.next,
+.paginationList.noCountPagination > li.selected,
+.paginationList.noCountPagination > li.previous{
+  display: inline-block;
+}

@@ -1,0 +1,53 @@
+[
+  {
+    "type": "dateRange",
+    "filterNameFrom": "createdDateFrom",
+    "filterNameTo": "createdDateTo",
+    "name": "Date Range",
+    "name_ar": "مدى التاريخ",
+    "date_range": 30,
+    "size": {
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 6
+    }
+  },
+  {
+    "type": "input",
+    "filterName": "customer_phoneNumber",
+    "name": "Customer Phone",
+    "name_ar": "هاتف العميل",
+    "validations": ["intNumber"]
+  },
+  {
+    "type": "select",
+    "filterName": "branch_id",
+    "name": "Branch",
+    "name_ar": "الفرع",
+    "message": "Select Branch",
+    "message_ar": "حدد الفرع",
+    "options": []
+  },
+  {
+    "type": "input",
+    "filterName": "creator_id",
+    "name": "Staff ID",
+    "name_ar": "رقم الكاشير",
+    "validations": []
+  },
+  {
+    "type": "toggle",
+    "filterName": "canceled",
+    "name": "Canceled",
+    "name_ar": "تم الالغاء"
+  },
+  {
+    "type": "toggle",
+    "filterName": "returned",
+    "name": "Returned",
+    "name_ar": "تم الارجاع"
+  }
+
+
+]

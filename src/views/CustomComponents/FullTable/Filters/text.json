@@ -1,0 +1,23 @@
+{
+    "en": {
+        "filter": "Filters",
+        "button":{
+            "filter": "Filter",
+            "reset": "Reset",
+            "cancel": "Cancel",
+            "remove": "Remove"
+            
+        }
+    },
+    "ar": {
+        "filter": "تصنيف",
+        "button":{
+            "filter": "تصنيف",
+            "reset": "حذف",
+            "cancel": "إلغاء",
+            "remove": "إلغاء التصنيف"
+            
+        }
+    }
+}
+                

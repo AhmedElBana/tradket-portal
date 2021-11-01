@@ -1,0 +1,34 @@
+//mixins
+//media mixin
+@mixin m($width) {
+    @media(max-width:#{$width}px) {
+      @content;
+    }
+  }
+  
+  // Lang mixin
+  @mixin en {
+    html[dir="ltr"] & {
+      @content;
+    }
+  }
+  
+  @mixin ar {
+    html[dir="rtl"] & {
+      @content;
+    }
+  }
+
+
+
+.newDetailsCard.x_panelAccept table tbody > tr{
+    display: inline-block;
+    width: 50%;
+    @include m(767) {
+        display: inline-block;
+        width: 100%;
+    }
+}
+.sub_Table > tbody > tr.integrationBlockTR > td:last-of-type::before{
+  top: 14px;
+}

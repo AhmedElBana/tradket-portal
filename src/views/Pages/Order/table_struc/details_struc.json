@@ -1,0 +1,48 @@
+{
+    "header":{
+      "title": "Intention", "title_ar": "نية دفع رقم",
+      "NEXT": true
+    },
+    "body": [
+      {
+        "title": "Intention Details", "title_ar": "تفاصيل نية الدفع",
+        "body": [
+          {"title": "ID", "title_ar": "الرقم", "value": "id", "type": "string"},
+          {"title": "Amount", "title_ar": "المبلغ", "value": "intention_detail.amount", "type": "string"},
+          {"title": "Created at", "title_ar": "تاريخ المعاملة", "value": "created", "type": "date"},
+          {"title": "Last update", "title_ar": "اخر تحديث", "value": "modified", "type": "date"},
+          {"title": "Confirmed", "title_ar": "تم تأكيد", "value": "confirmed", "type": "boolean"}
+        ]
+      },
+      {
+        "title": "Customer Details", "title_ar": "تفاصيل العميل",
+        "body": [
+          {"title": "Name", "title_ar": "الاسم", "value": "extras.first_name+extras.last_name", "type": "string"},
+          {"title": "Email", "title_ar": "البريد الالكتروني", "value": "extras.email", "type": "string"},
+          {"title": "Phone", "title_ar": "الهاتف", "value": "extras.phone_number", "type": "string"},
+          {"title": "Country", "title_ar": "البلد", "value": "extras.country", "type": "string"},
+          {"title": "State", "title_ar": "المحافظه", "value": "extras.state", "type": "string"},
+          {"title": "City", "title_ar": "المدينه", "value": "extras.city", "type": "string"},
+          {"title": "Street", "title_ar": "الشارع", "value": "extras.street", "type": "string"},
+          {"title": "Building", "title_ar": "المبني", "value": "extras.building", "type": "string"},
+          {"title": "Floor", "title_ar": "الدور", "value": "extras.floor", "type": "string"},
+          {"title": "Apartment", "title_ar": "رقم الشقة", "value": "extras.apartment", "type": "string"}
+        ]
+      },
+      {
+        "title": "Transaction Details",
+        "title_ar": "تفاصيل المعامله",
+        "conditions": {
+          "list": {
+            "transaction": null
+          },
+          "type": "not_equal"
+        },
+        "body": [
+            {"title": "Amount", "title_ar": "المبلغ", "value": "transaction.amount", "type": "string"},
+            {"title": "Status", "title_ar": "الحالة", "value": "transaction.status", "type": "string"},
+            {"title": "Type", "title_ar": "النوع", "value": "transaction.type", "type": "string"}
+        ]
+      }
+    ]
+  }

@@ -106,18 +106,34 @@ class Dependencies {
     boolName(bool){
         let str = bool;
         if(localStorage.lang === "ar"){
-            bool? str = "نعم" : str = "لا"
+            if(bool == true || bool == "true"){
+                str = "نعم"
+            }else{
+                str = "لا"
+            }
         }else{
-            bool? str = "Yes" : str = "No"
+            if(bool == true || bool == "true"){
+                str = "Yes"
+            }else{
+                str = "No"
+            }
         }
         return str
     }
     isLiveName(bool){
         let str = bool;
         if(localStorage.lang === "ar"){
-            bool? str = "نشط" : str = "اختبار"
+            if(bool == true || bool == "true"){
+                str = "نشط"
+            }else{
+                str = "اختبار"
+            }
         }else{
-            bool? str = "Live" : str = "Test"
+            if(bool == true || bool == "true"){
+                str = "Live"
+            }else{
+                str = "Test"
+            }
         }
         return str
     }
@@ -132,7 +148,30 @@ class Dependencies {
         return array[0];
     }
     convertAmount(amount,currency){
+        if(amount === "-"){
+            amount = 0;
+        }
         return (amount/1) + " " + this.currencyName(currency);
+    }
+    convertCentsAmountFull(amount,currency){
+        if(amount === "-"){
+            amount = 0;
+        }
+        if(currency === "JOD"){
+            return dependencies.numberWithCommas(amount/1000) + " " + this.currencyName(currency)
+        }else{
+            return dependencies.numberWithCommas(amount/100) + " " + this.currencyName(currency)
+        }
+    }
+    convertCentsAmountFullNoCurr(amount){
+        return dependencies.numberWithCommas(amount/100)
+    }
+    getCurrentLang =() =>{
+        if (localStorage.lang) {
+            return localStorage.lang
+        } else {
+            return "en"
+        }
     }
     convertCentsAmount(amount,currency){
         if(currency === "JOD"){

@@ -1,0 +1,46 @@
+>>this Docs explain Custom Table Rendering 
+
+====> CustomizeTable this parent Component of Table      
+We pass data in array of Object naming HeaderData 
+contain with key ,value like as {name:"" ,name_ar :"" ,value="",type="" }
+rendering header of table from name and name_ar for AR language 
+
+value ..We pass value from data from api 
+
+type ..we have much types for header such as date,text,amount,amount_cents,action,actionCustom,boolean,live 
+
+Date type === pass the value in function (dependencies.custom_date_format)
+amount type=== pass the value in function (dependencies.convertAmount)
+amount_cents type === pass the value in function(dependencies.convertCentsAmount)
+boolean type === pass the value in function(dependencies.boolName)
+live type === pass the value in function(dependencies.isLiveName)
+action Type === render Buttons with downloading  Links from backend 
+actionCustom type ===  rendering buttons with spesific data from backend
+Text Type ===  first We check the value is the Object or string from this code 
+typeof element.value === "object" in fun  renderContent()
+
+checkEnableRowClick={true} ==>> check if row of table clickable or not =>> True if clickable
+
+enableCount={true} ==>> check it the table has count from backend or not =>> True if has Count from                            backend
+ checkPagination={true} ==>> check if the table has paginantion it dashboard or not =>> True if has paginantion
+
+
+we divide the CustomizeTable  for 2 files ..there are naming RowOfTable ,FooterOfTable
+
+
+>>> RowOfTable File ... rendering Row of table with component EnteriesTable which passing in it 
+           Data={Data} ==>>> This data passing form api
+           strucObj={strucObj} ===>this for array of object which rendering header and row for table
+           renderContent={this.renderContent} ==>> check for type or strucObj
+           checkEnableRowClick={enableRowClick} ==>> we pass it to child component
+           renderContentLable={this.renderContentLable} ==>> this check of typeof lable === "object" to render td with spesific classnames 
+
+
+>>>> FooterOfTable File .... Rendering Pagination and count with component CustomPagination
+Rendering when this flag (checkPagination === True )
+which passing this  totalLength={totalLength} ===>> Total Length of data in backend
+                PageNumber={PageNumber} ===>> pageNumber of data in 10 rows 
+                PageSize={PageSize} ===>> for selection of 10,25,50 of rows in 1 page
+                CustomCount={enableCount} ==>>> this flag check if the page has count from backend or                                    not
+                handleTableSizeChange={this.handleTableSizeChange} ===> handling the page numbers
+                handleTablePageChange={this.handleTablePageChange} ===> handling the page size

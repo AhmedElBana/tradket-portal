@@ -1,0 +1,16 @@
+.tagsFiltersDiv {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.tagsFiltersDiv>div {
+  display: inline-block;
+  background-color: #fff;
+  border: 1px solid #E6E9ED;
+  padding: 4px 15px;
+  user-select: none;
+  margin: 2px;
+  transition: all 0.3s ease-in-out;
+}
+.tagsFiltersDiv>div>span {
+  font-weight: bold;
+}

@@ -1,0 +1,226 @@
+@mixin en {
+  html[dir="ltr"] & {
+    @content;
+  }
+}
+@mixin ar {
+  html[dir="rtl"] & {
+    @content;
+  }
+}
+//media mixin
+@mixin m($width) {
+  @media(max-width:#{$width}px) {
+    @content;
+  }
+}
+
+.filtersDiv {
+  @include m(767) {
+  text-align: center;
+  margin-top: 0;
+  }
+}
+.filtersDiv label {
+  color: #141E30;
+  font-weight: 600;
+}
+.filtersDiv .filtersDivBtn{
+  min-height: 40px;
+}
+.filtersForm {
+  @include en {
+    text-align: left !important;
+  }
+  @include ar {
+    text-align: right !important;
+  }
+}
+.filtersButtons{
+  margin-top: 30px;
+  @include en {
+    text-align: right;
+  }
+  @include ar {
+    text-align: left;
+  }
+  @include m(767) {
+    @include en {
+      text-align: center;
+    }
+    @include ar {
+      text-align: center;
+    }
+  }
+}
+.filterCompButton {
+  display: inline-block;
+  width: auto;
+  min-width: 105px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  text-decoration: none !important;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin: 0px 2px 5px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  vertical-align: middle;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 0px 15px;
+
+  &:hover {
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+  @include en {
+    margin-left: 15px;
+  }
+  @include ar {
+    margin-right: 15px;
+  }
+  @include m(767) {
+    padding: 0px 5px;
+    font-size: 13px;
+    min-width: auto;
+     @include en {
+       margin-left: 5px;
+     }
+     @include ar {
+       margin-right: 5px;
+     }
+  }
+}
+.SubmitFButton {
+  float: none;
+  background: #0180FD;
+  border: 1px solid transparent !important;
+  border-radius: 3px !important;
+  color: #fff;
+
+  &:hover {
+    background-color: transparent !important;
+    border: 1px solid #1782FB !important;
+    color: #0180FD !important;
+  }
+  &:disabled {
+    color: #fff !important;
+    background: #0180FD !important;
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+.resetFButton {
+  color: #2D4B68;
+  background-color: #FFF;
+  border: 1px solid #2D4B68;
+
+  &:hover {
+    background-color: #2D4B68;
+    border: 1px solid #2D4B68;
+  }
+}
+.cancelFButton {
+  color: #87A1BB;
+  background-color: #FFF;
+  border: 1px solid #FFF;
+
+  &:hover {
+    background-color: #87A1BB;
+    border: 1px solid #87A1BB;
+  }
+}
+.removeFButton {
+  background: #FF5C75;
+  border: 1px solid transparent;
+  border-radius: 3px !important;
+  color: #fff;
+
+  &:hover {
+    background-color: transparent !important;
+    border: 1px solid #FF5C75 !important;
+    color: #FF5C75 !important;
+  }
+  @include m(767) {
+    padding: 0px 5px;
+    min-width: auto;
+  }
+}
+.filterInputGruop>div {
+  position: relative;
+}
+.filterInputGruop .simple-alert {
+  color: #813838;
+  font-size: 16px;
+}
+.filterInputGruop .simple-alert>i {
+  display: inline-block;
+  position: absolute;
+  font-size: 20px;
+  top: 10px;
+  right: 20px;
+
+  @include ar {
+    right: auto;
+    left: 23px;
+  }
+}
+.filterInputGruop .simple-alert.outDiv {
+  position: static;
+}
+.filterInputGruop .simple-alert.outDiv>i {
+  right: 25px;
+
+  @include ar {
+    right: auto;
+    left: 25px;
+  }
+}
+.filterInputGruop .simple-alert>.alert-danger {
+  padding: 5px 15px;
+  margin: 0px;
+  margin-top: 5px;
+}
+.filter-input {
+  height: 40px;
+  font-size: 14px;
+  width: 100% !important;
+  margin: 0px !important;
+  color: #000;
+  background-color: #FBFCFC;
+  border: 1px solid #C8D2DC;
+  border-radius: 4px;
+  -webkit-appearance: textfield;
+  box-sizing: border-box;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+
+  &::placeholder {
+    color: #cfd3d6;
+    font-size: 12px;
+    font-weight: normal;
+  }
+  @include en  {
+    padding-left: 10px;
+  }
+  @include ar {
+    padding-right: 10px;
+  }
+  &:focus{
+    border: 1px solid #0180FD;
+    outline: none;
+    box-shadow: none;
+  }
+}
+.filetrs_required_span{
+  color: #FF5C75;
+}

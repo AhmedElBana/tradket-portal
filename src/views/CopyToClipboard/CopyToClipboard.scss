@@ -1,0 +1,26 @@
+.copyBtn{
+    border: none;
+    background: #fff;
+    width: 31px;
+    height: 31px;
+    vertical-align: top;
+    text-align: center;
+    border-radius: 5px;
+    margin: 0 10px;
+    color: #1782FB;
+    font-size: 16px;
+    box-shadow: 0px 0px 6px #1782FB3B;
+    transition: all ease-in-out .3s;
+    .fa-check{
+        color: #0BD796;
+        font-size: 17px;
+    }
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.1,1.1);
+    }
+    &:focus{
+        outline: none;
+        border: none;
+    }
+}

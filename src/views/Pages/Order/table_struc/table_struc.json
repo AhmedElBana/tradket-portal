@@ -1,0 +1,36 @@
+{
+  "setting": {
+    "title": "Orders Summary",
+    "title_ar": "ملخص الطلبات",
+    "pagination": true,
+    "default_size": 10,
+    "NEXT": true
+  },
+  "struc": [
+    { "name": "ID", "name_ar": "الرقم", "value": "_id", "type": "text", "NEXT_uuid": true },
+    { "name": "Amount", "name_ar": "المبلغ", "value": "total", "type": "text" },
+    { "name": "Type", "name_ar": "النوع", "value": "type", "type": "text" },
+    { "name": "Date Created", "name_ar": "تاريخ الإنشاء", "value": "createdDate", "type": "date" },
+    { "name": "Customer", "name_ar": "العميل", "value": "customer_phoneNumber", "type": "text" },
+    { "name": "Promo", "name_ar": "كود خصم", "value": "promo", "type": "boolean" },
+    {"name": "Status", "name_ar": "الحالة",
+      "value": {
+        "conditions": {
+          "Canceled": {
+            "canceled": true
+          },
+          "Returned": {
+            "returned": true
+          }
+        },
+        "default": "Completed"
+      },
+      "type": "text",
+      "lable": {
+        "Returned": "errorLable",
+        "Canceled": "pendingLable",
+        "else": "successLable"
+      }
+    }
+  ]
+}

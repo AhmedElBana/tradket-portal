@@ -1,0 +1,163 @@
+Welcome To Transactions Table Details Component "Details"
+
+>> It renders the table of details below the transactions table
+
+>> The component recieve 5 props
+    <Details 
+        obj={detailsObj} 
+        data={dataObj} 
+        show={true}
+        waiting={false}
+        renderTransDetailsBtns={this.renderTransDetailsBtns}
+    />
+
+>> It has a child component "ShowDataType" renders 7 types of data
+        1- link
+        2- amount_cents 
+        3- amount
+        4- date 
+        5- text
+        6- boolean
+        7- payment
+        8- any other type
+
+>> You can pass data to the component through an object 
+
+        >> Inside this object Some fields are Required :
+
+            *** for all types
+
+                header:{
+                    title: "Transaction",
+                    title_ar: "المعاملة رقم"
+                },
+                body: [
+                    {
+                        title: "Transaction Details",
+                        title_ar: "تفاصيل المعاملة",
+                        body: [
+                            {
+                                title: "Amount",
+                                title_ar: "المبلغ",
+                                value: dataObj,
+                                type: "amount_cents"
+                            },
+                            {
+                                title: "Created at",
+                                title_ar: "تاريخ المعاملة",
+                                value: dataObj.created_at,
+                                type: "date"
+                            }
+                        ]   
+                    }
+                ]
+            
+            # Note that: for text type (Status) the value field is
+                
+                value: {
+                    conditions: {
+                        Successful: {
+                            success: true,
+                            pending: false
+                        },
+                        Pending: {
+                            success: true,
+                            pending: true
+                        }
+                    },
+                    default: "Declined" 
+                }
+
+        >> And this fields is optional :
+
+            conditions: dataObj.billing_data == null,
+
+>> And this is an example for the object 
+
+    let detailsObj = {
+      header:{
+        title: "Transaction",
+        title_ar: "المعاملة رقم"
+      },
+      body: [
+        {
+        title: "Transaction Details",
+        title_ar: "تفاصيل المعاملة",
+        conditions: dataObj.billing_data == null,
+        body: [
+          {
+            title: "Amount",
+            title_ar: "المبلغ",
+            value: dataObj,
+            type: "amount_cents"
+          },
+          {
+            title: "Created at",
+            title_ar: "تاريخ المعاملة",
+            value: dataObj.created_at,
+            type: "date"
+          }
+        ]
+        },
+        {
+          title: "Order Details",
+          title_ar: "تفاصيل الطلب",
+          body: [
+            {
+              title: "Status",
+              title_ar: "الحالة",
+              value: {
+                conditions: {
+                  Successful: {
+                    success: true,
+                    pending: false
+                  },
+                  Pending: {
+                    success: true,
+                    pending: true
+                  }
+                },
+                default: "Declined" //default keywork is required
+              }, 
+              type: "text"
+            },
+            {
+              title: "Delivery Needed",
+              title_ar: "إمكانية التوصيل",
+              value: dataObj.order.delivery_status,
+              type: "boolean"
+            },
+            {
+              title: "Order Link",
+              title_ar: "رابط الطلب",
+              value: dataObj.order.order_url,
+              type: "link"
+            }
+          ]
+        },
+        {
+          title: "Shipping Details",
+          title_ar: "تفاصيل الشحن",
+          body: [
+            {
+              title: "Full Name",
+              title_ar: "الإسم بالكامل",
+              value: dataObj.billing_data.first_name+" "+dataObj.billing_data.last_name,
+              type: "string"
+            },
+            {
+              title: "Phone Number",
+              title_ar: "رقم الهاتف",
+              value: dataObj.billing_data.phone_number,
+              type: "string"
+            },
+            {
+              title: "Email Address",
+              title_ar: "البريد الإلكترونى",
+              value: dataObj.billing_data.email,
+              type: "string"
+            }
+          ]
+        }
+      ]
+    }

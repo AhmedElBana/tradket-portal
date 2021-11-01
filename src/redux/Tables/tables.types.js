@@ -1,0 +1,2 @@
+export const SETTABLESTATE = 'SETTABLESTATE';
+export const UPDATESTATE = 'UPDATESTATE';

@@ -15,6 +15,12 @@ import successImg from "./../../../assets/img/success.png"
 
 import Waiting from "./../../../views/Waiting/waiting";
 
+import FullTable from './../../CustomComponents/FullTable/FullTable';
+import table_struc from './table_struc/table_struc.json';
+import details_struc from './table_struc/details_struc.json';
+import filter_struc from './table_struc/filters_struc.json';
+let final_filter_struc = filter_struc;
+
 let requiredError = "This field is required."
 const required = (value) => {
   if (!value.toString().trim().length) {
@@ -68,51 +74,15 @@ class Order extends Component {
   constructor(props){
     super(props);
     this.state = {
-        //users
-        table: {
-          headers: ["ID","Branch","Amount","Type","Created At","Customer","promo","State"]
-        },
-        detailsHeaders: ["Product ID","Name","Price","Quantity","Total"],
-        usersTablePath: "/api/order/list",
-        integData: [],
-        totalLength: 0,
-        PageNumber: 0,
-        PageSize: 10,
-        usersWaiting: true,
-        detailsWaiting:false,
-        showUsersDetails: false,
-        selectedUser: {},
-        //branches
-        brancesLoaded: false,
-        fullBranchs: [],
-        branchName: {},
         //public
         publicError: false,
         logout: false,
-    };
-    //list user
-    this.requestUsers = this.requestUsers.bind(this);
-    this.renderUsersBlock = this.renderUsersBlock.bind(this);
-    this.userDetailsRef = React.createRef();
-    this.handelRowClick = this.handelRowClick.bind(this);
-    this.renderUsersTable = this.renderUsersTable.bind(this);
-    this.renderUserDetails = this.renderUserDetails.bind(this);
-    this.handleTablePageChange = this.handleTablePageChange.bind(this);
-    this.handleTableSizeChange = this.handleTableSizeChange.bind(this);
-
-    this.requestBranches = this.requestBranches.bind(this); 
-    this.loadDefaultData();
+    }; 
   }
-  loadDefaultData(){
-    //load first 10 records
-    let startFilters = {
-      "page": this.state.PageNumber + 1,
-      "page_size": this.state.PageSize
-    }
-    this.requestUsers(startFilters);
+  componentDidMount(){
     this.requestBranches();
   }
-  requestBranches(){
+  requestBranches = () => {
     //request data
     let config = {
       headers: {
@@ -127,12 +97,19 @@ class Order extends Component {
         "/api/branch/list",
         config,
         (resp) => {
-          let branches = {};
+          let branches_options = [];
           resp.data.data.result.map((branch)=>{
-            branches[branch._id] = branch.name;
-          })
-          this.setState({branchName: branches, fullBranchs: resp.data.data.result, brancesLoaded: true},()=>{
+            branches_options.push({"value": branch._id, "text": branch.name, "text_ar": branch.name})
           });
+          let with_branch_final_filter_struc = [];
+          final_filter_struc.map((ele) => {
+            let current_ele = ele;
+            if(current_ele.filterName == "branch_id"){
+              current_ele.options = branches_options;
+            }
+            with_branch_final_filter_struc.push(current_ele);
+          })
+          final_filter_struc = [...with_branch_final_filter_struc]
         },
         (error) => {
           if(error.response){
@@ -146,182 +123,6 @@ class Order extends Component {
           }
         }
     )
-  }
-  handleTablePageChange(page) {
-    this.setState({PageNumber: page.selected, usersWaiting: true, showUsersDetails: false},()=>{
-      let filters = {
-        page: this.state.PageNumber + 1,
-        page_size: this.state.PageSize,
-        token: auth.getMerchantToken()
-      }
-      this.requestUsers(filters);
-    });
-  }
-  handleTableSizeChange(event){
-    let maxPageNum = Math.ceil(this.state.totalLength/event.target.value) - 1;
-    if(this.state.PageNumber > maxPageNum){
-      this.setState({PageSize: event.target.value, PageNumber: maxPageNum, usersWaiting: true},()=>{
-        let filters = {
-          page: this.state.PageNumber + 1,
-          page_size: this.state.PageSize,
-          token: auth.getMerchantToken()
-        }
-        this.requestUsers(filters);
-      });
-    }else{
-      this.setState({PageSize: event.target.value, usersWaiting: true},()=>{
-        let filters = {
-          page: this.state.PageNumber + 1,
-          page_size: this.state.PageSize,
-          token: auth.getMerchantToken()
-        }
-        this.requestUsers(filters);
-      });
-    }
-  }
-  requestUsers(filters){
-    //request data
-    let config = {
-      headers: {
-        "Content-Type": "application/json",
-        "x-auth": auth.getMerchantToken()
-    },
-      params: {
-        ...this.state.currentFilters,
-        ...filters
-      }
-    }
-    httpClient.get(
-        this.state.usersTablePath,
-        config,
-        (resp) => {
-          let users = resp.data.data.result;
-          console.log(users)
-          this.setState({usersData: users, totalLength: resp.data.data.total, usersWaiting: false},()=>{
-          });
-        },
-        (error) => {
-          if(error.response){
-            if(error.response.status === 401){
-              this.setState({logout: true});
-            }else{
-              this.setState({publicError: true});
-            }
-          }else{
-            this.setState({publicError: true});
-          }
-        }
-    )
-  }
-  renderUsersTable(){
-    return(
-      <div>
-        <Table className="usersTable mainTable">
-          <thead>
-            <tr>
-              {this.state.table.headers.map((ele,index)=>{
-                return <th key={index}>{ele}</th>
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.usersData.map((ele,index)=>{
-              let state = "";
-              if(ele.canceled){
-                state = "Canceled"
-              }else if(ele.returned){
-                state = "Returned"
-              }else{
-                state = "Completed"
-              }
-              return(
-                <tr key={ele._id}  onClick={()=> this.handelRowClick(ele,index)} className={this.state.showUserDetails && (ele._id == this.state.selectedUser._id)? "selectedRow": ""}>
-                  <td>{ele._id}</td>
-                  <td>{this.state.branchName[ele.branch_id]}</td>
-                  <td>{ele.total}</td>
-                  <td>{ele.type}</td>
-                  <td>{dependencies.custom_date_format(ele.createdDate)}</td>
-                  <td>{ele.customer_name}</td>
-                  <td>{dependencies.boolName(ele.promo)}</td>
-                  <td>{state}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </Table>
-      </div>
-    )
-  }
-  renderUsersBlock(){
-    return(
-      <div>
-        <Row>
-          <div className="x_panel">
-            <div className="x_title">
-              <h2>Orders</h2>
-            </div>
-            <div className="x_content">
-              {this.state.usersWaiting || !this.state.brancesLoaded?
-                <Waiting height="605px" />
-              : 
-                <div className="">
-                  <div className="tableLength">
-                        <select className="tradket_select" onChange={this.handleTableSizeChange} value={this.state.PageSize}>
-                          <option value="10">10</option>
-                          <option value="25">25</option>
-                          <option value="50">50</option>
-                          <option value="100">100</option>
-                        </select>
-                    </div>
-                      <div className="currentTableDiv">
-                        {this.renderUsersTable()}
-                      </div>
-                      <ReactPaginate
-                        pageCount={Math.ceil(this.state.totalLength/this.state.PageSize)}
-                        marginPagesDisplayed={2}
-                        onPageChange={this.handleTablePageChange}
-                        forcePage={this.state.PageNumber}
-                        containerClassName="paginationList"
-                        nextLabel="Next"
-                        previousLabel="Previous"
-                      />
-                </div>
-              }
-            </div>
-          </div>
-        </Row>
-        {this.state.showUserDetails?
-          this.renderUserDetails()
-        :
-          null
-        }
-      </div>
-    )
-  }
-  //dedtails
-  handelRowClick(user,index){
-    //reset collapse open 
-      if(this.state.showUserDetails){
-        if(user._id === this.state.selectedUser._id){
-          this.setState({showUserDetails: false});
-        }else{
-          this.setState({selectedUser: user},()=>{
-            //scroll to transaction details
-            window.scrollTo({
-              top:this.userDetailsRef.current.offsetTop, 
-              behavior: "smooth"   // Optional, adds animation
-            })
-          });
-        }
-      }else{
-        this.setState({selectedUser: user, showUserDetails: true},()=>{
-          //scroll to transaction details
-          window.scrollTo({
-            top:this.userDetailsRef.current.offsetTop, 
-            behavior: "smooth"   // Optional, adds animation
-          })
-        });
-      }
   }
   renderUserDetails(){
     let state = "";
@@ -456,7 +257,9 @@ class Order extends Component {
           </div>
         :
           <div>
-            {this.renderUsersBlock()}
+            {/* {this.renderUsersBlock()} */}
+            <FullTable name="orders" path={"/api/order/list"} table={table_struc} filters={final_filter_struc} />
+            {/* <FullTable name="orders" path={"/api/order/list"} table={table_struc} filters={filter_struc} details={details_struc}/> */}
           </div>
         }
       </div>

@@ -1,0 +1,105 @@
+    Welcome to Filters Component 
+
+    >> It contains 5 types of filters
+        1- date
+        2- dateRange 
+        3- input
+        4- select 
+        5- toggle
+
+    >> You can pass data to the component through array of objects
+        >> Inside this array Some fields are Required :
+            *** for all types of filters 
+                >> type: "filter type"
+                >> filterName: "backend filter name"
+                >> name: "filter english name"
+                >> name_ar: "filter arabic name"
+            ***for (dateRange) type
+                note: instead of filterName
+                    >> filterNameFrom: "date_from"
+                    >> filterNameTo: "date_to"
+            ***for (select) type 
+                >> message: "select english message "
+                >> message_ar: "select arabic message"
+                >> options: [array of options contains {value, english text, arabic text}]
+
+        >> And others are Optional :
+            ***for all types of filters
+                >> size: {object of sizes for each screen contains xs, sm, md, lg}
+            ***for (dateRange) type
+                >> date_range: the range of date which you want in (days)
+                    *default value = 30 days*
+            *** for (input) type
+                >> validations: [array of validations]
+                    - validations types :
+                        1- "intNumber"
+                        2- "number"
+                        3- "amount"
+                    *default value = htmlTags*
+        
+        # Note that: all fields values are ("string") except:
+        "date_range" is (integer),
+        "size" is {object of (integers)},
+        "validaions" is [array of ("strings")] and
+        "options" is [array of objects of ("strings")].
+
+    >> And this is an exapmle for the array you can pass :
+
+    let filtersArr=[
+        
+        {
+            type: "dateRange",
+            filterNameFrom: "date_from",
+            filterNameTo: "date_to",
+            name: "Date Range",
+            name_ar: "مدى التاريخ",
+            date_range: 20,
+            size: {
+                xs: 12,
+                sm: 12,
+                md: 12,
+                lg: 6
+            }
+        },
+        {
+            type: "date",
+            filterName: "date",
+            name: "Date",
+            name_ar:"التاريخ"
+        },
+        {
+            type: "input",
+            filterName: "transId",
+            name: "Transaction ID",
+            name_ar: "رقم المعاملة",
+            validations: ["intNumber"]
+        },
+        {
+            type: "input",
+            filterName: "orderId",
+            name: "Order ID",
+            name_ar: "رقم الطلب",
+            validations: ["number"]
+        },
+        {
+            type: "select",
+            filterName: "origin",
+            name: "Origin",
+            name_ar: "المصدر",
+            message: "Select Origin",
+            message_ar: "حدد المصدر",
+            options: [
+                {value: "IFRAME", text: "Iframe", text_ar: "اى فريم"},
+                {value: "PRODUCT", text: "Product", text_ar: "منتج"},
+                {value: "INVOICE", text: "Invoice", text_ar: "فاتورة"},
+                {value: "SDK", text: "SDK", text_ar: "تطبيق تليفون"},
+                {value: "Application", text: "Application", text_ar: "أخرى"}
+            ]
+        },
+        {
+            type: "toggle",
+            filterName: "isLive",
+            name: "Is Live",
+            name_ar: "معاملات فعالة"
+        }
+    ];

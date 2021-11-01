@@ -1,0 +1,37 @@
+{
+ "en": {
+   "success": "Successful",
+   "pending": "Pending",
+   "declined": "Declined",
+   "nextLabel": "Next",
+   "previousLabel": "Prev", 
+   "noData":"No Data yet to show",
+   "downloadBtn":"Download",
+   "pendingFile": "Pending",
+   "reportTypeOption":{
+    "tranx":"Transactions Report",
+    "invoice":"Invoices Report",
+    "order":"Orders Report",
+    "transfers":"Transfer Report"
+   },
+   "redownload":"Pending...."
+   
+ },
+ "ar":{
+   "nextLabel": "التالى",
+   "previousLabel": "السابق",
+   "noData":"لا يوجد بيانات",
+   "success": "ناجحة",
+   "pending": "قيد الإنتظار",
+   "declined": "مرفوضة",
+   "downloadBtn":"تحميل",
+  "pendingFile": "قيد التجهيز",
+  "reportTypeOption":{
+    "tranx":"تقرير المعاملات",
+    "invoice":"تقرير الفواتير",
+    "order":"تقرير الطلبات",
+    "transfers":" تقرير التحويلات"
+  }
+ },
+ "redownload":"قيد التحميل"
+}
