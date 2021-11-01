@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CopyToClipboard from './../../../CopyToClipboard/CopyToClipboard';
 import { dependencies } from './../../../../tools/Dependencies';
+import { Table } from 'reactstrap';
 
 const fetchValue = (dateObj, value) => {
     let finalValue;
@@ -101,6 +102,39 @@ const renderArrayType = (strucEle, data) => {
         </td>
     )
 }
+const renderBill = (strucEle, data) => {
+    console.log(data[strucEle.value])
+    return(
+        <td>
+            <div className="product_map">
+                <Table className="usersTable mainTable">
+                    <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {data[strucEle.value].map((product,index)=>{
+                        return(
+                        <tr key={product._id}>
+                            <td>{product._id}</td>
+                            <td>{product.name}</td>
+                            <td>{product.price}</td>
+                            <td>{product.quantity}</td>
+                            <td>{product.total}</td>
+                        </tr>
+                        )
+                    })}
+                    </tbody>
+                </Table>
+            </div>
+        </td>
+    )
+}
 function ShowDataType(props) {
     if (props.use_parent_data && props.use_parent_data === true){
         return (
@@ -133,6 +167,8 @@ function ShowDataType(props) {
                                     <td>{ele.value ? fetchValue(props.parent_data, ele.value).trim().split(",").length : "-"}</td>
                                 : ele.type === "array"?
                                     renderArrayType(ele, props.parent_data)
+                                : ele.type === "bill"?
+                                    renderBill(ele, props.parent_data)
                                 : 
                                     <td>{fetchValue(props.parent_data, ele.value) ? fetchValue(props.parent_data, ele.value) : "-"}</td>
                                 }
@@ -149,7 +185,7 @@ function ShowDataType(props) {
                 {props.obj.map((ele, index) => {
                     return(
                         checkDisplayCoditions(props.data, ele) ? 
-                            <tr key={ele.value + "-" + index} className="integrationBlockTR">
+                            <tr key={ele.value + "-" + index} className={ele.type != "bill" ? "integrationBlockTR" : "bill_tr"}>
                                 <td>{localStorage.lang === "ar" ? ele.title_ar : ele.title}</td>
                                 {ele.type === "link"?
                                     <td>
@@ -174,6 +210,8 @@ function ShowDataType(props) {
                                     <td>{ele.value ? fetchValue(props.data, ele.value).trim().split(",").length : "-"}</td>
                                 : ele.type === "array"?
                                     renderArrayType(ele, props.data)
+                                :  ele.type === "bill"?
+                                    renderBill(ele, props.data)
                                 : 
                                     <td>{fetchValue(props.data, ele.value) ? fetchValue(props.data, ele.value) : "-"}</td>
                                 }

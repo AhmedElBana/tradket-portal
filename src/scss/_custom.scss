@@ -1224,3 +1224,26 @@ td.NEXT_uuid_td{
     font-size: 20px;
     color: #333;
 }
+
+.product_map table tbody > tr{
+    display: table-row !important;
+    width: 100%;
+}
+.newDetailsCard.x_panelAccept .product_map table tbody > tr{
+    width: 100% !important;
+}
+.bill_tr{
+    width: 100% !important;
+}
+tr.bill_tr > td{
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+}
+.sub_Table > tbody > tr.bill_tr > td:last-of-type::before{
+    display: none !important;
+}
+.sub_Table > tbody > tr.bill_tr > td:first-of-type{
+    display: block !important;
+    width: 100% !important;
+}
