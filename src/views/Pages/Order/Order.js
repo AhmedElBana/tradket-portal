@@ -258,8 +258,7 @@ class Order extends Component {
         :
           <div>
             {/* {this.renderUsersBlock()} */}
-            <FullTable name="orders" path={"/api/order/list"} table={table_struc} filters={final_filter_struc} />
-            {/* <FullTable name="orders" path={"/api/order/list"} table={table_struc} filters={filter_struc} details={details_struc}/> */}
+            <FullTable name="orders" path={"/api/order/list"} table={table_struc} filters={final_filter_struc} details={details_struc} />
           </div>
         }
       </div>

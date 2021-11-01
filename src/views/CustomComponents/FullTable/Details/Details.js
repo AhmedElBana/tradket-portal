@@ -156,9 +156,9 @@ function Details(props) {
                         <div className="x_title">
                             <>
                                 {props.obj.header.NEXT == true ?
-                                    <h2>{(localStorage.lang === "en" ? props.obj.header.title : props.obj.header.title_ar)}</h2>
+                                    <h2>{(localStorage.lang === "ar" ? props.obj.header.title_ar : props.obj.header.title)}</h2>
                                 :
-                                    <h2>{(localStorage.lang === "en" ? props.obj.header.title : props.obj.header.title_ar) + " (" + state.selectedRowData.id + ")"}</h2>
+                                    <h2>{(localStorage.lang === "ar" ? props.obj.header.title_ar : props.obj.header.title) + " (" + state.selectedRowData.id + ")"}</h2>
                                 }
                                 <div className="ButtonsDiv">
                                     {props.detailsButtons !== null && !state.details_waiting ?
@@ -186,7 +186,7 @@ function Details(props) {
                                                                     active={state.detailsActiveTab === index}
                                                                     onClick={() => togglePaneDetails(index, state, props, dispatch)}
                                                                 >
-                                                                    {localStorage.lang === "en" ? ele.title : ele.title_ar}
+                                                                    {localStorage.lang === "ar" ? ele.title_ar : ele.title}
                                                                 </NavLink>
                                                             </NavItem>
                                                         : null

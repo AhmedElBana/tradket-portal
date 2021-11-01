@@ -109,7 +109,7 @@ function ShowDataType(props) {
                     return(
                         checkDisplayCoditions(props.parent_data, ele) ? 
                             <tr key={ele.value + "-" + index}>
-                                <td>{localStorage.lang === "en" ? ele.title : ele.title_ar}</td>
+                                <td>{localStorage.lang === "ar" ? ele.title_ar : ele.title}</td>
                                 {ele.type === "link"?
                                     <td>
                                         <a className="previewBtn" href={fetchValue(props.parent_data, ele.value)} target="_blank"><i className=" fa fa-share-square-o" />Preview</a>
@@ -150,7 +150,7 @@ function ShowDataType(props) {
                     return(
                         checkDisplayCoditions(props.data, ele) ? 
                             <tr key={ele.value + "-" + index} className="integrationBlockTR">
-                                <td>{localStorage.lang === "en" ? ele.title : ele.title_ar}</td>
+                                <td>{localStorage.lang === "ar" ? ele.title_ar : ele.title}</td>
                                 {ele.type === "link"?
                                     <td>
                                         <a className="previewBtn" href={fetchValue(props.data, ele.value)} target="_blank"><i className=" fa fa-share-square-o" />Preview</a>

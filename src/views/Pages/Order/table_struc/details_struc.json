@@ -1,47 +1,42 @@
 {
     "header":{
-      "title": "Intention", "title_ar": "نية دفع رقم",
-      "NEXT": true
+      "title": "Order", "title_ar": "طلب رقم"
     },
     "body": [
       {
-        "title": "Intention Details", "title_ar": "تفاصيل نية الدفع",
+        "title": "Order Details", "title_ar": "تفاصيل الطلب",
         "body": [
-          {"title": "ID", "title_ar": "الرقم", "value": "id", "type": "string"},
-          {"title": "Amount", "title_ar": "المبلغ", "value": "intention_detail.amount", "type": "string"},
-          {"title": "Created at", "title_ar": "تاريخ المعاملة", "value": "created", "type": "date"},
-          {"title": "Last update", "title_ar": "اخر تحديث", "value": "modified", "type": "date"},
-          {"title": "Confirmed", "title_ar": "تم تأكيد", "value": "confirmed", "type": "boolean"}
+          {"title": "ID", "title_ar": "الرقم", "value": "_id", "type": "string"},
+          {"title": "Type", "title_ar": "type", "value": "type", "type": "string"},
+          {"title": "Status", "title_ar": "الحالة", "type": "text",
+            "value": {
+              "conditions": {
+                "Canceled": {
+                  "canceled": true
+                },
+                "Returned": {
+                  "returned": true
+                }
+              },
+              "default": "Completed"
+            }
+          },
+          {"title": "Branch", "title_ar": "الفرع", "value": "branch_id", "type": "string"},
+          {"title": "create Date", "title_ar": "تاريخ الطلب", "value": "createdDate", "type": "date"},
+          {"title": "Staff ID", "title_ar": "رقم الكاشير", "value": "creator_id", "type": "string"},
+          {"title": "Use Promo", "title_ar": "كود خصم", "value": "promo", "type": "boolean"},
+          {"title": "Sub Total", "title_ar": "المبلغ", "value": "subTotal", "type": "string"},
+          {"title": "Discount Value", "title_ar": "الخصم", "value": "discountValue", "type": "string"},
+          {"title": "Total", "title_ar": "المبلغ اللي", "value": "total", "type": "string"},
+          {"title": "Bill", "title_ar": "الفاتورة", "value": "bill", "type": "bill"}
         ]
       },
       {
         "title": "Customer Details", "title_ar": "تفاصيل العميل",
         "body": [
-          {"title": "Name", "title_ar": "الاسم", "value": "extras.first_name+extras.last_name", "type": "string"},
-          {"title": "Email", "title_ar": "البريد الالكتروني", "value": "extras.email", "type": "string"},
-          {"title": "Phone", "title_ar": "الهاتف", "value": "extras.phone_number", "type": "string"},
-          {"title": "Country", "title_ar": "البلد", "value": "extras.country", "type": "string"},
-          {"title": "State", "title_ar": "المحافظه", "value": "extras.state", "type": "string"},
-          {"title": "City", "title_ar": "المدينه", "value": "extras.city", "type": "string"},
-          {"title": "Street", "title_ar": "الشارع", "value": "extras.street", "type": "string"},
-          {"title": "Building", "title_ar": "المبني", "value": "extras.building", "type": "string"},
-          {"title": "Floor", "title_ar": "الدور", "value": "extras.floor", "type": "string"},
-          {"title": "Apartment", "title_ar": "رقم الشقة", "value": "extras.apartment", "type": "string"}
-        ]
-      },
-      {
-        "title": "Transaction Details",
-        "title_ar": "تفاصيل المعامله",
-        "conditions": {
-          "list": {
-            "transaction": null
-          },
-          "type": "not_equal"
-        },
-        "body": [
-            {"title": "Amount", "title_ar": "المبلغ", "value": "transaction.amount", "type": "string"},
-            {"title": "Status", "title_ar": "الحالة", "value": "transaction.status", "type": "string"},
-            {"title": "Type", "title_ar": "النوع", "value": "transaction.type", "type": "string"}
+          {"title": "ID", "title_ar": "الرقم", "value": "customer_id", "type": "string"},
+          {"title": "Name", "title_ar": "الاسم", "value": "customer_name", "type": "string"},
+          {"title": "Phone", "title_ar": "رقم الهاتف", "value": "customer_phoneNumber", "type": "string"}
         ]
       }
     ]

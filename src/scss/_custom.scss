@@ -935,3 +935,292 @@ td.NEXT_uuid_td{
 .modal.fade{
     opacity: 1;
 }
+
+.sub_Table {
+  border: none;
+}
+
+.sub_Table>tbody>* {
+  border: none;
+}
+
+.sub_Table>tbody>tr>* {
+  border: none;
+  padding: 4px 2px;
+}
+
+.sub_Table>tbody>tr:hover {
+  transition: none;
+  transform: none;
+  background-color: #fff;
+  box-shadow: none;
+  color: #73879C;
+}
+
+.sub_Table>tbody>tr>td {
+  vertical-align: middle;
+  position: relative;
+  overflow-wrap: break-word;
+
+  @media (max-width:767px) {
+    display: block;
+    width: 100%;
+  }
+}
+
+.sub_Table>tbody>tr>td>span.link {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.sub_Table>tbody>tr>td:first-of-type {
+  width: 1px !important;
+  white-space: nowrap;
+  font-weight: bold;
+}
+.sub_Table>tbody>tr>td a{
+  overflow-wrap: break-word;
+}
+.sub_Table.left_border>tbody>tr>td:first-of-type {
+  @include en {
+    padding-left: 10px;
+  }
+
+  @include ar {
+    padding-right: 10px;
+  }
+}
+.sub_Table > tbody > tr{
+    cursor: auto;
+    text-decoration: none !important;
+    color: #333;
+    &:hover{
+        color: #333;
+    }
+}
+.sub_Table>tbody>tr>td:last-of-type {
+  padding: 4px 14px;
+  max-width: 485px;
+
+  @media (max-width:767px) {
+    max-width: 200px;
+  }
+}
+.ps__rail-y:hover > .ps__thumb-y, .ps__rail-y:focus > .ps__thumb-y, .ps__rail-y.ps--clicking{
+  background-color: transparent !important;
+}
+.ps__thumb-y{
+  width: 5px;
+}
+.sub_Table>tbody>tr>td:last-of-type::before {
+  content: " : ";
+  font-weight: bold;
+  position: absolute;
+
+  @include en {
+    left: 0px;
+  }
+
+  @include ar {
+    right: 0px;
+  }
+
+  top: 50%;
+  transform: translateY(-50%);
+
+  @media (max-width:767px) {
+    content: "";
+  }
+}
+.users_x_content .sub_Table>tbody>tr>td:last-of-type::before {
+  content: "";
+}
+.left_border {
+  @media (min-width:767px) {
+    @include en {
+      border-left: 1px solid #c8ced3;
+    }
+
+    @include ar {
+      border-right: 1px solid #c8ced3;
+    }
+  }
+}
+
+.full_loading {
+  background-color: #fff;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 99999999;
+  opacity: 1;
+}
+.users_x_content .sub_Table>tbody>tr>td:last-of-type::before {
+  content: "";
+}
+
+.x_panelAccept{
+    padding: 0px;
+    background: transparent;
+    border: none;
+}
+.x_panelAccept .x_title{
+    position: relative;
+    background: #fff;
+    padding: 15px 15px;
+    margin-bottom: 15px;
+    @include m(767){
+        height: auto;
+        .ButtonsDiv{
+            float: none !important;
+        width: 100%;
+        overflow-x: auto;
+            .closeBtn{
+                position: absolute;
+                top: 15px;
+                @include en{
+                    right: 15px;
+                }
+                @include ar{
+                    left: 15px;
+                }
+            }
+        }
+    }
+}
+.x_panelAccept .x_title h2{
+    margin: 0px;
+    line-height: 35px;
+    width: auto;
+    span{
+        font-size: 13px;
+        color: #0180FD;
+        background: #ECF0FF;
+        padding: 3px 7px;
+        border-radius: 46px;
+        @include m(767){
+            display: none;
+        }
+    }
+}
+.x_panelAccept .x_content{
+    padding: 0px;
+}
+.x_panelAccept .x_content .nav.nav-tabs{
+    background: #fff;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 3px;
+    overflow: hidden;
+}
+.x_panelAccept .x_content .nav.nav-tabs .nav-link{
+    border: none;
+    border-bottom: 3px solid #fff;
+    color: #354052;
+    font-size: 18px;
+    font-weight: 600;
+    @include m(991){
+        font-size: 16px;
+    }
+}
+.x_panelAccept .x_content .nav.nav-tabs .nav-link.active{
+    border: none;
+    border-bottom: 3px solid #1782FB;
+}
+.x_panelAccept .x_content .tab-content{
+    border: none;
+    border-radius: 5px;
+}
+.x_panelAccept table th, .x_panelAccept table td {
+    padding: 5px 10px !important;
+    font-size: 14px !important;
+    font-weight: 500;
+    overflow: hidden;
+}
+.x_panelAccept table th, .x_panelAccept table td:first-of-type {
+    font-weight: 600;
+}
+.x_panelAccept table td {
+    @include m(767){
+        // display: table-cell;
+        // padding: 0px !important;
+    }
+}
+.x_panelAccept .sub_Table > tbody > tr > td{
+    @include m(767){
+        width: auto;
+        display: inline-block;
+    }
+}
+.sub_Table > tbody > tr > td:last-of-type::before{
+    left: 0px;
+}
+.x_panelAccept .sub_Table > tbody > tr > td:first-of-type{
+    @include m(767){
+        // width: 155px !important;
+        width: 1px !important;
+        white-space: nowrap;
+        display: inline-table;
+    }
+}
+.x_panelAccept .sub_Table>tbody>tr>td:last-of-type::before {
+    @media (max-width:767px) {
+        content: " : ";
+    }
+  }
+
+.x_panelAccept .x_content.noTaps{
+    background: #fff;
+    margin: 0px;
+    padding: 15px;
+}
+.x_panelAccept .x_content.noTaps table tr > td{
+    position: relative;
+}
+.x_panelAccept .x_content.noTaps table tr > td:last-of-type::before{
+    position: absolute;
+    @include en{
+        left: 0px;
+    }
+    @include ar{
+        right: 0px;
+    }
+    content: ":";
+}
+.x_panelAccept .x_content.noTaps table tr > td:first-of-type{
+    padding: 5px 0px !important;
+}
+
+
+.x_panelAccept.transfetrs .extraDataDiv{
+    text-align: center;
+    background: #fff;
+    margin: 0px;
+    padding: 15px;
+    overflow-x: auto;
+    width: 100%;
+}
+.x_panelAccept.transfetrs .extraDataDiv .tableFooter{
+    height: 40px;
+}
+.x_panelAccept.transfetrs .extraDataDiv .tableFooter > select{
+    @include en{
+        float: left;
+    }
+    @include ar{
+        float: right;
+    }
+}
+
+
+.x_title > h2{
+    font-size: 26px;
+    color: #333;
+}
+.x_panelAccept .x_title h2{
+    font-size: 20px;
+    color: #333;
+}
