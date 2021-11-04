@@ -30,11 +30,13 @@
     "options": []
   },
   {
-    "type": "input",
+    "type": "select",
     "filterName": "creator_id",
-    "name": "Staff ID",
-    "name_ar": "رقم الكاشير",
-    "validations": []
+    "name": "Staff",
+    "name_ar": "الكاشير",
+    "message": "Select Staff",
+    "message_ar": "حدد الكاشير",
+    "options": []
   },
   {
     "type": "toggle",

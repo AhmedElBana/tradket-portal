@@ -45,7 +45,6 @@ const fetchData = (state, name, dispatch) => {
     (resp) => {
       let newState = {};
       let data;
-      console.log(resp)
       if(resp.data.data.result){
         data = resp.data.data.result;
         newState.totalLength = resp.data.data.total;

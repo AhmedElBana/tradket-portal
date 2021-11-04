@@ -935,7 +935,12 @@ td.NEXT_uuid_td{
 .modal.fade{
     opacity: 1;
 }
-
+.fade.show{
+    opacity: 1;
+}
+.modal-backdrop.show{
+    opacity: .5;
+}
 .sub_Table {
   border: none;
 }
@@ -1246,4 +1251,7 @@ tr.bill_tr > td{
 .sub_Table > tbody > tr.bill_tr > td:first-of-type{
     display: block !important;
     width: 100% !important;
+}
+.perms_group .switch{
+    position: static;
 }
