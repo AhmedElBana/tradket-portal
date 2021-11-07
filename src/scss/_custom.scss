@@ -1086,15 +1086,18 @@ td.NEXT_uuid_td{
             .closeBtn{
                 position: absolute;
                 top: 15px;
-                @include en{
-                    right: 15px;
-                }
+                right: 15px;
                 @include ar{
                     left: 15px;
                 }
             }
         }
     }
+}
+.closeBtn{
+    height: 35px;
+    width: 35px;
+    font-size: 20px;
 }
 .x_panelAccept .x_title h2{
     margin: 0px;
@@ -1162,6 +1165,36 @@ td.NEXT_uuid_td{
 }
 .sub_Table > tbody > tr > td:last-of-type::before{
     left: 0px;
+}
+
+@include m(767){
+    table.sub_Table{
+        display: inline-block;
+        width: 100%;
+        tbody{
+            display: inline-block;
+            width: 100%;
+        }
+    }
+    .sub_Table > tbody > tr > td:last-of-type{
+        max-width: 100% !important;
+        .product_map{
+            max-width: 100% !important;
+            overflow-x: auto;
+            table{
+                tbody{
+                    display: table-row-group;
+                }
+            }
+        }
+    }
+    .sub_Table > tbody > tr.bill_tr > td:first-of-type{
+        padding: 0px !important;
+    }
+    .sub_Table > tbody > tr.bill_tr > td:last-of-type{
+        padding: 0px !important;
+        padding-top: 10px !important;
+    }
 }
 .x_panelAccept .sub_Table > tbody > tr > td:first-of-type{
     @include m(767){

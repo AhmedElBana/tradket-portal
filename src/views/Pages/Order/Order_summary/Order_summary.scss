@@ -1,3 +1,20 @@
+//media mixin
+@mixin m($width) {
+    @media(max-width:#{$width}px) {
+        @content;
+    }
+}
+// Lang mixin
+@mixin en {
+    html[dir="ltr"] & {
+        @content;
+    }
+}
+@mixin ar {
+    html[dir="rtl"] & {
+        @content;
+    }
+}
 .orders_headers{
     background-color: #fff;
     padding: 15px;
@@ -65,6 +82,32 @@
             font-weight: bold;
             font-size: 24px;
             color: #fff;
+        }
+    }
+}
+@include m(767){
+    .insights_head_div div{
+        padding-top: 10px;
+        select{
+            width: calc(100% - 10px);
+            margin-bottom: 10px;
+        }
+        div.rs-picker-date{
+            width: calc(100% - 10px);
+            margin-bottom: 10px;
+            padding-top: 0px;
+        }
+        button{
+            width: calc(100% - 10px);
+            margin: 0px 5px;
+            margin-bottom: 10px;
+        }
+    }
+    .insights_body_div{
+        text-align: center;
+        div{
+            width: calc(100% - 30px);
+
         }
     }
 }
