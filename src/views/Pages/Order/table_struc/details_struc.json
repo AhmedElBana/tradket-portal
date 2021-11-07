@@ -25,9 +25,11 @@
           {"title": "create Date", "title_ar": "تاريخ الطلب", "value": "createdDate", "type": "date"},
           {"title": "Staff ID", "title_ar": "رقم الكاشير", "value": "creator_id", "type": "string"},
           {"title": "Use Promo", "title_ar": "كود خصم", "value": "promo", "type": "boolean"},
-          {"title": "Sub Total", "title_ar": "المبلغ", "value": "subTotal", "type": "string"},
           {"title": "Discount Value", "title_ar": "الخصم", "value": "discountValue", "type": "string"},
-          {"title": "Total", "title_ar": "المبلغ اللي", "value": "total", "type": "string"},
+          {"title": "Amount In", "title_ar": "المبلغ اللي", "value": "amount_in", "type": "string"},
+          {"title": "Amount Out", "title_ar": "المبلغ اللي", "value": "amount_out", "type": "string"},
+          {"title": "Sub Total", "title_ar": "المبلغ", "value": "subTotal", "type": "string"},
+          {"title": "Total", "title_ar": "المبلغ الكلي", "value": "total", "type": "string"},
           {"title": "Bill", "title_ar": "الفاتورة", "value": "bill", "type": "bill"}
         ]
       },
