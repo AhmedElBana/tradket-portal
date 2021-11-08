@@ -203,7 +203,7 @@ function ShowDataType(props) {
                                 : ele.type === "amount" && ele.currencyField !== undefined?
                                     <td>{ele.value ? dependencies.convertAmount(fetchValue(props.data, ele.value), fetchValue(props.data, ele.currencyField)) : "Not Specified"}</td>
                                 : ele.type === "date"?
-                                    <td>{ele.value ? dependencies.custom_date_format(fetchValue(props.data, ele.value)) : "-"}</td>
+                                    <td>{ele.value && fetchValue(props.data, ele.value) != "-" ? dependencies.custom_date_format(fetchValue(props.data, ele.value)) : "-"}</td>
                                 : ele.type === "boolean"?
                                     <td>{ele.value ? dependencies.boolName(fetchValue(props.data, ele.value).trim()) : "-"}</td>
                                 : ele.type === "array_length"?

@@ -21,9 +21,9 @@
               "default": "Completed"
             }
           },
-          {"title": "Branch", "title_ar": "الفرع", "value": "branch_id", "type": "string"},
+          {"title": "Branch", "title_ar": "الفرع", "value": "branch_id.name", "type": "string"},
           {"title": "create Date", "title_ar": "تاريخ الطلب", "value": "createdDate", "type": "date"},
-          {"title": "Staff ID", "title_ar": "رقم الكاشير", "value": "creator_id", "type": "string"},
+          {"title": "Staff", "title_ar": "رقم الكاشير", "value": "creator_id.name", "type": "string"},
           {"title": "Use Promo", "title_ar": "كود خصم", "value": "promo", "type": "boolean"},
           {"title": "Discount Value", "title_ar": "الخصم", "value": "discountValue", "type": "string"},
           {"title": "Amount In", "title_ar": "المبلغ اللي", "value": "amount_in", "type": "string"},
@@ -36,9 +36,9 @@
       {
         "title": "Customer Details", "title_ar": "تفاصيل العميل",
         "body": [
-          {"title": "ID", "title_ar": "الرقم", "value": "customer_id", "type": "string"},
-          {"title": "Name", "title_ar": "الاسم", "value": "customer_name", "type": "string"},
-          {"title": "Phone", "title_ar": "رقم الهاتف", "value": "customer_phoneNumber", "type": "string"}
+          {"title": "ID", "title_ar": "الرقم", "value": "customer._id", "type": "string"},
+          {"title": "Name", "title_ar": "الاسم", "value": "customer.name", "type": "string"},
+          {"title": "Phone", "title_ar": "رقم الهاتف", "value": "customer.phoneNumber", "type": "string"}
         ]
       }
     ]

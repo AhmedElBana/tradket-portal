@@ -11,7 +11,8 @@
     { "name": "Amount", "name_ar": "المبلغ", "value": "total", "type": "text" },
     { "name": "Type", "name_ar": "النوع", "value": "type", "type": "text" },
     { "name": "Date Created", "name_ar": "تاريخ الإنشاء", "value": "createdDate", "type": "date" },
-    { "name": "Customer", "name_ar": "العميل", "value": "customer_phoneNumber", "type": "text" },
+    { "name": "Branch", "name_ar": "الفرع", "value": "branch_id.name", "type": "text" },
+    { "name": "Customer", "name_ar": "العميل", "value": "customer.phoneNumber", "type": "text" },
     { "name": "Promo", "name_ar": "كود خصم", "value": "promo", "type": "boolean" },
     {"name": "Status", "name_ar": "الحالة",
       "value": {

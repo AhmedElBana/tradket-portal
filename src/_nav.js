@@ -56,6 +56,15 @@ if(perms.includes("115") || perms.includes("116") || perms.includes("117") || pe
     icon: 'fa fa-cubes',
     });
 }
+//Custom_products
+let Custom_productsObj = []
+if(perms.includes("115") || perms.includes("116") || perms.includes("117") || perms.includes("118")){
+  Custom_productsObj.push({
+    name: 'Custom products',
+    url: '/custom/products',
+    icon: 'fa fa-newspaper-o',
+    });
+}
 //order
 let orderObj = []
 if(perms.includes("123")){
@@ -87,6 +96,7 @@ const listData = [
   ...featureObj,
   ...materialObj,
   ...productObj,
+  ...Custom_productsObj,
   ...orderObj,
   ...promoObj
 ]
