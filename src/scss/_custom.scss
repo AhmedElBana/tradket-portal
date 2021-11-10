@@ -1311,3 +1311,8 @@ tr.bill_tr > td{
         padding: 15px;
     }
 }
+@include m(767){
+    .tradket_section .head_div p{
+        font-size: 22px;
+    }
+}
