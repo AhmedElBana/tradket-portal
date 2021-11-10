@@ -1288,3 +1288,26 @@ tr.bill_tr > td{
 .perms_group .switch{
     position: static;
 }
+.tradket_section{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    background-color: #fff;
+    padding: 15px;
+    .head_div{
+        border-bottom: 2px solid #E6E9ED;
+        padding: 1px 5px 6px;
+        margin-bottom: 10px;
+        display: inline-block;
+        width: 100%;
+        p{
+            display: inline-block;
+            font-weight: bold;
+            font-size: 26px;
+            color: #333;
+        }
+    }
+    .body_div{
+        padding: 15px;
+    }
+}
