@@ -44,6 +44,7 @@ const Feature = React.lazy(() => import('./views/Pages/Feature/Feature'));
 const Product = React.lazy(() => import('./views/Pages/Product/Product'));
 const Material = React.lazy(() => import('./views/Pages/Material/Material'));
 const Custom_products = React.lazy(() => import('./views/Pages/Custom_products/Custom_products'));
+const Custom_product_full = React.lazy(() => import('./views/Pages/Custom_product_full/Custom_product_full'));
 
 const Order = React.lazy(() => import('./views/Pages/Order/Order'));
 const Promo = React.lazy(() => import('./views/Pages/Promo/Promo'));
@@ -58,6 +59,7 @@ const routes = [
   { path: '/product', name: 'Product', component: Product },
   { path: '/Material', name: 'Material', component: Material },
   { path: '/custom/products', exact: true , name: 'Custom_products', component: Custom_products },
+  { path: '/custom/products/details/:id?', exact: true , name: 'Custom_product_full', component: Custom_product_full },
   { path: '/order', name: 'Order', component: Order },
   { path: '/promo', name: 'Promo', component: Promo },
 

@@ -14,13 +14,6 @@
     }
   },
   {
-    "type": "input",
-    "filterName": "customer_phoneNumber",
-    "name": "Customer Phone",
-    "name_ar": "هاتف العميل",
-    "validations": ["intNumber"]
-  },
-  {
     "type": "select",
     "filterName": "branch_id",
     "name": "Branch",

@@ -4,6 +4,7 @@ import {auth} from '../../../tools/Auth';
 import 'react-widgets/dist/css/react-widgets.css';
 import {httpClient} from './../../../tools/HttpClient';
 import "./Custom_products.scss";
+import DetailsButtons from './DetailsButtons/DetailsButtons';
 import FullTable from './../../CustomComponents/FullTable/FullTable';
 import table_struc from './table_struc/table_struc.json';
 import details_struc from './table_struc/details_struc.json';
@@ -123,7 +124,7 @@ class Custom_products extends Component {
         :
           <>
             <div>
-              <FullTable name="orders" path={"/api/custom_product/list"} table={table_struc} filters={final_filter_struc} details={details_struc} />
+              <FullTable name="custom_products" path={"/api/custom_product/list"} table={table_struc} filters={final_filter_struc} details={details_struc}  detailsButtons={<DetailsButtons/>} />
             </div>
           </>
         }
