@@ -4,11 +4,10 @@ import Input from 'muicss/lib/react/input';
 import {httpClient} from './../../../tools/HttpClient';
 import validator from 'validator';
 import "./Custom_product_full.scss";
-import ImageGallery from 'react-image-gallery';
 import Waiting from "./../../../views/Waiting/waiting";
 import { auth } from '../../../tools/Auth';
 import { dependencies } from '../../../tools/Dependencies';
-
+import ImgPreview from 'img-preview';
 
 class Custom_product_full extends Component {
   constructor(props){
@@ -42,8 +41,9 @@ class Custom_product_full extends Component {
           if(resp.data.data.images && resp.data.data.images.length > 0){
             resp.data.data.images.map((ele)=>{
               final_img.push({
-                original: ele,
-                thumbnail: ele,
+                src: ele,
+                w: 200,
+                h: 200
               })
             })
           }
@@ -124,7 +124,7 @@ class Custom_product_full extends Component {
                         <>
                           <h3>Images</h3>
                           <div className="ImageGallery_div">
-                            <ImageGallery items={this.state.final_img} />
+                            <ImgPreview src={this.state.data.images}/>
                           </div>
                         </>
                       }
