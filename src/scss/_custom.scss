@@ -1316,3 +1316,23 @@ tr.bill_tr > td{
         font-size: 22px;
     }
 }
+
+.ImageGallery_div{
+    display: inline-block;
+    background-color: #efefef;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+.ImageGallery_div > div{
+    // max-width: 800px;
+    margin: auto;
+}
+@include m(767){
+    .ImageGallery_div{
+        padding: 5px;
+    }
+}
+#img-preview-popup-bg{
+    z-index: 99999 !important;
+}

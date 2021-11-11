@@ -13,7 +13,7 @@ import {httpClient} from './../../../tools/HttpClient';
 import validator from 'validator';
 import "./Material.scss";
 import successImg from "./../../../assets/img/success.png"
-
+import ImgPreview from 'img-preview';
 import Waiting from "./../../../views/Waiting/waiting";
 
 let requiredError = "This field is required."
@@ -648,6 +648,9 @@ class Material extends Component {
               <Waiting height="150px" />
               :
               <div>
+                {this.state.subcategories.images && this.state.subcategories.images.length > 0 &&
+                  <div className="ImageGallery_div"><ImgPreview src={this.state.subcategories.images}/></div>
+                }
                 <div className="modal_details">
                   <span className="title">ID</span><span className="value">{this.state.subcategories._id}</span>
                 </div>

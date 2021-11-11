@@ -9,6 +9,7 @@ import { auth } from '../../../tools/Auth';
 import { dependencies } from '../../../tools/Dependencies';
 import ImgPreview from 'img-preview';
 
+
 class Custom_product_full extends Component {
   constructor(props){
     super(props);
