@@ -108,7 +108,7 @@ const listData = [
   ...Custom_productsObj,
   ...orderObj,
   ...TransfersObj,
-  ...promoObj
+  // ...promoObj
 ]
 
 export default {
