@@ -176,10 +176,14 @@ class DetailsButtons extends Component {
                             </div>
                         }
                     </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={this.acceptTransfer} className="primaryBtn">Accept</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleAcceptModal} className="secondryBtn">Close</Button>
-                    </ModalFooter>
+                    {this.state.acceptSuccessfully || this.state.acceptModalWaiting || this.state.acceptFaild?
+                        null
+                    : 
+                        <ModalFooter>
+                            <Button color="primary" onClick={this.acceptTransfer} className="primaryBtn">Accept</Button>{' '}
+                            <Button color="secondary" onClick={this.toggleAcceptModal} className="secondryBtn">Close</Button>
+                        </ModalFooter>
+                    }
                 </Modal>
                 {/* cancel Modal */}
                 <Modal isOpen={this.state.cancelModal} toggle={this.toggleCancelModal}>
@@ -218,10 +222,14 @@ class DetailsButtons extends Component {
                             </div>
                         }
                     </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={this.cancelTransfer} className="primaryBtn">Confirm</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleCancelModal} className="secondryBtn">Close</Button>
-                    </ModalFooter>
+                    {this.state.cancelSuccessfully || this.state.cancelModalWaiting || this.state.cancelFaild?
+                        null
+                    : 
+                        <ModalFooter>
+                            <Button color="primary" onClick={this.cancelTransfer} className="primaryBtn">Confirm</Button>{' '}
+                            <Button color="secondary" onClick={this.toggleCancelModal} className="secondryBtn">Close</Button>
+                        </ModalFooter>
+                    }
                 </Modal>
             </div>
         )
