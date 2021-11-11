@@ -6,6 +6,7 @@ import ReactPaginate from 'react-paginate';
 import { AppSwitch } from '@coreui/react';
 import VForm from 'react-validation/build/form';
 import VInput from 'react-validation/build/input';
+import VSelect from 'react-validation/build/select';
 import VButton from 'react-validation/build/button';
 import 'react-widgets/dist/css/react-widgets.css';
 import Multiselect from 'react-widgets/lib/Multiselect';
@@ -132,7 +133,7 @@ class Staff extends Component {
           phoneNumber: "",
           password: "",
           confirmPassword: "",
-          branches: [],
+          branch: "",
           perms: []
         },
         //edit modal
@@ -149,7 +150,7 @@ class Staff extends Component {
           phoneNumber: "",
           password: "",
           confirmPassword: "",
-          branches: [],
+          branch: "",
           perms: []
         },
         //deactivate modal
@@ -438,7 +439,7 @@ class Staff extends Component {
     addFormData.phoneNumber= "";
     addFormData.password= "";
     addFormData.confirmPassword = "";
-    addFormData.branches= [];
+    addFormData.branch= "";
     addFormData.perms= [];
     this.setState({
       addModal: !this.state.addModal,
@@ -527,7 +528,7 @@ class Staff extends Component {
       "phoneNumber": this.state.addForm.phoneNumber,
       "password": this.state.addForm.password,
       "permissions": this.state.addForm.perms.join(),
-      "branches": this.state.addForm.branches.join()
+      "branches": this.state.addForm.branch
     };
     let userData = JSON.stringify(userObj);
     //start waiting
@@ -677,14 +678,26 @@ class Staff extends Component {
                       </Col>
                       <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
-                        <Multiselect
-                          data={this.state.branches}
-                          valueField='id'
-                          textField='name'
-                          placeholder="Staff Branches"
-                          onChange={this.onSelectBranchAddForm}
-                          required
-                        />
+                          <VSelect type="select" name="type" className="tradket_b_s"
+                            value={this.state.addForm.branch}
+                            onChange={(e) => this.handleAddInputChange("branch",e)}
+                            validations={[required]} 
+                          >
+                            <option value="" disabled>Select Branch</option>
+                            {this.state.branches.map((ele)=>{
+                              return(
+                                <option value={ele.id}>{ele.name}</option>
+                              )
+                            })}
+                          </VSelect>
+                          {/* <Multiselect
+                            data={this.state.branches}
+                            valueField='id'
+                            textField='name'
+                            placeholder="Staff Branches"
+                            onChange={this.onSelectBranchAddForm}
+                            required
+                          /> */}
                         </div>
                       </Col>
                     </Row>
@@ -773,13 +786,7 @@ class Staff extends Component {
               {this.state.addModalSuccess || this.state.addModalWaiting || this.state.addModalError?
                 null
               : 
-                <span>
-                  {this.state.addForm.branches.length === 0?
-                    <button disabled className="btn btn-info">Add</button>
-                  :
-                    <VButton className="btn btn-info">Add</VButton>
-                  }
-                </span>
+                <VButton className="btn btn-info">Add</VButton>
               }
               {this.state.addModalError?
                 <button className="accept-btn btn btn-default" onClick={this.addModalReset}>Try again</button>
@@ -802,7 +809,7 @@ class Staff extends Component {
     editFormData.phoneNumber= this.state.selectedUser.phoneNumber;
     editFormData.password= "";
     editFormData.confirmPassword = "";
-    editFormData.branches = [...this.state.selectedUser.branches];
+    editFormData.branch = this.state.selectedUser.branches.join();
     editFormData.perms= [...this.state.selectedUser.permissions];
     this.setState({
       editModal: !this.state.editModal,
@@ -891,7 +898,7 @@ class Staff extends Component {
       "email": this.state.editForm.email,
       "phoneNumber": this.state.editForm.phoneNumber,
       "permissions": this.state.editForm.perms.join(),
-      "branches": this.state.editForm.branches.join()
+      "branches": this.state.editForm.branch
     };
     if(this.state.editForm.password != ""){
       userObj.password = this.state.editForm.password
@@ -1044,15 +1051,27 @@ class Staff extends Component {
                       </Col>
                       <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
-                        <Multiselect
-                          data={this.state.branches}
-                          valueField='id'
-                          textField='name'
-                          placeholder="Staff Branches"
-                          onChange={this.onSelectBranchEditForm}
-                          required
-                          defaultValue={this.state.editForm.branches}
-                        />
+                          <VSelect type="select" name="type" className="tradket_b_s"
+                            value={this.state.editForm.branch}
+                            onChange={(e) => this.handleEditInputChange("branch",e)}
+                            validations={[required]} 
+                          >
+                            <option value="" disabled>Select Branch</option>
+                            {this.state.branches.map((ele)=>{
+                              return(
+                                <option value={ele.id}>{ele.name}</option>
+                              )
+                            })}
+                          </VSelect>
+                          {/* <Multiselect
+                            data={this.state.branches}
+                            valueField='id'
+                            textField='name'
+                            placeholder="Staff Branches"
+                            onChange={this.onSelectBranchEditForm}
+                            required
+                            defaultValue={this.state.editForm.branches}
+                          /> */}
                         </div>
                       </Col>
                     </Row>
@@ -1141,13 +1160,7 @@ class Staff extends Component {
               {this.state.editModalSuccess || this.state.editModalWaiting || this.state.editModalError?
                 null
               : 
-                <span>
-                  {this.state.editForm.branches.length === 0?
-                    <button disabled className="btn btn-info">Edit</button>
-                  :
-                    <VButton className="btn btn-info">Edit</VButton>
-                  }
-                </span>
+                <VButton className="btn btn-info">Edit</VButton>
               }
               {this.state.editModalError?
                 <button className="accept-btn btn btn-default" onClick={this.editModalReset}>Try again</button>
