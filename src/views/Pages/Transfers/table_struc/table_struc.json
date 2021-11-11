@@ -1,0 +1,23 @@
+{
+  "setting": {
+    "title": "Transfers",
+    "title_ar": "المنتجات الخاصه",
+    "pagination": true,
+    "default_size": 10,
+    "NEXT": true
+  },
+  "struc": [
+    { "name": "ID", "name_ar": "الرقم", "value": "_id", "type": "text", "NEXT_uuid": true },
+    { "name": "From Branch", "name_ar": "الاسم", "value": "source_id.name", "type": "text" },
+    { "name": "To Branch", "name_ar": "الاسم", "value": "target_id.name", "type": "text" },
+    { "name": "Created At", "name_ar": "تاريخ الإنشاء", "value": "createdAt", "type": "date" },
+    { "name": "Created From", "name_ar": "العميل", "value": "creator_id.name", "type": "text" },
+    {"name": "Status", "name_ar": "الحالة", "value": "status", "type": "text",
+      "lable": {
+        "canceled": "errorLable",
+        "completed": "successLable",
+        "else": "pendingLable"
+      }
+    }
+  ]
+}

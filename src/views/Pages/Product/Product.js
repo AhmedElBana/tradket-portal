@@ -165,6 +165,19 @@ class Product extends Component {
           quantity: "",
           branch: ""
         },
+        //transfer modal
+        transferPath: "/api/transfer/create",
+        transferModalWaiting: false,
+        transferModal: false,
+        transferModalError: false,
+        transferModalFaildMessage: "",
+        transferModalSuccess: false,
+        transferForm: {
+          product: {},
+          quantity: "",
+          source_branch: "",
+          target_branch: ""
+        },
         //deactivate modal
         deactivateModalWaiting: false,
         deactivateModal: false,
@@ -232,6 +245,12 @@ class Product extends Component {
     this.handleAddMoreInputChange = this.handleAddMoreInputChange.bind(this);
     this.handleAddMoreProductSubmit = this.handleAddMoreProductSubmit.bind(this);
     this.addMoreModalReset = this.addMoreModalReset.bind(this);
+    //transfer 
+    this.renderTransferModal = this.renderTransferModal.bind(this);
+    this.toggleTransferModal = this.toggleTransferModal.bind(this);
+    this.handleTransferInputChange = this.handleTransferInputChange.bind(this);
+    this.handleTransferProductSubmit = this.handleTransferProductSubmit.bind(this);
+    this.transferModalReset = this.transferModalReset.bind(this);
     //deactivate modal
     this.renderDeactivateModal = this.renderDeactivateModal.bind(this);
     this.toggleDeactivateModal = this.toggleDeactivateModal.bind(this);
@@ -706,6 +725,11 @@ class Product extends Component {
                               {JSON.parse(localStorage.userData).permissions.includes("116")?
                                   <button onClick={(e)=>{this.toggleAddMoreModal(e,product)}} type="button" className="btn">
                                     More Quantity
+                                  </button>:null
+                              }
+                              {JSON.parse(localStorage.userData).permissions.includes("120")?
+                                  <button onClick={(e)=>{this.toggleTransferModal(e,product)}} type="button" className="btn">
+                                    Transfer Request
                                   </button>:null
                               }
                             </div>
@@ -1704,6 +1728,191 @@ class Product extends Component {
       </Modal>
     )
   } 
+  //transfer modal
+  toggleTransferModal(e,product){
+    e.preventDefault();
+    let transferFormData = this.state.transferForm;
+    transferFormData.product = product;
+    transferFormData.quantity= "";
+    transferFormData.source_branch= "";
+    transferFormData.target_branch= "";
+    this.setState({
+      transferModal: !this.state.transferModal,
+      transferForm: transferFormData,
+      transferModalWaiting: false, 
+      transferModalSuccess: false, 
+      transferModalError: false, 
+      transferModalFaildMessage: ""
+    });
+  }
+  handleTransferInputChange(inputName,event){
+    let transferFormData = this.state.transferForm;
+    transferFormData[inputName] = event.target.value;
+    this.setState({transferForm: transferFormData},()=>{
+      console.log(this.state.transferForm)
+    })
+  }
+  handleTransferProductSubmit(event){
+    //get form data
+    let userObj = {
+      "source_id": this.state.transferForm.source_branch,
+      "target_id": this.state.transferForm.target_branch,
+      "products": [{"product_id": this.state.transferForm.product._id, "quantity": this.state.transferForm.quantity}]
+    };
+    let userData = JSON.stringify(userObj);
+    //start waiting
+    this.setState({transferModalWaiting: true},()=>{
+      //send request
+      let config = {
+        headers: {
+          //"Cache-Control": "no-cache",
+          "Content-Type": "application/json",
+          "x-auth": auth.getMerchantToken()
+        }
+      }
+      httpClient.post(
+          this.state.transferPath,
+          config,
+          userData,
+          (resp) => {
+            this.setState({transferModalSuccess: true ,transferModalWaiting:false},()=>{
+              setTimeout(()=>{
+                window.location.reload();
+              }, 3000);
+            });
+          },
+          (error) => {
+            if(error.response){
+              if(error.response.status === 401){
+                this.setState({logout: true});
+              }else if(error.response.status === 400){
+                this.setState({transferModalWaiting: false, transferModalError: true, transferModalFaildMessage: error.response.data.message});
+              }else{
+                this.setState({publicError: true});
+              }
+            }else{
+              this.setState({publicError: true});
+            }
+          }
+      )
+    });
+    event.preventDefault();
+  }
+  transferModalReset(e){
+    e.preventDefault();
+    let transferFormData= this.state.transferForm;
+    this.setState({
+      transferForm: transferFormData,
+      transferModalWaiting: false, 
+      transferModalSuccess: false, 
+      transferModalError: false, 
+      transferModalFaildMessage: ""
+    });
+  }
+  renderTransferModal(){
+    return(
+      <Modal className="usersModal" isOpen={this.state.transferModal} toggle={this.toggleTransferModal}>
+        <VForm onSubmit={this.handleTransferProductSubmit} >
+          <ModalHeader toggle={this.toggleTransferModal}>
+            Transfer Request
+          </ModalHeader>
+          <ModalBody>
+          {this.state.transferModalError?
+              <div>
+                <Alert color="danger">
+                  {this.state.transferModalFaildMessage}
+                </Alert>
+              </div>
+          :
+            <div >
+              {this.state.transferModalSuccess?
+                <div className="staffSuccesDiv">
+                  <img src={successImg} alt="succes"/>
+                  <h1>Congratulations</h1>
+                  <p>Transfer request submited Successfully.</p>
+                </div>
+              :
+                <div >
+                {this.state.transferModalWaiting?
+                  <Waiting height="250px" />
+                :
+                  <div className="transferModalBody">
+                    <br/>
+                    <Row>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            autoFocus={true}
+                            name="quantity"
+                            value={this.state.transferForm.quantity}
+                            onChange={(e) => this.handleTransferInputChange("quantity", e)}
+                            validations={[required, NumberV]}
+                            placeholder="Quantity"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VSelect type="select" name="type" className="tradket_b_s"
+                            value={this.state.transferForm.source_branch}
+                            onChange={(e) => this.handleTransferInputChange("source_branch",e)}
+                            validations={[required]} 
+                          >
+                            <option value="" disabled>Select Source Branch</option>
+                            {this.state.fullBranchs.map((branch)=>{
+                              return(
+                                <option key={branch._id} value={branch._id}>{branch.name}</option>
+                              )
+                            })}
+                          </VSelect>
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VSelect type="select" name="type" className="tradket_b_s"
+                            value={this.state.transferForm.target_branch}
+                            onChange={(e) => this.handleTransferInputChange("target_branch",e)}
+                            validations={[required]} 
+                          >
+                            <option value="" disabled>Select Target Branch</option>
+                            {this.state.fullBranchs.map((branch)=>{
+                              return(
+                                <option key={branch._id} value={branch._id}>{branch.name}</option>
+                              )
+                            })}
+                          </VSelect>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                }
+                </div>
+              }
+            </div>
+          }
+          </ModalBody>
+          {this.state.transferModalSuccess || this.state.transferModalWaiting?
+            null
+          : 
+            <ModalFooter>
+              {this.state.transferModalSuccess || this.state.transferModalWaiting || this.state.transferModalError?
+                null
+              : 
+                <VButton className="btn btn-info">Submit</VButton>
+              }
+              {this.state.transferModalError?
+                <button className="accept-btn btn btn-default" onClick={this.transferModalReset}>Try again</button>
+              :
+                null
+              }
+              <button className="accept-btn btn btn-default" onClick={this.toggleTransferModal}>Cancel</button>
+            </ModalFooter>
+          }
+        </VForm>
+      </Modal>
+    )
+  } 
   //deactivate modal
   toggleDeactivateModal(){
     this.setState({
@@ -1945,6 +2154,7 @@ class Product extends Component {
             {this.renderUsersBlock()}
             {this.renderAddModal()}
             {this.renderAddMoreModal()}
+            {this.renderTransferModal()}
             {this.renderEditModal()}
             {this.renderDeactivateModal()}
             {this.renderActivateModal()}

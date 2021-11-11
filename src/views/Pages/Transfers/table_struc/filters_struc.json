@@ -1,0 +1,51 @@
+[
+  {
+    "type": "dateRange",
+    "filterNameFrom": "createdDateFrom",
+    "filterNameTo": "createdDateTo",
+    "name": "Date Range",
+    "name_ar": "مدى التاريخ",
+    "date_range": 30,
+    "size": {
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 6
+    }
+  },
+  {
+    "type": "select",
+    "filterName": "branch_id",
+    "name": "Branch",
+    "name_ar": "الفرع",
+    "message": "Select Branch",
+    "message_ar": "حدد الفرع",
+    "options": []
+  },
+  {
+    "type": "select",
+    "filterName": "creator_id",
+    "name": "Staff",
+    "name_ar": "الكاشير",
+    "message": "Select Staff",
+    "message_ar": "حدد الكاشير",
+    "options": []
+  },
+  {
+    "type": "select",
+    "filterName": "status",
+    "name": "Status",
+    "name_ar": "الكاشير",
+    "message": "Select Status",
+    "message_ar": "حدد الكاشير",
+    "options": [
+      {"value": "created", "text": "Created", "text_ar": "created"},
+      {"value": "assigned", "text": "Assigned", "text_ar": "assigned"},
+      {"value": "accepted", "text": "Accepted", "text_ar": "accepted"},
+      {"value": "inprogress", "text": "Inprogress", "text_ar": "inprogress"},
+      {"value": "ready", "text": "Ready", "text_ar": "ready"},
+      {"value": "delivered", "text": "Delivered", "text_ar": "delivered"},
+      {"value": "canceled", "text": "Canceled", "text_ar": "canceled"}
+    ]
+  }
+]

@@ -74,6 +74,15 @@ if(perms.includes("123")){
     icon: 'fa fa-qrcode',
     });
 }
+//Transfers
+let TransfersObj = []
+if(perms.includes("120") || perms.includes("121") || perms.includes("122")){
+  TransfersObj.push({
+    name: 'Transfers',
+    url: '/transfers',
+    icon: 'fa fa-exchange',
+    });
+}
 //promo
 let promoObj = []
 if(perms.includes("127") || perms.includes("127") || perms.includes("128") || perms.includes("129") || perms.includes("130")){
@@ -98,6 +107,7 @@ const listData = [
   ...productObj,
   ...Custom_productsObj,
   ...orderObj,
+  ...TransfersObj,
   ...promoObj
 ]
 

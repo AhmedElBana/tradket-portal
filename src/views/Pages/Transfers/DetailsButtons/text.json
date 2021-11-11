@@ -1,0 +1,192 @@
+{
+    "en": {
+        "transDetails": {
+            "title": "Transaction",
+            "button": {
+                "delete": "Delete",
+                "void": "Void",
+                "refund": "Refund",
+                "capture": "Capture",
+                "receipt": "Receipt",
+                "cancel": "Cancel"
+            },
+            "modals": {
+                "delete": {
+                    "title": "Delete Transaction",
+                    "message1": "You are about to delete transaction",
+                    "message2": ". Please confirm deletion or press cancel.",
+                    "succesMessage": "Transaction deleted successfully",
+                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider."
+                },
+                "void": {
+                    "title": "Void Transaction",
+                    "message1": "You are about to void transaction",
+                    "message2": ". Please confirm void or press cancel.",
+                    "succesMessage": "Transaction void successfully",
+                    "faildMessage422": "Sorry, this transaction cannot be voided.",
+                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider."
+                },
+                "refund": {
+                    "title": "Confirm Refund",
+                    "succesMessage": "Transaction refund successfully",
+                    "faildMessage422": "Sorry, this transaction cannot be refund.",
+                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider.",
+                    "body": {
+                        "title": "Here are the details of transaction",
+                        "amount": "Amount",
+                        "createdAt": "Created at",
+                        "paymentType": "Payment Type",
+                        "transSuccess": "Trnx Success",
+                        "transPending": "Trnx Pending",
+                        "voided": "Voided",
+                        "refunded": "Refunded",
+                        "form": {
+                            "title": "Please enter the amount you wish to refund.",
+                            "refundProduct": "Please choose the product you wish to refund.",
+                            "noRefundProducts": "There is no products to refund",
+                            "allProductsRefunded": "All products have been refunded",
+                            "amount": "Amount",
+                            "refundValidation": "Please enter the amount less than (Transaction amount - Refunded amount)."
+                        },
+                        "jawwal": {
+                            "sendOtp": "Request OTP",
+                            "success": "Refund completed successfully.",
+                            "wrongOtp": "Wrong OTP",
+                            "failOtp": "OTP send fail, please try again later."
+                        }
+                    }
+                },
+                "capture": {
+                    "title": "Confirm Capture",
+                    "succesMessage": "Capture transaction is successful.",
+                    "faildMessage200": "Sorry, this transaction cannot be captured. Please make sure that the auth transaction was not captured before.",
+                    "faildMessage400": "Your request cannot be fulfilled. Please make sure that the auth transaction was not captured before.",
+                    "faildMessage404": "Your request cannot be fulfilled. Please make sure that your integration supports auth/capture transactions.",
+                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider.",
+                    "body": {
+                        "title": "Here are the details of transaction",
+                        "authAmoun": "Amount",
+                        "createdAt": "Created at",
+                        "transSuccess": "Trnx Success",
+                        "transPending": "Trnx Pending",
+                        "form": {
+                            "title": "Please enter the amount you wish to capture.",
+                            "amount": "Amount"
+                        }
+                    }
+                },
+                "receipt": {
+                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider."
+                }
+            }
+        },
+        "placeholders":{
+            "refund":"example: 149.99",
+            "pin":"Pin",
+            "otp": "OTP"
+        },
+        "validation": {
+            "requiredError": "This field is required.",
+            "numberError": "Please enter valid number.",
+            "amountError": "Please enter valid Amount.",
+            "intNumberError": "Please enter integer number.",
+            "htmlTagsError": "Please remove any HTML tags.",
+            "oneAtLeast": "Please select one payment at least."
+        }
+    },
+    "ar": {
+        "transDetails": {
+            "title": "المعامله",
+            "button": {
+                "delete": "حذف",
+                "void": "إبطال",
+                "refund": "إعادة المال",
+                "capture": "تحصيل",
+                "receipt": "إيصال",
+                "cancel": "إلغاء"
+            },
+            "modals": {
+                "delete": {
+                    "title": "تاكيد الحذف",
+                    "message1": "انت على وشك حذف المعامله رقم",
+                    "message2": ". من فضلك قم بتاكيد الحذف او الغاء  الامر .",
+                    "succesMessage": "تم حذف المعاملة بنجاح.",
+                    "faildMessage": "حدث خطأ اثناء الارسال ، اذا استمرت المشكلة برجاء الإتصال بمزود الخدمة."
+                },
+                "void": {
+                    "title": "تاكيد إلغاء التحويل",
+                    "message1": "انت على وشك إلغاء المعامله رقم",
+                    "message2": ". . من فضلك قم بتاكيد الامر او الإلغاء.",
+                    "succesMessage": "تم إلغاء المعاملة بنجاح.",
+                    "faildMessage422": "للأسف لا يمكن إلغاء هذه المعامله.",
+                    "faildMessage": "حدث خطأ اثناء الارسال ، اذا استمرت المشكلة برجاء الإتصال بمزود الخدمة."
+                },
+                "refund": {
+                    "title": "تاكيد إرجاع المال",
+                    "succesMessage": "تمت العملية بنجاح.",
+                    "faildMessage422": "عذرا، لا يمكن رد هذه المعاملة.",
+                    "faildMessage": "حدث خطأ اثناء الارسال ، اذا استمرت المشكلة برجاء الإتصال بمزود الخدمة.",
+                    "body": {
+                        "title": "تفاصيل المعامله رقم",
+                        "amount": "المبلغ",
+                        "createdAt": "تاريخ الإنشاء",
+                        "paymentType": "نوع الدفع",
+                        "transSuccess": "معاملة ناجحة",
+                        "transPending": "قيد الانتظار",
+                        "voided": "تم إلغاء المعامله",
+                        "refunded": "تم إعادة المبلغ",
+                        "form": {
+                            "title": "الرجاء إدخال المبلغ الذي ترغب في رده.",
+                            "refundProduct": "الرجاء إختيار المنتج الذي ترغب في رده",
+                            "noRefundProducts": "لا يوجد منتجات لردها",
+                            "allProductsRefunded": "كل المنتجات تم ردها",
+                            "refundValidation": "من فضلك أدخل مبلغ أقل من مبلغ الفرق بين مبلغ المعاملة و المبلغ المردود.",
+                            "amount": "المبلغ"
+                        },
+                        "jawwal": {
+                            "sendOtp": "طلب رقم OTP",
+                            "success": "تم إرجاع المبلغ بنجاح.",
+                            "wrongOtp": "رقم خطأ.",
+                            "failOtp": "فشل إرسال OTP برجاء المحاولة في وقت لاحق."
+                        }
+                    }
+                },
+                "capture": {
+                    "title": "تأكيد التقاط",
+                    "succesMessage": "تم تحصيل المعامله بنجاح.",
+                    "faildMessage200": "عذرا، لا يمكن تحصيل هذه المعاملة. الرجاء التأكد من أن عملية المصادقة لم يتم تحصيلها من قبل.",
+                    "faildMessage400": "يتعذر استيفاء طلبك. الرجtextاء التأكد من أن عملية المصادقة لم يتم تحصيلها من قبل.",
+                    "faildMessage404": "يتعذر استيفاء طلبك. الرجاء التأكد من أن عملية المصادقة تدعم المعاملات الموثقه. ",
+                    "faildMessage": "حدث خطأ اثناء الارسال ، اذا استمرت المشكلة برجاء الإتصال بمزود الخدمة.",
+                    "body": {
+                        "title": "تفاصيل المعامله الموثق رقم ",
+                        "authAmoun": "المبلغ",
+                        "createdAt": "تاريخ الإنشاء",
+                        "transSuccess": "معاملة ناجحة",
+                        "transPending": "قيد الانتظار",
+                        "form": {
+                            "title": "الرجاء إدخال المبلغ الذي ترغب في تحصيله.",
+                            "amount": "المبلغ"
+                        }
+                    }
+                },
+                "receipt": {
+                    "faildMessage": "حدث خطأ اثناء الارسال ، اذا استمرت المشكلة برجاء الإتصال بمزود الخدمة."
+                }
+            }
+        },
+        "placeholders":{
+            "refund":"مثال : 149.99",
+            "pin":"Pin",
+            "otp": "OTP"
+        },
+        "validation": {
+            "requiredError": "يجب إدخال هذا الحقل.",
+            "numberError": "من فضلك أدخل رقم صحيح.",
+            "amountError": "من فضلك أدخل مبلغ صحيح.",
+            "intNumberError": "من فضلك ادخل رقم بدون كسور.",
+            "htmlTagsError": "من فضلك احذف اى اكواد.",
+            "oneAtLeast": "من فضلك حدد طريقة دفع واحده على الاقلز"
+        }
+    }
+}

@@ -612,6 +612,9 @@ body{
     padding-bottom: 15px;
     border-bottom: 1px solid #ccc;
     text-align: right;
+    button{
+        margin: 0px 5px;
+    }
     @include m (767){
         text-align: center;
     }
@@ -1335,4 +1338,18 @@ tr.bill_tr > td{
 }
 #img-preview-popup-bg{
     z-index: 99999 !important;
+}
+
+.modal-body{
+    min-height: 150px;
+}
+.transfer_modal_body{
+    text-align: center;
+    p{
+        margin: 0px;
+        font-size: 24px;
+        color: #333;
+        text-align: center;
+        margin-top: 25px;
+    }
 }

@@ -103,7 +103,6 @@ const renderArrayType = (strucEle, data) => {
     )
 }
 const renderBill = (strucEle, data) => {
-    console.log(data[strucEle.value])
     return(
         <td>
             <div className="product_map">
@@ -126,6 +125,34 @@ const renderBill = (strucEle, data) => {
                             <td>{product.price}</td>
                             <td>{product.quantity}</td>
                             <td>{product.total}</td>
+                        </tr>
+                        )
+                    })}
+                    </tbody>
+                </Table>
+            </div>
+        </td>
+    )
+}
+const renderProduct_bill = (strucEle, data) => {
+    return(
+        <td>
+            <div className="product_map">
+                <Table className="usersTable mainTable">
+                    <thead>
+                    <tr>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {data[strucEle.value].map((product,index)=>{
+                        return(
+                        <tr key={product.product_id}>
+                            <td>{product.product_id}</td>
+                            <td>{product.name}</td>
+                            <td>{product.quantity}</td>
                         </tr>
                         )
                     })}
@@ -169,6 +196,8 @@ function ShowDataType(props) {
                                     renderArrayType(ele, props.parent_data)
                                 : ele.type === "bill"?
                                     renderBill(ele, props.parent_data)
+                                :  ele.type === "product_bill"?
+                                    renderProduct_bill(ele, props.data)
                                 : 
                                     <td>{fetchValue(props.parent_data, ele.value) ? fetchValue(props.parent_data, ele.value) : "-"}</td>
                                 }
@@ -185,7 +214,7 @@ function ShowDataType(props) {
                 {props.obj.map((ele, index) => {
                     return(
                         checkDisplayCoditions(props.data, ele) ? 
-                            <tr key={ele.value + "-" + index} className={ele.type != "bill" ? "integrationBlockTR" : "bill_tr"}>
+                            <tr key={ele.value + "-" + index} className={ele.type != "bill" && ele.type != "product_bill" ? "integrationBlockTR" : "bill_tr"}>
                                 <td>{localStorage.lang === "ar" ? ele.title_ar : ele.title}</td>
                                 {ele.type === "link"?
                                     <td>
@@ -212,6 +241,8 @@ function ShowDataType(props) {
                                     renderArrayType(ele, props.data)
                                 :  ele.type === "bill"?
                                     renderBill(ele, props.data)
+                                : ele.type === "product_bill"?
+                                    renderProduct_bill(ele, props.data)
                                 : 
                                     <td>{fetchValue(props.data, ele.value) ? fetchValue(props.data, ele.value) : "-"}</td>
                                 }
