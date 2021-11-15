@@ -28,6 +28,13 @@
       {"id":"117", "name": "Can Edit Product"},
       {"id":"118", "name": "Can Deactivate Product"}
     ],
+    "Custom Product": [
+      {"id":"131", "name": "Can View Custom Product"},
+      {"id":"132", "name": "Can View Full Custom Product"},
+      {"id":"133", "name": "Can Create Custom Product"},
+      {"id":"134", "name": "Can Edit Custom Product"},
+      {"id":"135", "name": "Can Edit Full Custom Product"}
+    ],
     "Transfer": [
       {"id":"119", "name": "Can View Transfer"},
       {"id":"120", "name": "Can Create Transfer"},

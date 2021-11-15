@@ -506,6 +506,12 @@ class Staff extends Component {
       if(!addFormData.perms.includes("123")){
         addFormData.perms.push("123");
       }
+      if(!addFormData.perms.includes("131")){
+        addFormData.perms.push("131");
+      }
+      if(!addFormData.perms.includes("133")){
+        addFormData.perms.push("133");
+      }
     }
     if(addFormData.perms.includes("128") || addFormData.perms.includes("129") || addFormData.perms.includes("130")){
       if(!addFormData.perms.includes("127")){
@@ -758,6 +764,16 @@ class Staff extends Component {
                                                   ((this.state.addForm.perms.includes("128") || this.state.addForm.perms.includes("129") || this.state.addForm.perms.includes("130"))? true: false) 
                                                 : 
                                                   false) 
+                                            ||
+                                                (perm.id === "131"? 
+                                                  ((this.state.addForm.perms.includes("124") )? true: false) 
+                                                : 
+                                                  false) 
+                                            ||
+                                                (perm.id === "133"? 
+                                                  ((this.state.addForm.perms.includes("124") )? true: false) 
+                                                : 
+                                                  false) 
                                           }
                                             name={perm}
                                           />
@@ -875,6 +891,12 @@ class Staff extends Component {
     if(editFormData.perms.includes("124") || editFormData.perms.includes("125") || editFormData.perms.includes("126")){
       if(!editFormData.perms.includes("123")){
         editFormData.perms.push("123");
+      }
+      if(!editFormData.perms.includes("131")){
+        editFormData.perms.push("131");
+      }
+      if(!editFormData.perms.includes("133")){
+        editFormData.perms.push("133");
       }
     }
     if(editFormData.perms.includes("128") || editFormData.perms.includes("129") || editFormData.perms.includes("130")){
@@ -1130,6 +1152,16 @@ class Staff extends Component {
                                             ||
                                                 (perm.id === "127"? 
                                                   ((this.state.editForm.perms.includes("128") || this.state.editForm.perms.includes("129") || this.state.editForm.perms.includes("130"))? true: false) 
+                                                : 
+                                                  false) 
+                                            ||
+                                                (perm.id === "131"? 
+                                                  ((this.state.editForm.perms.includes("124") )? true: false) 
+                                                : 
+                                                  false) 
+                                            ||
+                                                (perm.id === "133"? 
+                                                  ((this.state.editForm.perms.includes("124") )? true: false) 
                                                 : 
                                                   false) 
                                           }

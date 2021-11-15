@@ -58,7 +58,7 @@ if(perms.includes("115") || perms.includes("116") || perms.includes("117") || pe
 }
 //Custom_products
 let Custom_productsObj = []
-if(perms.includes("115") || perms.includes("116") || perms.includes("117") || perms.includes("118")){
+if(perms.includes("131") || perms.includes("132") || perms.includes("133") || perms.includes("134") || perms.includes("135")){
   Custom_productsObj.push({
     name: 'Custom products',
     url: '/custom/products',
