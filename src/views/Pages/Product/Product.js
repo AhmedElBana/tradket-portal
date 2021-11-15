@@ -391,7 +391,8 @@ class Product extends Component {
         "x-auth": auth.getMerchantToken()
       },
       params: {
-        "page_size": "1000"
+        "page_size": "1000",
+        "for_custom_products": false
       }
     }
     httpClient.get(

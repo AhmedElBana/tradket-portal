@@ -3,6 +3,7 @@ import { Alert, Col, Input, Table, Row, Modal, ModalBody, ModalFooter, ModalHead
 import {auth} from '../../../tools/Auth';
 import {dependencies} from '../../../tools/Dependencies';
 import ReactPaginate from 'react-paginate';
+import { AppSwitch } from '@coreui/react';
 import VForm from 'react-validation/build/form';
 import VInput from 'react-validation/build/input';
 import VSelect from 'react-validation/build/select';
@@ -70,7 +71,7 @@ class Staff extends Component {
     this.state = {
         //users
         table: {
-          headers: ["ID","Feature name","Values Number","Active"]
+          headers: ["ID","Feature name","For Custom Products","Active"]
         },
         usersTablePath: "/api/feature/list",
         integData: [],
@@ -92,7 +93,8 @@ class Staff extends Component {
         addForm: {
           name: "",
           currentValue: "",
-          values: []
+          values: [],
+          for_custom_products: false
         },
         //edit modal
         editPath: "/api/feature/edit",
@@ -105,7 +107,8 @@ class Staff extends Component {
         editForm: {
           name: "",
           currentValue: "",
-          values: []
+          values: [],
+          for_custom_products: false
         },
         //deactivate modal
         deactivateModalWaiting: false,
@@ -253,7 +256,7 @@ class Staff extends Component {
                 <tr key={ele._id}  onClick={()=> this.handelRowClick(ele,index)} className={this.state.showUserDetails && (ele._id == this.state.selectedUser._id)? "selectedRow": ""}>
                   <td>{ele._id}</td>
                   <td>{ele.name}</td>
-                  <td>{ele.options.length}</td>
+                  <td>{dependencies.boolName(ele.for_custom_products)}</td>
                   <td>{dependencies.boolName(ele.active)}</td>
                 </tr>
               )
@@ -389,6 +392,9 @@ class Staff extends Component {
                   })}</span>
                 </div>
                 <div className="modal_details">
+                  <span className="title">For Custom Products</span><span className="value">{dependencies.boolName(this.state.selectedUser.for_custom_products)}</span>
+                </div>
+                <div className="modal_details">
                   <span className="title">Active</span><span className="value">{dependencies.boolName(this.state.selectedUser.active)}</span>
                 </div>
               </div>
@@ -405,6 +411,7 @@ class Staff extends Component {
     addFormData.name= "";
     addFormData.currentValue= "";
     addFormData.values= [];
+    addFormData.for_custom_products= false;
     this.setState({
       addModal: !this.state.addModal,
       addForm: addFormData,
@@ -416,15 +423,19 @@ class Staff extends Component {
   }
   handleAddInputChange(inputName,event){
     let addFormData = this.state.addForm;
-    addFormData[inputName] = event.target.value;
-    this.setState({addForm: addFormData},()=>{
-    })
+    if(inputName == "for_custom_products"){
+      addFormData[inputName] = !this.state.addForm["for_custom_products"];
+    }else{
+      addFormData[inputName] = event.target.value;
+    }
+    this.setState({addForm: addFormData})
   }
   handleAddProductSubmit(event){
     //get form data
     let userObj = {
       "name": this.state.addForm.name,
-      "options": this.state.addForm.values.join()
+      "options": this.state.addForm.values.join(),
+      "for_custom_products": this.state.addForm.for_custom_products
     };
     let userData = JSON.stringify(userObj);
     //start waiting
@@ -568,6 +579,18 @@ class Staff extends Component {
                           
                         </div>
                       </Col> 
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <FormGroup>
+                            <AppSwitch className={'mx-1'} variant={'pill'} color={'info'}
+                              onChange={(e) => this.handleAddInputChange("for_custom_products",e)}
+                              checked={this.state.addForm.for_custom_products}
+                              name="for_custom_products"
+                            />
+                            For Custom Products
+                          </FormGroup>
+                        </div>
+                      </Col> 
                     </Row>
                   </div>
                 }
@@ -604,6 +627,7 @@ class Staff extends Component {
     editFormData.name= this.state.selectedUser.name;
     editFormData.currentValue= "";
     editFormData.values= this.state.selectedUser.options;
+    editFormData.for_custom_products = this.state.selectedUser.for_custom_products
     this.setState({
       editModal: !this.state.editModal,
       editForm: editFormData,
@@ -615,7 +639,11 @@ class Staff extends Component {
   }
   handleEditInputChange(inputName,event){
     let editFormData = this.state.editForm;
-    editFormData[inputName] = event.target.value;
+    if(inputName == "for_custom_products"){
+      editFormData[inputName] = !this.state.editForm["for_custom_products"];
+    }else{
+      editFormData[inputName] = event.target.value;
+    }
     this.setState({editForm: editFormData})
   }
   handleEditUserSubmit(event){
@@ -623,7 +651,8 @@ class Staff extends Component {
     let userObj = {
       "feature_id": this.state.selectedUser._id,
       "name": this.state.editForm.name,
-      "options": this.state.editForm.values.join()
+      "options": this.state.editForm.values.join(),
+      "for_custom_products": this.state.editForm.for_custom_products
     };
     let userData = JSON.stringify(userObj);
     //start waiting
@@ -765,6 +794,18 @@ class Staff extends Component {
                             <button className="accept-btn btn btn-default add_btn" onClick={this.handleEditFormAddValueInput}><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
                           }
                           
+                        </div>
+                      </Col> 
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <FormGroup>
+                            <AppSwitch className={'mx-1'} variant={'pill'} color={'info'}
+                              onChange={(e) => this.handleEditInputChange("for_custom_products",e)}
+                              checked={this.state.editForm.for_custom_products}
+                              name="for_custom_products"
+                            />
+                            For Custom Products
+                          </FormGroup>
                         </div>
                       </Col> 
                     </Row>

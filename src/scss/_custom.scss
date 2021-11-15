@@ -832,10 +832,11 @@ html[dir="rtl"] .TableDiv > select{
     font-weight: bold;
     font-size: 16px;
     line-height: 30px;
+    margin-right: 10px;
 }
 .modal_details .title::after {
     position: absolute;
-    right: 3px;
+    right: -6px;
     content: " : ";
 }
 td.NEXT_uuid_td{
