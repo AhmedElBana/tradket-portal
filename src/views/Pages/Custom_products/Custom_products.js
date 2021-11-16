@@ -96,7 +96,7 @@ class Custom_products extends Component {
           let with_staff_final_filter_struc = [];
           final_filter_struc.map((ele) => {
             let current_ele = ele;
-            if(current_ele.filterName == "creator_id"){
+            if(current_ele.filterName == "creator_id" || current_ele.filterName == "accepted_from" || current_ele.filterName == "ready_from"){
               current_ele.options = staff_options;
             }
             with_staff_final_filter_struc.push(current_ele);

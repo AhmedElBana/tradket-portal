@@ -25,7 +25,25 @@
   {
     "type": "select",
     "filterName": "creator_id",
-    "name": "Staff",
+    "name": "Created By",
+    "name_ar": "الكاشير",
+    "message": "Select Staff",
+    "message_ar": "حدد الكاشير",
+    "options": []
+  },
+  {
+    "type": "select",
+    "filterName": "accepted_from",
+    "name": "Started By",
+    "name_ar": "الكاشير",
+    "message": "Select Staff",
+    "message_ar": "حدد الكاشير",
+    "options": []
+  },
+  {
+    "type": "select",
+    "filterName": "ready_from",
+    "name": "Ready By",
     "name_ar": "الكاشير",
     "message": "Select Staff",
     "message_ar": "حدد الكاشير",
