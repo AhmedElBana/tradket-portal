@@ -1,0 +1,77 @@
+//media mixin
+@mixin m($width) {
+    @media(max-width:#{$width}px) {
+        @content;
+    }
+}
+// Lang mixin
+@mixin en {
+    html[dir="ltr"] & {
+        @content;
+    }
+}
+@mixin ar {
+    html[dir="rtl"] & {
+        @content;
+    }
+}
+
+.staffSuccesDiv{
+    text-align: center;
+    margin-top: 30px;
+    color: #20A8D8;
+}
+.staffSuccesDiv h1{
+    font-size: 34px;
+    margin-bottom: 30px;
+}
+.staffSuccesDiv p{
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+.staffSuccesDiv img{
+    margin-bottom: 30px;
+}
+
+.orders .modal_details .title{
+    min-width: 135px !important;
+}
+.ordersDetails .product_map{
+    overflow-x: auto;
+}
+.orders .modal_details .title{
+    @include m (767){
+        min-width: 0px !important;
+        padding-right: 15px !important;
+    }
+}
+.ordersDetails .x_title.details{
+    @include m (767){
+        height: auto;
+        border: none;
+    }
+}
+
+.custom_products_head{
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #E6E9ED;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    div{
+        display: inline-block;
+        width: calc(25% - 10px);
+        text-align: center;
+        cursor: pointer;
+        background-color: #eee;
+        margin: 5px;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    div.active{
+        background-color: #22A9D7;
+        color: #fff;
+    }
+}

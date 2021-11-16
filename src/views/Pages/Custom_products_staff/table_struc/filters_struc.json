@@ -1,0 +1,16 @@
+[
+  {
+    "type": "dateRange",
+    "filterNameFrom": "createdDateFrom",
+    "filterNameTo": "createdDateTo",
+    "name": "Date Range",
+    "name_ar": "مدى التاريخ",
+    "date_range": 30,
+    "size": {
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 12
+    }
+  }
+]

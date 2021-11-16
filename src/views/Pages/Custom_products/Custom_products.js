@@ -10,6 +10,7 @@ import table_struc from './table_struc/table_struc.json';
 import details_struc from './table_struc/details_struc.json';
 import filter_struc from './table_struc/filters_struc.json';
 let final_filter_struc = filter_struc;
+const perms = JSON.parse(localStorage.userData).permissions;
 
 class Custom_products extends Component {
   constructor(props){
@@ -23,8 +24,12 @@ class Custom_products extends Component {
     }; 
   }
   componentDidMount(){
-    this.requestBranches();
-    this.requestStaff();
+    if(!perms.includes("132")){
+      window.location.pathname = "/portal/custom/products/staff"
+    }else{
+      this.requestBranches();
+      this.requestStaff();
+    }
   }
   requestBranches = () => {
     //request data
