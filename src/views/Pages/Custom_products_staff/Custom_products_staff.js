@@ -42,8 +42,7 @@ class Custom_products_staff extends Component {
               <div className="custom_products_head">
                 <div className={this.state.current_step == "new" ? "active" : ""} onClick={()=>{this.current_step_change("new")}}>New</div>
                 <div className={this.state.current_step == "progress" ? "active" : ""} onClick={()=>{this.current_step_change("progress")}}>Progress</div>
-                <div className={this.state.current_step == "ready" ? "active" : ""} onClick={()=>{this.current_step_change("ready")}}>Ready</div>
-                <div className={this.state.current_step == "delivered" ? "active" : ""} onClick={()=>{this.current_step_change("delivered")}}>Delivered</div>
+                <div className={this.state.current_step == "ready" ? "active" : ""} onClick={()=>{this.current_step_change("ready")}}>Complate</div>
               </div>
             </div>
             <div>
@@ -54,10 +53,7 @@ class Custom_products_staff extends Component {
                   <FullTable name="Custom_products_staff_progress" path={`/api/custom_product/list?status=accepted&accepted_from=${JSON.parse(localStorage.userData)._id}`} table={table_struc} filters={final_filter_struc} details={details_struc}  detailsButtons={<DetailsButtons/>} />
               }
               {this.state.current_step === "ready" &&
-                  <FullTable name="Custom_products_staff_ready" path={`/api/custom_product/list?status=ready&accepted_from=${JSON.parse(localStorage.userData)._id}`} table={table_struc} filters={final_filter_struc} details={details_struc}  detailsButtons={<DetailsButtons/>} />
-              }
-              {this.state.current_step === "delivered" &&
-                  <FullTable name="Custom_products_staff_delivered" path={`/api/custom_product/list?status=delivered&accepted_from=${JSON.parse(localStorage.userData)._id}`} table={table_struc} filters={final_filter_struc} details={details_struc}  detailsButtons={<DetailsButtons/>} />
+                  <FullTable name="Custom_products_staff_ready" path={`/api/custom_product/list?ready_from=${JSON.parse(localStorage.userData)._id}`} table={table_struc} filters={final_filter_struc} details={details_struc}  detailsButtons={<DetailsButtons/>} />
               }
             </div>
           </>
