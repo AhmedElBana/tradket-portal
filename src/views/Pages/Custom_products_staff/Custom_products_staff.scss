@@ -69,6 +69,9 @@
         border-radius: 5px;
         font-size: 18px;
         font-weight: bold;
+        @include m (767){
+            width: calc(100% - 10px);
+        }
     }
     div.active{
         background-color: #22A9D7;
