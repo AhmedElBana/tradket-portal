@@ -8,6 +8,7 @@ import "./Home.scss";
 import Waiting from "./../../../views/Waiting/waiting";
 import { auth } from '../../../tools/Auth';
 
+const perms = JSON.parse(localStorage.userData).permissions;
 
 class Home extends Component {
   constructor(props){
@@ -20,7 +21,9 @@ class Home extends Component {
     };
   }
   componentDidMount(){
-    this.load_info();
+    if(perms.includes("136")){
+      this.load_info();
+    }
   }
   load_info = () => {
     //request data
@@ -53,40 +56,42 @@ class Home extends Component {
     return (
       <div className="Home">
         <Row>
-          <div className="home_headers">
-            {this.state.publicError?
-                <Alert color="danger">
-                  Oops! Something went wrong. If this problem persists, please contact your service provider.
-                </Alert>
-            :
-              this.state.waiting ?
-                <Waiting height="100px" width="50px" />
+          {perms.includes("136") &&
+            <div className="home_headers">
+              {this.state.publicError?
+                  <Alert color="danger">
+                    Oops! Something went wrong. If this problem persists, please contact your service provider.
+                  </Alert>
               :
-                <div>
-                  <div className="insights_head_div">
-                    <p>Store Resources</p>
+                this.state.waiting ?
+                  <Waiting height="100px" width="50px" />
+                :
+                  <div>
+                    <div className="insights_head_div">
+                      <p>Store Resources</p>
+                    </div>
+                    <div className="insights_body_div">
+                      <div>
+                          <p>Storage Limit</p>
+                          <span>{this.state.info.imagesStorageLimit.toFixed(2)}MB</span>
+                      </div>
+                      <div>
+                          <p>Used Storage</p>
+                          <span>{this.state.info.imagesStorage.toFixed(2)}MB</span>
+                      </div>
+                      <div>
+                          <p>Available SMS</p>
+                          <span>{this.state.info.availableSMS}</span>
+                      </div>
+                      <div>
+                          <p>Used SMS</p>
+                          <span>{this.state.info.usedSMS}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="insights_body_div">
-                    <div>
-                        <p>Storage Limit</p>
-                        <span>{this.state.info.imagesStorageLimit.toFixed(2)}MB</span>
-                    </div>
-                    <div>
-                        <p>Used Storage</p>
-                        <span>{this.state.info.imagesStorage.toFixed(2)}MB</span>
-                    </div>
-                    <div>
-                        <p>Available SMS</p>
-                        <span>{this.state.info.availableSMS}</span>
-                    </div>
-                    <div>
-                        <p>Used SMS</p>
-                        <span>{this.state.info.usedSMS}</span>
-                    </div>
-                  </div>
-                </div>
-            }
-          </div>
+              }
+            </div>
+          }
         </Row>
       </div>
     );

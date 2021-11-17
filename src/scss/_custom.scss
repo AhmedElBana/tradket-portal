@@ -1354,3 +1354,24 @@ tr.bill_tr > td{
         margin-top: 25px;
     }
 }
+
+.materials_update{
+    border-top: 1px solid #ccc;
+    margin-top: 30px;
+    padding-top: 30px;
+    h3{
+        margin-bottom: 15px;
+    }
+    span.label{
+        float: left;
+        text-align: left;
+        font-size: 18px;
+        margin-left: 10px;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: bold;
+    }
+    .inputeDiv{
+        margin-bottom: 15px;
+    }
+}
