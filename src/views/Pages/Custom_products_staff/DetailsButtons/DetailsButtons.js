@@ -20,14 +20,21 @@ class DetailsButtons extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            userCanEdit: false,
             //start custom product
-            userCanStart: false,
             startPath: "/api/custom_product/start",
             startModal: false,
             startModalWaiting: false,
             startSuccessfully: false,
             startFaild: false,
             startFaildMessage: "",
+            //start_cancel custom product
+            start_cancelPath: "/api/custom_product/start_cancel",
+            start_cancelModal: false,
+            start_cancelModalWaiting: false,
+            start_cancelSuccessfully: false,
+            start_cancelFaild: false,
+            start_cancelFaildMessage: "",
         };
     }
     componentDidMount(){
@@ -36,7 +43,7 @@ class DetailsButtons extends Component {
     handleUserPerms = () => {
         const perms = JSON.parse(localStorage.userData).permissions;
         this.setState({
-            "userCanStart": (perms.includes("134") || perms.includes("135"))
+            "userCanEdit": (perms.includes("134") || perms.includes("135"))
         })
     }
     startProduct = () => {
@@ -88,6 +95,56 @@ class DetailsButtons extends Component {
             startFaildMessage: ""
         })
     }
+    //start_cancel
+    start_cancelProduct = () => {
+        //start start_cancel modal waiting
+        this.setState({ start_cancelFaild: false, start_cancelFaildMessage: "", start_cancelModalWaiting: true }, () => {
+            //send start_cancel request
+            let config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-auth": auth.getMerchantToken()
+                }
+            }
+            let product_obj = {
+                "id": this.props.selectedDetailsObj._id
+            }
+            let productData = JSON.stringify(product_obj);
+            httpClient.post(
+                this.state.start_cancelPath,
+                config,
+                productData,
+                (resp) => {
+                    this.setState({ start_cancelModalWaiting: false, start_cancelSuccessfully: true }, () => {
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 3000);
+                    });
+                },
+                (error) => {
+                    if(error.response){
+                      if(error.response.status === 401){
+                        this.setState({logout: true});
+                      }else if(error.response.status === 400){
+                        this.setState({start_cancelModalWaiting: false, start_cancelFaild: true, start_cancelFaildMessage: error.response.data.message});
+                      }else{
+                        this.setState({publicError: true});
+                      }
+                    }else{
+                      this.setState({publicError: true});
+                    }
+                }
+            )
+        });
+    }
+    toggleStart_cancelModal = () => {
+        this.setState({
+            start_cancelModal: !this.state.start_cancelModal,
+            start_cancelModalWaiting: false,
+            start_cancelFaild: false,
+            start_cancelFaildMessage: ""
+        })
+    }
     renderDetailModals = () => {
         return (
             <div>
@@ -137,6 +194,52 @@ class DetailsButtons extends Component {
                         </ModalFooter>
                     }
                 </Modal>
+                {/* start_cancel Modal */}
+                <Modal isOpen={this.state.start_cancelModal} toggle={this.toggleStart_cancelModal}>
+                    <ModalHeader toggle={this.toggleStart_cancelModal}>Back To New</ModalHeader>
+                    <ModalBody>
+                        {this.state.start_cancelFaild ?
+                            <div>
+                                <Alert color="danger">
+                                    {this.state.start_cancelFaildMessage}
+                                </Alert>
+                            </div>
+                            :
+                            <div className="transfer_modal_body">
+                                {this.state.start_cancelSuccessfully ?
+                                    <div className="staffSuccesDiv">
+                                        <img src={successImg} alt="succes"/>
+                                        <h1>Congratulations</h1>
+                                        <p>Custom Product Back To New Successfully.</p>
+                                    </div>
+                                :
+                                    this.state.start_cancelFaild?
+                                        <Col>
+                                            <div className="alert alert-danger fade show fullWidth">{this.state.start_cancelFaildMessage}</div>
+                                        </Col>
+                                    :
+                                        <div>
+                                            {this.state.start_cancelModalWaiting ?
+                                                <Waiting height="100px" width="50px" />
+                                                :
+                                                <div>
+                                                    <p>Back Custom Product <br/>({this.props.selectedDetailsObj.id}) To New</p>
+                                                </div>
+                                            }
+                                        </div>
+                                }
+                            </div>
+                        }
+                    </ModalBody>
+                    {this.state.start_cancelSuccessfully || this.state.start_cancelModalWaiting || this.state.start_cancelFaild?
+                        null
+                    : 
+                        <ModalFooter>
+                            <Button color="primary" onClick={this.start_cancelProduct} className="primaryBtn">Confirm</Button>{' '}
+                            <Button color="secondary" onClick={this.toggleStart_cancelModal} className="secondryBtn">Close</Button>
+                        </ModalFooter>
+                    }
+                </Modal>
             </div>
         )
     }
@@ -144,8 +247,11 @@ class DetailsButtons extends Component {
         return (
             <>
                 {this.renderDetailModals()}
-                {this.props.selectedDetailsObj.status == "assigned" && this.state.userCanStart &&
+                {this.props.selectedDetailsObj.status == "assigned" && this.state.userCanEdit &&
                     <Button onClick={this.toggleStartModal} className="filterCompButton SubmitFButton btn btn-secondary">Start</Button>
+                }
+                {this.props.selectedDetailsObj.status == "accepted" && this.state.userCanEdit &&
+                    <Button onClick={this.toggleStart_cancelModal} className="filterCompButton SubmitFButton btn btn-secondary">Back New</Button>
                 }
                 <Link to={"/custom/products/details/" + this.props.selectedDetailsObj._id} className="filterCompButton SubmitFButton btn btn-secondary">Full Details</Link>
             </>
