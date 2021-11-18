@@ -88,20 +88,21 @@ class Dependencies {
         return input_date.slice(0, 19)
     }
     custom_date_format( input_date ){
-        var d = this.ParseFullDate(this.IeDateFormate(input_date));
-        var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        if( localStorage.lang == "ar" ){
-          month = ['يناير','فبراير','مارس','ابريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-        }
-        var output_time = d.toLocaleTimeString().toLowerCase().replace(/([\d]+:[\d]+):[\d]+(\s\w+)/g, "$1$2");
-        if( localStorage.lang == "ar"){
-            output_time = output_time.replace(/am/g,"صباحا");
-            output_time = output_time.replace(/pm/g,"مساءً");
-        }
-        var output_date =  d.getDate() + ' - ' + month[d.getMonth()] + ' - ' + d.getFullYear() + ', ' + output_time;
+        // var d = this.ParseFullDate(input_date);
+        // var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        // if( localStorage.lang == "ar" ){
+        //   month = ['يناير','فبراير','مارس','ابريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+        // }
+        // var output_time = d.toLocaleTimeString().toLowerCase().replace(/([\d]+:[\d]+):[\d]+(\s\w+)/g, "$1$2");
+        // if( localStorage.lang == "ar"){
+        //     output_time = output_time.replace(/am/g,"صباحا");
+        //     output_time = output_time.replace(/pm/g,"مساءً");
+        // }
+        // var output_date =  d.getDate() + ' - ' + month[d.getMonth()] + ' - ' + d.getFullYear() + ', ' + output_time;
         
-        //return d.toISOString().split('T')[0]
-        return output_date
+        // //return d.toISOString().split('T')[0]
+        // return output_date
+        return new Date(input_date).toLocaleString()
     }
     boolName(bool){
         let str = bool;
