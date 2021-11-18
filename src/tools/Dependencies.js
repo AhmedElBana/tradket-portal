@@ -102,7 +102,7 @@ class Dependencies {
         
         // //return d.toISOString().split('T')[0]
         // return output_date
-        return new Date(input_date).toLocaleString()
+        return new Date(input_date).toLocaleString("en-NZ")
     }
     boolName(bool){
         let str = bool;
