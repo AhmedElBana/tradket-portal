@@ -74,8 +74,8 @@ class Bill extends Component {
                             </td>
 
                             <td>
-                              <b>Customer:</b> {this.state.order.customer_name}<br />
-                              <b>Phone:</b> {this.state.order.customer_phoneNumber}<br />
+                              <b>Customer:</b> {this.state.order.customer.name}<br />
+                              <b>Phone:</b> {this.state.order.customer.phoneNumber}<br />
                             </td>
                           </tr>
                         </table>
