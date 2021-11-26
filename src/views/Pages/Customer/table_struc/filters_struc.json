@@ -1,0 +1,16 @@
+[
+  {
+    "type": "input",
+    "filterName": "phoneNumber",
+    "name": "Phone Number",
+    "name_ar": "رقم المعاملة",
+    "validations": ["intNumber"]
+  },
+  {
+    "type": "input",
+    "filterName": "name",
+    "name": "Name",
+    "name_ar": "رقم المعاملة",
+    "validations": []
+  }
+]

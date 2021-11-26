@@ -89,6 +89,15 @@ if(perms.includes("139")){
     icon: 'fa fa-money',
   });
 }
+//Customer
+let customerObj = []
+if(perms.includes("139")){
+  customerObj.push({
+    name: 'Customers',
+    url: '/customer',
+    icon: 'fa fa-users',
+  });
+}
 //Transfers
 let TransfersObj = []
 if(perms.includes("120") || perms.includes("121") || perms.includes("122")){
@@ -124,6 +133,7 @@ const listData = [
   ...Custom_productsObj,
   ...orderObj,
   ...paymentObj,
+  ...customerObj,
   // ...promoObj
 ]
 
