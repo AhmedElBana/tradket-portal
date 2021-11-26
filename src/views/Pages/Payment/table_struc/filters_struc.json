@@ -1,0 +1,72 @@
+[
+  {
+    "type": "dateRange",
+    "filterNameFrom": "created_at_from",
+    "filterNameTo": "created_at_to",
+    "name": "Date Range",
+    "name_ar": "مدى التاريخ",
+    "date_range": 30,
+    "size": {
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 6
+    }
+  },
+  {
+    "type": "select",
+    "filterName": "branch",
+    "name": "Branch",
+    "name_ar": "الفرع",
+    "message": "Select Branch",
+    "message_ar": "حدد الفرع",
+    "options": []
+  },
+  {
+    "type": "select",
+    "filterName": "created_from",
+    "name": "Staff",
+    "name_ar": "الكاشير",
+    "message": "Select Staff",
+    "message_ar": "حدد الكاشير",
+    "options": []
+  },
+  {
+    "type": "select",
+    "filterName": "type",
+    "name": "Type",
+    "name_ar": "الكاشير",
+    "message": "Select Type",
+    "message_ar": "حدد الكاشير",
+    "options": [
+      {"value": "in", "text": "In", "text_ar": "Success"},
+      {"value": "out", "text": "Out", "text_ar": "Canceled"}
+    ]
+  },
+  {
+    "type": "select",
+    "filterName": "status",
+    "name": "Status",
+    "name_ar": "الكاشير",
+    "message": "Select Status",
+    "message_ar": "حدد الكاشير",
+    "options": [
+      {"value": "success", "text": "Success", "text_ar": "Success"},
+      {"value": "canceled", "text": "Canceled", "text_ar": "Canceled"}
+    ]
+  },
+  {
+    "type": "select",
+    "filterName": "method",
+    "name": "Method",
+    "name_ar": "الكاشير",
+    "message": "Select Method",
+    "message_ar": "حدد الكاشير",
+    "options": [
+      {"value": "cashe", "text": "Cashe", "text_ar": "Success"},
+      {"value": "card", "text": "Card", "text_ar": "Canceled"}
+    ]
+  }
+
+
+]

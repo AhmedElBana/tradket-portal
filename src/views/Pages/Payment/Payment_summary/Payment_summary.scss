@@ -1,0 +1,113 @@
+//media mixin
+@mixin m($width) {
+    @media(max-width:#{$width}px) {
+        @content;
+    }
+}
+// Lang mixin
+@mixin en {
+    html[dir="ltr"] & {
+        @content;
+    }
+}
+@mixin ar {
+    html[dir="rtl"] & {
+        @content;
+    }
+}
+.payments_headers{
+    background-color: #fff;
+    padding: 15px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.alert{
+    margin-bottom: 0px;
+
+}
+
+.payments_headers .insights_head_div{
+    border-bottom: 2px solid #E6E9ED;
+    padding: 1px 5px 6px;
+    margin-bottom: 10px;
+    display: inline-block;
+    width: 100%;
+    p{
+        display: inline-block;
+        font-weight: bold;
+        font-size: 26px;
+        color: #333;
+    }
+    div{
+        display: inline-block;
+        float: right;
+        input, button, select, textarea{
+            height: 35px;
+            padding: 0px 5px;
+        }
+        select{
+            float: right;
+            margin: 0px 5px;
+            cursor: pointer;
+        }
+        button{
+            float: right;
+        }
+        div.rs-picker-date{
+            margin: 0px 5px;
+            height: 35px;
+            .rs-btn.rs-btn-default.rs-picker-toggle{
+                height: 35px !important;
+                padding-top: 8px !important;
+            }
+        }
+    }
+}
+.insights_body_div{
+    div{
+        display: inline-block;
+        width: calc(33.333% - 10px);
+        background-color: #22A9D7;
+        border-radius: 8px;
+        text-align: center;
+        margin: 5px;
+        padding: 20px 10px;
+        p{
+            font-weight: bold;
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        span{
+            font-weight: bold;
+            font-size: 24px;
+            color: #fff;
+        }
+    }
+}
+@include m(767){
+    .insights_head_div div{
+        padding-top: 10px;
+        select{
+            width: calc(100% - 10px);
+            margin-bottom: 10px;
+        }
+        div.rs-picker-date{
+            width: calc(100% - 10px);
+            margin-bottom: 10px;
+            padding-top: 0px;
+        }
+        button{
+            width: calc(100% - 10px);
+            margin: 0px 5px;
+            margin-bottom: 10px;
+        }
+    }
+    .insights_body_div{
+        text-align: center;
+        div{
+            width: calc(100% - 30px);
+
+        }
+    }
+}

@@ -32,16 +32,17 @@
     "options": []
   },
   {
-    "type": "toggle",
-    "filterName": "canceled",
-    "name": "Canceled",
-    "name_ar": "تم الالغاء"
-  },
-  {
-    "type": "toggle",
-    "filterName": "returned",
-    "name": "Returned",
-    "name_ar": "تم الارجاع"
+    "type": "select",
+    "filterName": "status",
+    "name": "Status",
+    "name_ar": "الكاشير",
+    "message": "Select Status",
+    "message_ar": "حدد الكاشير",
+    "options": [
+      {"value": "success", "text": "Success", "text_ar": "Success"},
+      {"value": "canceled", "text": "Canceled", "text_ar": "Canceled"},
+      {"value": "returned", "text": "Returned", "text_ar": "Returned"}
+    ]
   }
 
 

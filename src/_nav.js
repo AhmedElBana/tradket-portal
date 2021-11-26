@@ -80,6 +80,15 @@ if(perms.includes("123")){
     icon: 'fa fa-qrcode',
     });
 }
+//payment
+let paymentObj = []
+if(perms.includes("139")){
+  paymentObj.push({
+    name: 'Payments',
+    url: '/payment',
+    icon: 'fa fa-money',
+  });
+}
 //Transfers
 let TransfersObj = []
 if(perms.includes("120") || perms.includes("121") || perms.includes("122")){
@@ -111,9 +120,10 @@ const listData = [
   ...featureObj,
   ...materialObj,
   ...productObj,
+  ...TransfersObj,
   ...Custom_productsObj,
   ...orderObj,
-  ...TransfersObj,
+  ...paymentObj,
   // ...promoObj
 ]
 
