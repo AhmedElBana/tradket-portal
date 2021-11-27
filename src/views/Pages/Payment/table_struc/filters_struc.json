@@ -63,7 +63,7 @@
     "message": "Select Method",
     "message_ar": "حدد الكاشير",
     "options": [
-      {"value": "cashe", "text": "Cashe", "text_ar": "Success"},
+      {"value": "cash", "text": "Cash", "text_ar": "Success"},
       {"value": "card", "text": "Card", "text_ar": "Canceled"}
     ]
   }
