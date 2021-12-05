@@ -188,7 +188,12 @@ class Dependencies {
             return (amount/100)
         }
     }
-
+    convertAmountFullNoCurr(amount){
+        return dependencies.numberWithCommas(amount)
+    }
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 }
 
 export let dependencies = new Dependencies();

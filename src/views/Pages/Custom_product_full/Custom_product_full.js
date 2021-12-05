@@ -102,12 +102,12 @@ class Custom_product_full extends Component {
                       <p><span>Ready From</span>: {this.state.data.ready_from ? this.state.data.ready_from.name : "-"}</p>
                       <p><span>Delivered At</span>: {this.state.data.delivered_at ? dependencies.custom_date_format(this.state.data.delivered_at) : "-"}</p>
                       <p><span>Delivered From</span>: {this.state.data.delivered_from ? this.state.data.delivered_from.name : "-"}</p>
-                      {perms.includes("132") && <>
+                      <>
                         <h3>Customer</h3>
-                        <p><span>Name</span>: {this.state.data.customer.name}</p>
-                        <p><span>Phone Number</span>: {this.state.data.customer.phoneNumber}</p>
-                        <p><span>ID</span>: {this.state.data.customer._id}</p>
-                      </>}
+                        <p><span>Name</span>: {this.state.data.customer && this.state.data.customer.name ? this.state.data.customer.name : " - "}</p>
+                        <p><span>Phone Number</span>: {this.state.data.customer && this.state.data.customer.phoneNumber ? this.state.data.customer.phoneNumber : " - "}</p>
+                        <p><span>ID</span>: {this.state.data.customer && this.state.data.customer._id ? this.state.data.customer._id : " - "}</p>
+                      </>
                       <h3>Materials</h3>
                       {Object.keys(this.state.data.materials_details).map((key, index)=>{
                         return(
