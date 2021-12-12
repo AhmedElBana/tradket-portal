@@ -16,7 +16,7 @@ import successImg from "./../../../assets/img/success.png"
 import ImgPreview from 'img-preview';
 import Waiting from "./../../../views/Waiting/waiting";
 
-let requiredError = "This field is required."
+let requiredError = "هذا الحقل إجباري."
 const required = (value) => {
   if (!value.toString().trim().length) {
     // We can return string or jsx as the 'error' prop for the validated Component
@@ -28,7 +28,7 @@ const required = (value) => {
           </div>;
   }
 };
-let emailError= "Please enter valid email.";
+let emailError= "يرجي ادخال بريد الكتروني صحيح.";
 const email = (value) => {
   if (!validator.isEmail(value)) {
     return <div className="simple-alert">
@@ -39,7 +39,7 @@ const email = (value) => {
           </div>;
   }
 };
-let fullNameError = "Please enter your full name."
+let fullNameError = "يرجي ادخال الاسم بالكامل"
 const fullName = (value) => {
   var patt = new RegExp("[a-zA-Zا-ى]+ [a-zA-Zا-ى]+");
   if (!patt.test(value)) {
@@ -51,7 +51,7 @@ const fullName = (value) => {
           </div>;
   }
 };
-let phoneNameError = "Please enter valid phone number  (more than 4 number)."
+let phoneNameError = "يرجي ادخال رقم هاتف صحيح."
 const phoneNumber = (value) => {
   // var patt = new RegExp("^(01)([0-9]*)$");
   if (isNaN(value) || value.toString().trim().length <= 4) {
@@ -94,9 +94,9 @@ class Material extends Component {
     this.state = {
         //users
         table: {
-          headers: ["ID","name","Category","SubCategory","Created At","Active"]
+          headers: ["الرقم","الاسم","القسم","القسم الفرعي","تاريخ الانشاء","فعال"]
         },
-        detailsHeaders: ["Branch ID","Branch Name","Quantity"],
+        detailsHeaders: ["رقم الفرع","اسم الفرع","العدد"],
         usersTablePath: "/api/productGroup/list",
         currentFilters: {
           "is_material": true
@@ -165,6 +165,19 @@ class Material extends Component {
           quantity: "",
           branch: ""
         },
+        //transfer modal
+        transferPath: "/api/transfer/create",
+        transferModalWaiting: false,
+        transferModal: false,
+        transferModalError: false,
+        transferModalFaildMessage: "",
+        transferModalSuccess: false,
+        transferForm: {
+          product: {},
+          quantity: "",
+          source_branch: "",
+          target_branch: ""
+        },
         //deactivate modal
         deactivateModalWaiting: false,
         deactivateModal: false,
@@ -232,6 +245,12 @@ class Material extends Component {
     this.handleAddMoreInputChange = this.handleAddMoreInputChange.bind(this);
     this.handleAddMoreProductSubmit = this.handleAddMoreProductSubmit.bind(this);
     this.addMoreModalReset = this.addMoreModalReset.bind(this);
+    //transfer 
+    this.renderTransferModal = this.renderTransferModal.bind(this);
+    this.toggleTransferModal = this.toggleTransferModal.bind(this);
+    this.handleTransferInputChange = this.handleTransferInputChange.bind(this);
+    this.handleTransferProductSubmit = this.handleTransferProductSubmit.bind(this);
+    this.transferModalReset = this.transferModalReset.bind(this);
     //deactivate modal
     this.renderDeactivateModal = this.renderDeactivateModal.bind(this);
     this.toggleDeactivateModal = this.toggleDeactivateModal.bind(this);
@@ -372,7 +391,8 @@ class Material extends Component {
         "x-auth": auth.getMerchantToken()
       },
       params: {
-        "page_size": "1000"
+        "page_size": "1000",
+        "for_custom_products": false
       }
     }
     httpClient.get(
@@ -499,11 +519,11 @@ class Material extends Component {
         <Row>
           <div className="x_panel">
             <div className="x_title">
-              <h2>Materials</h2>
+              <h2>الخامات</h2>
               <div className="ButtonsDiv">
                 {JSON.parse(localStorage.userData).permissions.includes("116")?
                   <button onClick={this.toggleAddModal} type="button" className="btn">
-                    New Material
+                    خامة جديدة
                   </button>:null
                 }
               </div>  
@@ -530,8 +550,8 @@ class Material extends Component {
                         onPageChange={this.handleTablePageChange}
                         forcePage={this.state.PageNumber}
                         containerClassName="paginationList"
-                        nextLabel="Next"
-                        previousLabel="Previous"
+                        nextLabel="التالي"
+                        previousLabel="السابق"
                       />
                 </div>
               }
@@ -652,31 +672,31 @@ class Material extends Component {
                   <div className="ImageGallery_div"><ImgPreview src={this.state.subcategories.images}/></div>
                 }
                 <div className="modal_details">
-                  <span className="title">ID</span><span className="value">{this.state.subcategories._id}</span>
+                  <span className="title">الرقم</span><span className="value">{this.state.subcategories._id}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Name</span><span className="value">{this.state.subcategories.name}</span>
+                  <span className="title">الاسم</span><span className="value">{this.state.subcategories.name}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Category</span><span className="value">{this.state.categoriesName[this.state.subcategories.category_id]}</span>
+                  <span className="title">القسم</span><span className="value">{this.state.categoriesName[this.state.subcategories.category_id]}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">SubCategory</span><span className="value">{this.state.subcategories.subCategory_id ? this.state.subCategoriesName[this.state.subcategories.subCategory_id] : " - "}</span>
+                  <span className="title">القسم الفرعي</span><span className="value">{this.state.subcategories.subCategory_id ? this.state.subCategoriesName[this.state.subcategories.subCategory_id] : " - "}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Full Quantity</span><span className="value">{fullQuantity}</span>
+                  <span className="title">إجمالي العدد</span><span className="value">{fullQuantity}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Created At</span><span className="value">{dependencies.custom_date_format(this.state.subcategories.createdAt)}</span>
+                  <span className="title">تاريخ الانشاء</span><span className="value">{dependencies.custom_date_format(this.state.subcategories.createdAt)}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Description</span><span className="value">{this.state.subcategories.description}</span>
+                  <span className="title">الوصف</span><span className="value">{this.state.subcategories.description}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Active</span><span className="value">{dependencies.boolName(this.state.subcategories.active)}</span>
+                  <span className="title">فعال</span><span className="value">{dependencies.boolName(this.state.subcategories.active)}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Features</span><span className="value">
+                  <span className="title">الخصائص</span><span className="value">
                     {!this.state.subcategories.features?
                       <span> - </span>
                     :
@@ -693,7 +713,7 @@ class Material extends Component {
                   </span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Products</span>
+                  <span className="title">الخامات</span>
                     {this.state.subcategories.products.map((product, index)=>{
                       return(
                         <Card key={product._id} className="detailsCollapseCard">
@@ -705,30 +725,35 @@ class Material extends Component {
                             <div className="subHeader">
                               {JSON.parse(localStorage.userData).permissions.includes("116")?
                                   <button onClick={(e)=>{this.toggleAddMoreModal(e,product)}} type="button" className="btn">
-                                    More Quantity
+                                    إضافة كمية جديدة
+                                  </button>:null
+                              }
+                              {JSON.parse(localStorage.userData).permissions.includes("120")?
+                                  <button onClick={(e)=>{this.toggleTransferModal(e,product)}} type="button" className="btn">
+                                    طلب نقل كمية
                                   </button>:null
                               }
                             </div>
                             <div className="modal_details">
-                              <span className="title">Material ID</span><span className="value">{product._id}</span>
+                              <span className="title">رقم الخامة</span><span className="value">{product._id}</span>
                             </div>
                             <div className="modal_details">
-                              <span className="title">Group ID</span><span className="value">{product.group_id}</span>
+                              <span className="title">رقم المجموعة</span><span className="value">{product.group_id}</span>
                             </div>
                             <div className="modal_details">
-                              <span className="title">Name</span><span className="value">{product.name}</span>
+                              <span className="title">الاسم</span><span className="value">{product.name}</span>
                             </div>
                             <div className="modal_details">
-                              <span className="title">Price</span><span className="value">{product.price}</span>
+                              <span className="title">السعر</span><span className="value">{product.price}</span>
                             </div>
                             <div className="modal_details">
-                              <span className="title">Quantity</span><span className="value">{product.quantity}</span>
+                              <span className="title">العدد المتوفر</span><span className="value">{product.quantity}</span>
                             </div>
                             <div className="modal_details">
-                              <span className="title">Active</span><span className="value">{dependencies.boolName(product.active)}</span>
+                              <span className="title">فعال</span><span className="value">{dependencies.boolName(product.active)}</span>
                             </div>
                             <div className="modal_details">
-                              <span className="title">Branches Map</span>
+                              <span className="title">العدد في كل فرع</span>
                               <div className="product_map">
                                 <Table className="usersTable mainTable">
                                   <thead>
@@ -927,9 +952,6 @@ class Material extends Component {
     })
   }
   onSelectSubProductForm2(optionsList, featre) {
-    console.log("####################")
-    console.log(optionsList)
-    console.log(featre)
     let custom_features_ids_new = this.state.custom_features_ids;
     if(optionsList.length !== 0){
       custom_features_ids_new[featre._id] = {...featre};
@@ -970,9 +992,6 @@ class Material extends Component {
           })
         }
         let patchSize = optionsNumber / (this.state.custom_features_ids[feature_id].options.length * prevSize);
-        console.log("prevSize: " + prevSize)
-        console.log("patchSize: " + patchSize)
-        console.log("option: " + this.state.custom_features_ids[feature_id].options.length)
         for(let z = 0; z < prevSize; z++){
           this.state.custom_features_ids[feature_id].options.map((option, optionIndex)=>{
             for(let x = 0; x < patchSize; x++){
@@ -1002,7 +1021,7 @@ class Material extends Component {
                     data={this.state.features_ids[feature_id].options}
                     valueField='_id'
                     textField='name'
-                    placeholder={"Select " + this.state.features_ids[feature_id].name}
+                    placeholder={"حدد " + this.state.features_ids[feature_id].name}
                     onChange={(e) => this.onSelectSubProductForm2(e,this.state.features_ids[feature_id])}
                     defaultValue={calcValues(feature_id)}
                   />
@@ -1020,7 +1039,7 @@ class Material extends Component {
               return(
                 <div key={JSON.stringify(ele.features)} className="singleSubProduct">
                   <p className="title">
-                    Material : 
+                    خامة : 
                     {Object.keys(ele.features).map((key,subIndex)=>{
                       return(<span key={JSON.stringify(ele.features) + index + "" + subIndex} className="feature table_block">{key} : <span>{ele.features[key]}</span></span>)
                     })}
@@ -1033,7 +1052,7 @@ class Material extends Component {
                           autoComplete="off"
                           name="id"
                           validations={[]}
-                          placeholder="ID (optional)"
+                          placeholder="الرقم(اختياري)"
                         />
                       </div>
                     </Col>
@@ -1045,7 +1064,7 @@ class Material extends Component {
                           // value={this.state.addForm.price}
                           onChange={this.subProductInputChange}
                           validations={[NumberNR]}
-                          placeholder="Price"
+                          placeholder="السعر"
                         />
                       </div>
                     </Col>
@@ -1057,7 +1076,7 @@ class Material extends Component {
                           // value={this.state.addForm.quantity}
                           onChange={this.subProductInputChange}
                           validations={[NumberNR]}
-                          placeholder="Quantity"
+                          placeholder="العدد"
                         />
                       </div>
                     </Col>
@@ -1080,7 +1099,7 @@ class Material extends Component {
       <Modal className="usersModal modal-lg" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
         <VForm onSubmit={this.handleAddProductSubmit} >
           <ModalHeader toggle={this.toggleAddModal}>
-            New Material
+            خامة جديدة
           </ModalHeader>
           <ModalBody>
           {this.state.addModalError?
@@ -1094,8 +1113,8 @@ class Material extends Component {
               {this.state.addModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>Your Material has been created successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم إنشاء الخامة بنجاح.</p>
                 </div>
               :
                 <div >
@@ -1114,7 +1133,7 @@ class Material extends Component {
                             value={this.state.addForm._id}
                             onChange={(e) => this.handleAddInputChange("_id", e)}
                             validations={[]}
-                            placeholder="Material ID (optional)"
+                            placeholder="رقم الخامة (اختياري)"
                           />
                         </div>
                       </Col>
@@ -1126,7 +1145,7 @@ class Material extends Component {
                             value={this.state.addForm.name}
                             onChange={(e) => this.handleAddInputChange("name", e)}
                             validations={[required]}
-                            placeholder="Material Name"
+                            placeholder="اسم الخامة"
                           />
                         </div>
                       </Col>
@@ -1137,7 +1156,7 @@ class Material extends Component {
                             onChange={(e) => this.handleAddInputChange("branch_id",e)}
                             validations={[required]} 
                           >
-                            <option value="" disabled>Select Branch</option>
+                            <option value="" disabled>حدد الفرع</option>
                             {this.state.fullBranchs.map((branch)=>{
                               return(
                                 <option key={branch._id} value={branch._id}>{branch.name}</option>
@@ -1153,7 +1172,7 @@ class Material extends Component {
                             onChange={(e) => this.handleAddInputChange("category_id",e)}
                             validations={[required]} 
                           >
-                            <option value="" disabled>Select Category</option>
+                            <option value="" disabled>حدد القسم</option>
                             {this.state.fullCategories.map((category)=>{
                               return(
                                 <option key={category._id} value={category._id}>{category.name}</option>
@@ -1167,7 +1186,7 @@ class Material extends Component {
                           <div className="tradketInputGroup full_width">
                             <VSelect type="select" name="subCategory" className="tradket_b_s"
                             >
-                              <option value="" disabled>Select Category First</option>
+                              <option value="" disabled>حدد القسم اولا</option>
                             </VSelect>
                           </div>
                         </Col>
@@ -1179,7 +1198,7 @@ class Material extends Component {
                               onChange={(e) => this.handleAddInputChange("subCategory_id",e)}
                               validations={[]} 
                             >
-                              <option value="" disabled>Select SubCategory (optional)</option>
+                              <option value="" disabled>حدد القسم الفرعي (اختياري)</option>
                               {this.state.fullSubCategories.map((subCategory)=>{
                                 if(this.state.addForm.category_id == subCategory.category_id){
                                   return(<option key={subCategory._id} value={subCategory._id}>{subCategory.name}</option>)
@@ -1197,7 +1216,7 @@ class Material extends Component {
                             value={this.state.addForm.price}
                             onChange={(e) => this.handleAddInputChange("price", e)}
                             validations={[required, NumberV]}
-                            placeholder="Price"
+                            placeholder="السعر"
                           />
                         </div>
                       </Col>
@@ -1209,7 +1228,7 @@ class Material extends Component {
                             value={this.state.addForm.quantity}
                             onChange={(e) => this.handleAddInputChange("quantity", e)}
                             validations={[required, NumberV]}
-                            placeholder="Quantity"
+                            placeholder="العدد"
                           />
                         </div>
                       </Col>
@@ -1221,7 +1240,7 @@ class Material extends Component {
                             value={this.state.addForm.description}
                             onChange={(e) => this.handleAddInputChange("description", e)}
                             validations={[required]}
-                            placeholder="Description"
+                            placeholder="الوصف"
                           />
                         </div>
                       </Col>
@@ -1231,7 +1250,7 @@ class Material extends Component {
                           data={this.state.fullFeatures}
                           valueField='_id'
                           textField='name'
-                          placeholder="Features (optional)"
+                          placeholder="الخصائص (اختياري)"
                           onChange={this.onSelectFeaturesForm}
                           required
                           defaultValue={this.state.selectedFeatures}
@@ -1250,7 +1269,7 @@ class Material extends Component {
                                     validations={[required]} 
                                     name={this.state.features_ids[feature_id].name}
                                   >
-                                    <option value="" disabled>Select {this.state.features_ids[feature_id].name}</option>
+                                    <option value="" disabled>حدد {this.state.features_ids[feature_id].name}</option>
                                     {this.state.features_ids[feature_id].options.map((option)=>{
                                       return (<option key={option} value={option}>{option}</option>)
                                     })}
@@ -1261,14 +1280,14 @@ class Material extends Component {
                           )
                         })}
                       </div>
-                      <p className="subproductsTxt">Sub Materials (optional)</p>
+                      <p className="subproductsTxt">الخامات الفرعية</p>
                       <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
                         <Multiselect
                           data={this.state.fullFeatures}
                           valueField='_id'
                           textField='name'
-                          placeholder="Materials Features"
+                          placeholder="خصائص الخامات"
                           onChange={this.onSelectSubProductForm}
                           required
                           defaultValue={this.state.selectedSubProductFeatures}
@@ -1335,14 +1354,14 @@ class Material extends Component {
               {this.state.addModalSuccess || this.state.addModalWaiting || this.state.addModalError?
                 null
               : 
-                <VButton className="btn btn-info">Add</VButton>
+                <VButton className="btn btn-info">إنشاء</VButton>
               }
               {this.state.addModalError?
-                <button className="accept-btn btn btn-default" onClick={this.addModalReset}>Try again</button>
+                <button className="accept-btn btn btn-default" onClick={this.addModalReset}>حاول مرة اخري</button>
               :
                 null
               }
-              <button className="accept-btn btn btn-default" onClick={this.toggleAddModal}>Cancel</button>
+              <button className="accept-btn btn btn-default" onClick={this.toggleAddModal}>إلغاء</button>
             </ModalFooter>
           }
         </VForm>
@@ -1624,7 +1643,7 @@ class Material extends Component {
       <Modal className="usersModal" isOpen={this.state.addMoreModal} toggle={this.toggleAddMoreModal}>
         <VForm onSubmit={this.handleAddMoreProductSubmit} >
           <ModalHeader toggle={this.toggleAddMoreModal}>
-            More Quantity
+            إضافة كمية جديدة
           </ModalHeader>
           <ModalBody>
           {this.state.addMoreModalError?
@@ -1638,8 +1657,8 @@ class Material extends Component {
               {this.state.addMoreModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>Quantity Added to the Selected Branch Successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم إضافة الكمية بنجاح.</p>
                 </div>
               :
                 <div >
@@ -1658,7 +1677,7 @@ class Material extends Component {
                             value={this.state.addMoreForm.quantity}
                             onChange={(e) => this.handleAddMoreInputChange("quantity", e)}
                             validations={[required, NumberV]}
-                            placeholder="Quantity"
+                            placeholder="العدد"
                           />
                         </div>
                       </Col>
@@ -1669,7 +1688,7 @@ class Material extends Component {
                             onChange={(e) => this.handleAddMoreInputChange("branch",e)}
                             validations={[required]} 
                           >
-                            <option value="" disabled>Select Branch</option>
+                            <option value="" disabled>حدد الفرع</option>
                             {this.state.fullBranchs.map((branch)=>{
                               return(
                                 <option key={branch._id} value={branch._id}>{branch.name}</option>
@@ -1693,14 +1712,199 @@ class Material extends Component {
               {this.state.addMoreModalSuccess || this.state.addMoreModalWaiting || this.state.addMoreModalError?
                 null
               : 
-                <VButton className="btn btn-info">Add</VButton>
+                <VButton className="btn btn-info">إضافة</VButton>
               }
               {this.state.addMoreModalError?
-                <button className="accept-btn btn btn-default" onClick={this.addMoreModalReset}>Try again</button>
+                <button className="accept-btn btn btn-default" onClick={this.addMoreModalReset}>حاول مرة اخري</button>
               :
                 null
               }
-              <button className="accept-btn btn btn-default" onClick={this.toggleAddMoreModal}>Cancel</button>
+              <button className="accept-btn btn btn-default" onClick={this.toggleAddMoreModal}>إلغاء</button>
+            </ModalFooter>
+          }
+        </VForm>
+      </Modal>
+    )
+  } 
+  //transfer modal
+  toggleTransferModal(e,product){
+    e.preventDefault();
+    let transferFormData = this.state.transferForm;
+    transferFormData.product = product;
+    transferFormData.quantity= "";
+    transferFormData.source_branch= "";
+    transferFormData.target_branch= "";
+    this.setState({
+      transferModal: !this.state.transferModal,
+      transferForm: transferFormData,
+      transferModalWaiting: false, 
+      transferModalSuccess: false, 
+      transferModalError: false, 
+      transferModalFaildMessage: ""
+    });
+  }
+  handleTransferInputChange(inputName,event){
+    let transferFormData = this.state.transferForm;
+    transferFormData[inputName] = event.target.value;
+    this.setState({transferForm: transferFormData},()=>{
+      console.log(this.state.transferForm)
+    })
+  }
+  handleTransferProductSubmit(event){
+    //get form data
+    let userObj = {
+      "source_id": this.state.transferForm.source_branch,
+      "target_id": this.state.transferForm.target_branch,
+      "products": [{"product_id": this.state.transferForm.product._id, "quantity": this.state.transferForm.quantity}]
+    };
+    let userData = JSON.stringify(userObj);
+    //start waiting
+    this.setState({transferModalWaiting: true},()=>{
+      //send request
+      let config = {
+        headers: {
+          //"Cache-Control": "no-cache",
+          "Content-Type": "application/json",
+          "x-auth": auth.getMerchantToken()
+        }
+      }
+      httpClient.post(
+          this.state.transferPath,
+          config,
+          userData,
+          (resp) => {
+            this.setState({transferModalSuccess: true ,transferModalWaiting:false},()=>{
+              setTimeout(()=>{
+                window.location.reload();
+              }, 3000);
+            });
+          },
+          (error) => {
+            if(error.response){
+              if(error.response.status === 401){
+                this.setState({logout: true});
+              }else if(error.response.status === 400){
+                this.setState({transferModalWaiting: false, transferModalError: true, transferModalFaildMessage: error.response.data.message});
+              }else{
+                this.setState({publicError: true});
+              }
+            }else{
+              this.setState({publicError: true});
+            }
+          }
+      )
+    });
+    event.preventDefault();
+  }
+  transferModalReset(e){
+    e.preventDefault();
+    let transferFormData= this.state.transferForm;
+    this.setState({
+      transferForm: transferFormData,
+      transferModalWaiting: false, 
+      transferModalSuccess: false, 
+      transferModalError: false, 
+      transferModalFaildMessage: ""
+    });
+  }
+  renderTransferModal(){
+    return(
+      <Modal className="usersModal" isOpen={this.state.transferModal} toggle={this.toggleTransferModal}>
+        <VForm onSubmit={this.handleTransferProductSubmit} >
+          <ModalHeader toggle={this.toggleTransferModal}>
+            طلب نقل
+          </ModalHeader>
+          <ModalBody>
+          {this.state.transferModalError?
+              <div>
+                <Alert color="danger">
+                  {this.state.transferModalFaildMessage}
+                </Alert>
+              </div>
+          :
+            <div >
+              {this.state.transferModalSuccess?
+                <div className="staffSuccesDiv">
+                  <img src={successImg} alt="succes"/>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم إنشاء طلب النقل بنجاح.</p>
+                </div>
+              :
+                <div >
+                {this.state.transferModalWaiting?
+                  <Waiting height="250px" />
+                :
+                  <div className="transferModalBody">
+                    <br/>
+                    <Row>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VInput type="text" className="tradket_b_i"
+                            autoComplete="off"
+                            autoFocus={true}
+                            name="quantity"
+                            value={this.state.transferForm.quantity}
+                            onChange={(e) => this.handleTransferInputChange("quantity", e)}
+                            validations={[required, NumberV]}
+                            placeholder="العدد"
+                          />
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VSelect type="select" name="type" className="tradket_b_s"
+                            value={this.state.transferForm.source_branch}
+                            onChange={(e) => this.handleTransferInputChange("source_branch",e)}
+                            validations={[required]} 
+                          >
+                            <option value="" disabled>حدد الفرع المنقول منه</option>
+                            {this.state.fullBranchs.map((branch)=>{
+                              return(
+                                <option key={branch._id} value={branch._id}>{branch.name}</option>
+                              )
+                            })}
+                          </VSelect>
+                        </div>
+                      </Col>
+                      <Col sm="12" className="inputeDiv">
+                        <div className="tradketInputGroup full_width">
+                          <VSelect type="select" name="type" className="tradket_b_s"
+                            value={this.state.transferForm.target_branch}
+                            onChange={(e) => this.handleTransferInputChange("target_branch",e)}
+                            validations={[required]} 
+                          >
+                            <option value="" disabled>حدد الفرع المنقول اليه</option>
+                            {this.state.fullBranchs.map((branch)=>{
+                              return(
+                                <option key={branch._id} value={branch._id}>{branch.name}</option>
+                              )
+                            })}
+                          </VSelect>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                }
+                </div>
+              }
+            </div>
+          }
+          </ModalBody>
+          {this.state.transferModalSuccess || this.state.transferModalWaiting?
+            null
+          : 
+            <ModalFooter>
+              {this.state.transferModalSuccess || this.state.transferModalWaiting || this.state.transferModalError?
+                null
+              : 
+                <VButton className="btn btn-info">إنشاء</VButton>
+              }
+              {this.state.transferModalError?
+                <button className="accept-btn btn btn-default" onClick={this.transferModalReset}>حاول مرة اخري</button>
+              :
+                null
+              }
+              <button className="accept-btn btn btn-default" onClick={this.toggleTransferModal}>إلغاء</button>
             </ModalFooter>
           }
         </VForm>
@@ -1771,7 +1975,7 @@ class Material extends Component {
       <Modal isOpen={this.state.deactivateModal} toggle={this.toggleDeactivateModal}>
         <VForm >
           <ModalHeader toggle={this.toggleDeactivateModal}>
-            Deactivate
+            إيقاف الخامة
           </ModalHeader>
           <ModalBody>
           {this.state.deactivateModalError?
@@ -1785,8 +1989,8 @@ class Material extends Component {
               {this.state.deactivateModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>your Branch has been Deactivated Successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم إيقاف الخامة بنجاح.</p>
                 </div>
               :
                 <div >
@@ -1795,7 +1999,7 @@ class Material extends Component {
                 :
                   <div className="deactivateModalBody">
                       <br/>
-                <p>You are about to Deactivate Branch <b>{this.state.selectedUser.name}</b> . Please confirm deactivation or press cancel.</p>
+                <p>انت علي وش ايقاف الخامة <b>{this.state.selectedUser.name}</b> .</p>
                   </div>
                 }
                 </div>
@@ -1807,14 +2011,14 @@ class Material extends Component {
             {this.state.deactivateModalSuccess || this.state.deactivateModalWaiting || this.state.deactivateModalError?
               null
             : 
-              <VButton className="btn btn-danger" onClick={this.handleDeactivateUserSubmit} >Deactivate</VButton>
+              <VButton className="btn btn-danger" onClick={this.handleDeactivateUserSubmit} >إيقاف</VButton>
             }
             {this.state.deactivateModalError?
-              <button className="accept-btn btn btn-default" onClick={this.deactivateModalReset}>Try Again</button>
+              <button className="accept-btn btn btn-default" onClick={this.deactivateModalReset}>حاول مرة اخري</button>
             :
               null
             }
-            <span className="accept-btn btn btn-default" onClick={this.toggleDeactivateModal}>Cancel</span>
+            <span className="accept-btn btn btn-default" onClick={this.toggleDeactivateModal}>إلغاء</span>
           </ModalFooter>
         </VForm>
       </Modal>
@@ -1885,7 +2089,7 @@ class Material extends Component {
       <Modal isOpen={this.state.activateModal} toggle={this.toggleActivateModal}>
         <VForm >
           <ModalHeader toggle={this.toggleActivateModal}>
-            Activate
+            تشغيل الخامة
           </ModalHeader>
           <ModalBody>
           {this.state.activateModalError?
@@ -1899,8 +2103,8 @@ class Material extends Component {
               {this.state.activateModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>Your Branch has been Activated Successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم تشغيل الخامة بنجاح.</p>
                 </div>
               :
                 <div >
@@ -1909,7 +2113,7 @@ class Material extends Component {
                 :
                   <div className="activateModalBody">
                     <br/>
-                    <p>You are about to Activate user <b>{this.state.selectedUser.name}</b> . Please confirm activation or press cancel.</p>
+                    <p>انت علي وش تشغيل الخامة  <b>{this.state.selectedUser.name}</b> .</p>
                   </div>
                 }
                 </div>
@@ -1921,14 +2125,14 @@ class Material extends Component {
             {this.state.activateModalSuccess || this.state.activateModalWaiting || this.state.activateModalError?
               null
             : 
-              <VButton className="btn btn-danger" onClick={this.handleActivateUserSubmit} >Activate</VButton>
+              <VButton className="btn btn-danger" onClick={this.handleActivateUserSubmit} >تشغيل</VButton>
             }
             {this.state.activateModalError?
-              <button className="accept-btn btn btn-default" onClick={this.activateModalReset}>Try Again</button>
+              <button className="accept-btn btn btn-default" onClick={this.activateModalReset}>حاول مرة اخري</button>
             :
               null
             }
-            <span className="accept-btn btn btn-default" onClick={this.toggleActivateModal}>Cancel</span>
+            <span className="accept-btn btn btn-default" onClick={this.toggleActivateModal}>إلغاء</span>
           </ModalFooter>
         </VForm>
       </Modal>
@@ -1948,6 +2152,7 @@ class Material extends Component {
             {this.renderUsersBlock()}
             {this.renderAddModal()}
             {this.renderAddMoreModal()}
+            {this.renderTransferModal()}
             {this.renderEditModal()}
             {this.renderDeactivateModal()}
             {this.renderActivateModal()}

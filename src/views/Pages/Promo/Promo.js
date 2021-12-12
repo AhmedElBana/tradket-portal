@@ -18,7 +18,7 @@ import successImg from "./../../../assets/img/success.png"
 import Waiting from "./../../../views/Waiting/waiting";
 import { number } from 'prop-types';
 
-let requiredError = "This field is required."
+let requiredError = "هذا الحقل إجباري."
 const required = (value) => {
   if (!value.toString().trim().length) {
     // We can return string or jsx as the 'error' prop for the validated Component
@@ -30,7 +30,7 @@ const required = (value) => {
           </div>;
   }
 };
-let emailError= "Please enter valid email.";
+let emailError= "يرجي ادخال بريد الكتروني صحيح.";
 const email = (value) => {
   if (!validator.isEmail(value)) {
     return <div className="simple-alert">
@@ -41,7 +41,7 @@ const email = (value) => {
           </div>;
   }
 };
-let fullNameError = "Please enter your full name."
+let fullNameError = "يرجي ادخال الاسم بالكامل"
 const fullName = (value) => {
   var patt = new RegExp("[a-zA-Zا-ى]+ [a-zA-Zا-ى]+");
   if (!patt.test(value)) {
@@ -53,7 +53,7 @@ const fullName = (value) => {
           </div>;
   }
 };
-let phoneNameError = "Please enter valid phone number  (more than 4 number)."
+let phoneNameError = "يرجي ادخال رقم هاتف صحيح."
 const phoneNumber = (value) => {
   // var patt = new RegExp("^(01)([0-9]*)$");
   if (isNaN(value) || value.toString().trim().length <= 4) {

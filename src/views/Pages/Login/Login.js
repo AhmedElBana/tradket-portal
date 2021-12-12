@@ -51,7 +51,7 @@ class Login extends Component {
       if(this.state.email === ""){
         this.setState({firstEmail: false, error: true, errorMessage: "Email field is required."})
       }else if(!validator.isEmail(this.state.email)){
-        this.setState({firstEmail: false, error: true, errorMessage: "Please enter valid email."})
+        this.setState({firstEmail: false, error: true, errorMessage: "يرجي ادخال بريد الكتروني صحيح."})
       }else{
         this.setState({firstEmail: false, error: false, errorMessage: ""})
       }
@@ -71,7 +71,7 @@ class Login extends Component {
       if(this.state.email === ""){
         this.setState({error: true, errorMessage: "Email field is required."})
       }else if(!validator.isEmail(this.state.email)){
-        this.setState({error: true, errorMessage: "Please enter valid email."})
+        this.setState({error: true, errorMessage: "يرجي ادخال بريد الكتروني صحيح."})
       }else{
         this.setState({error: false, errorMessage: ""})
       }

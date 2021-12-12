@@ -20,7 +20,7 @@ import { httpClient } from '../../../../tools/HttpClient';
 import Waiting from '../../../Waiting/waiting';
 import successImg from "./../../../../assets/img/success.png"
 
-let requiredError = "This field is required."
+let requiredError = "هذا الحقل إجباري."
 const required = (value) => {
   if (!value.toString().trim().length) {
     // We can return string or jsx as the 'error' prop for the validated Component

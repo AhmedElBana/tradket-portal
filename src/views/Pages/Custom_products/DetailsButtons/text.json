@@ -86,7 +86,7 @@
             "otp": "OTP"
         },
         "validation": {
-            "requiredError": "This field is required.",
+            "requiredError": "هذا الحقل إجباري.",
             "numberError": "Please enter valid number.",
             "amountError": "Please enter valid Amount.",
             "intNumberError": "Please enter integer number.",
