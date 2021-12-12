@@ -114,10 +114,10 @@ class Login extends Component {
               if(error.response.status === 401){
                 this.setState({waiting:false, error: true, errorMessage: "Email or password is wrong."});
               }else{
-                this.setState({waiting:false, error: true, errorMessage: "Oops! Something went wrong. If this problem persists, please contact your service provider."});
+                this.setState({waiting:false, error: true, errorMessage: "حدث خطا ما ، يرجي المحاوله في وقت لاحق."});
               }
             }else{
-              this.setState({waiting:false, error: true, errorMessage: "Oops! Something went wrong. If this problem persists, please contact your service provider."});
+              this.setState({waiting:false, error: true, errorMessage: "حدث خطا ما ، يرجي المحاوله في وقت لاحق."});
             }
           }
       );

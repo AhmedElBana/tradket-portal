@@ -6,7 +6,7 @@ const perms = JSON.parse(localStorage.userData).permissions;
 let branchObj = []
 if(perms.includes("104") || perms.includes("105") || perms.includes("106") || perms.includes("107")){
   branchObj.push({
-    name: 'Branches',
+    name: 'الفروع',
     url: '/branch',
     icon: 'icon-grid',
     });
@@ -15,7 +15,7 @@ if(perms.includes("104") || perms.includes("105") || perms.includes("106") || pe
 let staffObj = []
 if(perms.includes("100") || perms.includes("101") || perms.includes("102") || perms.includes("103")){
   staffObj.push({
-    name: 'Staff',
+    name: 'الموظفين',
     url: '/staff',
     icon: 'icon-people',
     });
@@ -24,7 +24,7 @@ if(perms.includes("100") || perms.includes("101") || perms.includes("102") || pe
 let categoryObj = []
 if(perms.includes("108") || perms.includes("109") || perms.includes("110")){
   categoryObj.push({
-    name: 'Categories',
+    name: 'الاقسام',
     url: '/category',
     icon: 'icon-layers',
     });
@@ -33,7 +33,7 @@ if(perms.includes("108") || perms.includes("109") || perms.includes("110")){
 let featureObj = []
 if(perms.includes("111") || perms.includes("112") || perms.includes("113") || perms.includes("114")){
   featureObj.push({
-    name: 'Features',
+    name: 'الخصائص',
     url: '/feature',
     icon: 'fa fa-puzzle-piece',
     });
@@ -42,7 +42,7 @@ if(perms.includes("111") || perms.includes("112") || perms.includes("113") || pe
 let productObj = []
 if(perms.includes("115") || perms.includes("116") || perms.includes("117") || perms.includes("118")){
   productObj.push({
-    name: 'Products',
+    name: 'المنتجات',
     url: '/product',
     icon: 'fa fa-barcode',
     });
@@ -51,7 +51,7 @@ if(perms.includes("115") || perms.includes("116") || perms.includes("117") || pe
 let materialObj = []
 if(perms.includes("115") || perms.includes("116") || perms.includes("117") || perms.includes("118")){
   materialObj.push({
-    name: 'Materials',
+    name: 'الخامات',
     url: '/material',
     icon: 'fa fa-cubes',
     });
@@ -60,13 +60,13 @@ if(perms.includes("115") || perms.includes("116") || perms.includes("117") || pe
 let Custom_productsObj = []
 if(perms.includes("131") && perms.includes("132")){
   Custom_productsObj.push({
-    name: 'Custom products',
+    name: 'المنتجات المخصوصة',
     url: '/custom/products',
     icon: 'fa fa-newspaper-o',
     });
 }else if(perms.includes("131") && !perms.includes("132")){
   Custom_productsObj.push({
-    name: 'Custom products',
+    name: 'المنتجات المخصوصة',
     url: '/custom/products/staff',
     icon: 'fa fa-newspaper-o',
     });
@@ -75,7 +75,7 @@ if(perms.includes("131") && perms.includes("132")){
 let orderObj = []
 if(perms.includes("123")){
   orderObj.push({
-    name: 'Orders',
+    name: 'الطلبات',
     url: '/order',
     icon: 'fa fa-qrcode',
     });
@@ -84,7 +84,7 @@ if(perms.includes("123")){
 let paymentObj = []
 if(perms.includes("139")){
   paymentObj.push({
-    name: 'Payments',
+    name: 'المدفوعات',
     url: '/payment',
     icon: 'fa fa-money',
   });
@@ -93,7 +93,7 @@ if(perms.includes("139")){
 let customerObj = []
 if(perms.includes("139")){
   customerObj.push({
-    name: 'Customers',
+    name: 'العملاء',
     url: '/customer',
     icon: 'fa fa-users',
   });
@@ -102,7 +102,7 @@ if(perms.includes("139")){
 let TransfersObj = []
 if(perms.includes("120") || perms.includes("121") || perms.includes("122")){
   TransfersObj.push({
-    name: 'Transfers',
+    name: 'طلبات نقل المنتجات',
     url: '/transfers',
     icon: 'fa fa-exchange',
     });
@@ -119,7 +119,7 @@ if(perms.includes("127") || perms.includes("127") || perms.includes("128") || pe
 
 const listData = [
   {
-    name: 'Home',
+    name: 'الرئيسية',
     url: '/home',
     icon: 'icon-home',
   },
@@ -129,8 +129,8 @@ const listData = [
   ...featureObj,
   ...materialObj,
   ...productObj,
-  ...TransfersObj,
   ...Custom_productsObj,
+  ...TransfersObj,
   ...orderObj,
   ...paymentObj,
   ...customerObj,

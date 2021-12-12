@@ -143,7 +143,7 @@ class Payment_summary extends Component {
         <div className="payments_headers">
           {this.state.publicError?
               <Alert color="danger">
-                Oops! Something went wrong. If this problem persists, please contact your service provider.
+                حدث خطا ما ، يرجي المحاوله في وقت لاحق.
               </Alert>
           :
             this.state.waiting ?

@@ -60,7 +60,7 @@ class Home extends Component {
             <div className="home_headers">
               {this.state.publicError?
                   <Alert color="danger">
-                    Oops! Something went wrong. If this problem persists, please contact your service provider.
+                    حدث خطا ما ، يرجي المحاوله في وقت لاحق.
                   </Alert>
               :
                 this.state.waiting ?
@@ -68,23 +68,23 @@ class Home extends Component {
                 :
                   <div>
                     <div className="insights_head_div">
-                      <p>Store Resources</p>
+                      <p>بيانات عامة</p>
                     </div>
                     <div className="insights_body_div">
                       <div>
-                          <p>Storage Limit</p>
+                          <p>المساحة المسموحة للصور</p>
                           <span>{this.state.info.imagesStorageLimit.toFixed(2)}MB</span>
                       </div>
                       <div>
-                          <p>Used Storage</p>
+                          <p>مساحة الصور المستخدمة</p>
                           <span>{this.state.info.imagesStorage.toFixed(2)}MB</span>
                       </div>
                       <div>
-                          <p>Available SMS</p>
+                          <p>الرسائل المتوفرة</p>
                           <span>{this.state.info.availableSMS}</span>
                       </div>
                       <div>
-                          <p>Used SMS</p>
+                          <p>الرسائل المستخدمة</p>
                           <span>{this.state.info.usedSMS}</span>
                       </div>
                     </div>

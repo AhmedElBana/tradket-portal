@@ -109,7 +109,7 @@ class Staff extends Component {
     this.state = {
         //users
         table: {
-          headers: ["User name","Email","Phone Number","Branches","Active"]
+          headers: ["اسم المستخدم","البريد الالكترني","رقم الهاتف","الفروع","فعال"]
         },
         usersTablePath: "/api/staff/list",
         totalLength: 0,
@@ -383,11 +383,11 @@ class Staff extends Component {
         <Row>
           <div className="x_panel">
             <div className="x_title">
-              <h2>Staff</h2>
+              <h2>الموظفين</h2>
               <div className="ButtonsDiv">
                 {JSON.parse(localStorage.userData).permissions.includes("101") && this.state.brancesLoaded?
                   <button onClick={this.toggleAddModal} type="button" className="btn">
-                    New Staff
+                    موظف جديد
                   </button>:null
                 }
               </div>  
@@ -414,8 +414,8 @@ class Staff extends Component {
                         onPageChange={this.handleTablePageChange}
                         forcePage={this.state.PageNumber}
                         containerClassName="paginationList"
-                        nextLabel="Next"
-                        previousLabel="Previous"
+                        nextLabel="التالي"
+                        previousLabel="السابق"
                       />
                 </div>
               }
@@ -595,7 +595,7 @@ class Staff extends Component {
       <Modal className="usersModal modal-lg" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
         <VForm onSubmit={this.handleAddProductSubmit} >
           <ModalHeader toggle={this.toggleAddModal}>
-            New Staff
+            موظف جديد
           </ModalHeader>
           <ModalBody>
           {this.state.addModalError?
@@ -609,8 +609,8 @@ class Staff extends Component {
               {this.state.addModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>your Staff has been created successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم إضافة الموظف بنجاح.</p>
                 </div>
               :
                 <div >
@@ -629,7 +629,7 @@ class Staff extends Component {
                             value={this.state.addForm.name}
                             onChange={(e) => this.handleAddInputChange("name", e)}
                             validations={[required, fullName]}
-                            placeholder="Full Name"
+                            placeholder="الاسم بالكامل"
                           />
                         </div>
                       </Col>
@@ -641,7 +641,7 @@ class Staff extends Component {
                             value={this.state.addForm.email}
                             onChange={(e) => this.handleAddInputChange("email",e)}
                             validations={[required, email]} 
-                            placeholder="Email"
+                            placeholder="البريد الالكتروني"
                           />
                         </div>
                       </Col>
@@ -653,7 +653,7 @@ class Staff extends Component {
                             value={this.state.addForm.phoneNumber}
                             onChange={(e) => this.handleAddInputChange("phoneNumber",e)}
                             validations={[required, phoneNumber]} 
-                            placeholder="phone Number"
+                            placeholder="رقم الهاتف"
                           />
                         </div>
                       </Col>
@@ -666,7 +666,7 @@ class Staff extends Component {
                             value={this.state.addForm.password}
                             onChange={(e) => this.handleAddInputChange("password",e)}
                             validations={[required, Password]} 
-                            placeholder="Staff password"
+                            placeholder="كلمة مرور الموظف"
                           />
                         </div>
                       </Col>
@@ -678,7 +678,7 @@ class Staff extends Component {
                             value={this.state.addForm.confirmPassword}
                             onChange={(e) => this.handleAddInputChange("confirmPassword",e)}
                             validations={[required, RePassword]} 
-                            placeholder="Confirm password"
+                            placeholder="تاكيد كلمة المرور"
                           />
                         </div>
                       </Col>
@@ -689,7 +689,7 @@ class Staff extends Component {
                             onChange={(e) => this.handleAddInputChange("branch",e)}
                             validations={[required]} 
                           >
-                            <option value="" disabled>Select Branch</option>
+                            <option value="" disabled>حدد فرع الموظف</option>
                             {this.state.branches.map((ele)=>{
                               return(
                                 <option value={ele.id}>{ele.name}</option>
@@ -802,14 +802,14 @@ class Staff extends Component {
               {this.state.addModalSuccess || this.state.addModalWaiting || this.state.addModalError?
                 null
               : 
-                <VButton className="btn btn-info">Add</VButton>
+                <VButton className="btn btn-info">إنشاء</VButton>
               }
               {this.state.addModalError?
-                <button className="accept-btn btn btn-default" onClick={this.addModalReset}>Try again</button>
+                <button className="accept-btn btn btn-default" onClick={this.addModalReset}>حاول مرة اخري</button>
               :
                 null
               }
-              <button className="accept-btn btn btn-default" onClick={this.toggleAddModal}>Cancel</button>
+              <button className="accept-btn btn btn-default" onClick={this.toggleAddModal}>إلغاء</button>
             </ModalFooter>
           }
         </VForm>
@@ -984,7 +984,7 @@ class Staff extends Component {
       <Modal className="usersModal modal-lg" isOpen={this.state.editModal} toggle={this.toggleEditModal}>
         <VForm onSubmit={this.handleEditUserSubmit} >
           <ModalHeader toggle={this.toggleEditModal}>
-            Edit Staff
+            تعديل بيانات موظف
           </ModalHeader>
           <ModalBody>
           {this.state.editModalError?
@@ -998,8 +998,8 @@ class Staff extends Component {
               {this.state.editModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>your Staff has been Edited successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم تعديل بيانات الموظف بنجاح.</p>
                 </div>
               :
                 <div >
@@ -1018,7 +1018,7 @@ class Staff extends Component {
                             value={this.state.editForm.name}
                             onChange={(e) => this.handleEditInputChange("name", e)}
                             validations={[required, fullName]}
-                            placeholder="Full Name"
+                            placeholder="الاسم بالكامل"
                           />
                         </div>
                       </Col>
@@ -1030,7 +1030,7 @@ class Staff extends Component {
                             value={this.state.editForm.email}
                             onChange={(e) => this.handleEditInputChange("email",e)}
                             validations={[required, email]} 
-                            placeholder="Email"
+                            placeholder="البريد الالكتروني"
                           />
                         </div>
                       </Col>
@@ -1042,7 +1042,7 @@ class Staff extends Component {
                             value={this.state.editForm.phoneNumber}
                             onChange={(e) => this.handleEditInputChange("phoneNumber",e)}
                             validations={[required, phoneNumber]} 
-                            placeholder="phone Number"
+                            placeholder="رقم الهاتف"
                           />
                         </div>
                       </Col>
@@ -1055,7 +1055,7 @@ class Staff extends Component {
                             value={this.state.editForm.password}
                             onChange={(e) => this.handleEditInputChange("password",e)}
                             validations={[Password]} 
-                            placeholder="Staff password"
+                            placeholder="كلمة مرور الموظف"
                           />
                         </div>
                       </Col>
@@ -1067,7 +1067,7 @@ class Staff extends Component {
                             value={this.state.editForm.confirmPassword}
                             onChange={(e) => this.handleEditInputChange("confirmPassword",e)}
                             validations={[editRePassword]} 
-                            placeholder="Confirm password"
+                            placeholder="تاكيد كلمة المرور"
                           />
                         </div>
                       </Col>
@@ -1078,7 +1078,7 @@ class Staff extends Component {
                             onChange={(e) => this.handleEditInputChange("branch",e)}
                             validations={[required]} 
                           >
-                            <option value="" disabled>Select Branch</option>
+                            <option value="" disabled>حدد فرع الموظف</option>
                             {this.state.branches.map((ele)=>{
                               return(
                                 <option value={ele.id}>{ele.name}</option>
@@ -1192,14 +1192,14 @@ class Staff extends Component {
               {this.state.editModalSuccess || this.state.editModalWaiting || this.state.editModalError?
                 null
               : 
-                <VButton className="btn btn-info">Edit</VButton>
+                <VButton className="btn btn-info">تعديل</VButton>
               }
               {this.state.editModalError?
-                <button className="accept-btn btn btn-default" onClick={this.editModalReset}>Try again</button>
+                <button className="accept-btn btn btn-default" onClick={this.editModalReset}>حاول مرة اخري</button>
               :
                 null
               }
-              <button className="accept-btn btn btn-default" onClick={this.toggleEditModal}>Cancel</button>
+              <button className="accept-btn btn btn-default" onClick={this.toggleEditModal}>إلغاء</button>
             </ModalFooter>
           }
         </VForm>
@@ -1271,13 +1271,13 @@ class Staff extends Component {
       <Modal isOpen={this.state.deactivateModal} toggle={this.toggleDeactivateModal}>
         <VForm >
           <ModalHeader toggle={this.toggleDeactivateModal}>
-            Deactivate
+            إيقاف حساب الموظف
           </ModalHeader>
           <ModalBody>
           {this.state.deactivateModalError?
               <div>
                 <Alert color="danger">
-                  Oops! Something went wrong. If this problem persists, please contact your service provider.
+                  حدث خطا ما ، يرجي المحاوله في وقت لاحق.
                 </Alert>
               </div>
           :
@@ -1285,8 +1285,8 @@ class Staff extends Component {
               {this.state.deactivateModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>your Staff has been Deactivated successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم إيقاف حساب الموظف بنجاح.</p>
                 </div>
               :
                 <div >
@@ -1295,7 +1295,7 @@ class Staff extends Component {
                 :
                   <div className="deactivateModalBody">
                       <br/>
-                <p>You are about to Deactivate user <b>{this.state.selectedUser.name}</b> . Please confirm deactivation or press cancel.</p>
+                <p>انت علي وشك إيقاف حساب الموظف  <b>{this.state.selectedUser.name}</b> .</p>
                   </div>
                 }
                 </div>
@@ -1307,14 +1307,14 @@ class Staff extends Component {
             {this.state.deactivateModalSuccess || this.state.deactivateModalWaiting || this.state.deactivateModalError?
               null
             : 
-              <VButton className="btn btn-danger" onClick={this.handleDeactivateUserSubmit} >Deactivate</VButton>
+              <VButton className="btn btn-danger" onClick={this.handleDeactivateUserSubmit} >إيقاف</VButton>
             }
             {this.state.deactivateModalError?
-              <button className="accept-btn btn btn-default" onClick={this.deactivateModalReset}>Try Again</button>
+              <button className="accept-btn btn btn-default" onClick={this.deactivateModalReset}>حاول مرة اخري</button>
             :
               null
             }
-            <span className="accept-btn btn btn-default" onClick={this.toggleDeactivateModal}>Cancel</span>
+            <span className="accept-btn btn btn-default" onClick={this.toggleDeactivateModal}>إلغاء</span>
           </ModalFooter>
         </VForm>
       </Modal>
@@ -1385,13 +1385,13 @@ class Staff extends Component {
       <Modal isOpen={this.state.activateModal} toggle={this.toggleActivateModal}>
         <VForm >
           <ModalHeader toggle={this.toggleActivateModal}>
-            Activate
+            تشغيل حساب الموظف
           </ModalHeader>
           <ModalBody>
           {this.state.activateModalError?
               <div>
                 <Alert color="danger">
-                  Oops! Something went wrong. If this problem persists, please contact your service provider.
+                  حدث خطا ما ، يرجي المحاوله في وقت لاحق.
                 </Alert>
               </div>
           :
@@ -1399,8 +1399,8 @@ class Staff extends Component {
               {this.state.activateModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>your Staff has been Activated successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم تشغيل حساب الموظف بنجاح.</p>
                 </div>
               :
                 <div >
@@ -1409,7 +1409,7 @@ class Staff extends Component {
                 :
                   <div className="activateModalBody">
                     <br/>
-                    <p>You are about to Activate user <b>{this.state.selectedUser.name}</b> . Please confirm activation or press cancel.</p>
+                    <p>انت علي وشك تشغيل حساب الموظف  <b>{this.state.selectedUser.name}</b> .</p>
                   </div>
                 }
                 </div>
@@ -1421,14 +1421,14 @@ class Staff extends Component {
             {this.state.activateModalSuccess || this.state.activateModalWaiting || this.state.activateModalError?
               null
             : 
-              <VButton className="btn btn-danger" onClick={this.handleActivateUserSubmit} >Activate</VButton>
+              <VButton className="btn btn-danger" onClick={this.handleActivateUserSubmit} >تشغيل</VButton>
             }
             {this.state.activateModalError?
-              <button className="accept-btn btn btn-default" onClick={this.activateModalReset}>Try Again</button>
+              <button className="accept-btn btn btn-default" onClick={this.activateModalReset}>حاول مرة اخري</button>
             :
               null
             }
-            <span className="accept-btn btn btn-default" onClick={this.toggleActivateModal}>Cancel</span>
+            <span className="accept-btn btn btn-default" onClick={this.toggleActivateModal}>إلغاء</span>
           </ModalFooter>
         </VForm>
       </Modal>
@@ -1468,18 +1468,18 @@ class Staff extends Component {
             <div className="ButtonsDiv">
               {JSON.parse(localStorage.userData).permissions.includes("102") && this.state.brancesLoaded?
                   <button onClick={this.toggleEditModal} type="button" className="btn">
-                    Edit
+                    تعديل البيانات
                   </button>:null
               }
               {JSON.parse(localStorage.userData).permissions.includes("103")?
                   <span>
                     {this.state.selectedUser.active?
                       <button onClick={this.toggleDeactivateModal} type="button" className="btn">
-                        Deacttivate
+                        إيقاف الحساب
                       </button>
                     :
                       <button onClick={this.toggleActivateModal} type="button" className="btn">
-                        Acttivate
+                        تشغيل الحساب
                       </button>
                     }
                   </span>:null
@@ -1496,22 +1496,22 @@ class Staff extends Component {
               :
               <div>
                 <div className="modal_details">
-                  <span className="title">ID</span><span className="value">{this.state.selectedUser._id}</span>
+                  <span className="title">الرقم</span><span className="value">{this.state.selectedUser._id}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Name</span><span className="value">{this.state.selectedUser.name}</span>
+                  <span className="title">الاسم</span><span className="value">{this.state.selectedUser.name}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Email</span><span className="value">{this.state.selectedUser.email}</span>
+                  <span className="title">البريد الالكتروني</span><span className="value">{this.state.selectedUser.email}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Phone</span><span className="value">{this.state.selectedUser.phoneNumber}</span>
+                  <span className="title">رقم الهاتف</span><span className="value">{this.state.selectedUser.phoneNumber}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Active</span><span className="value">{dependencies.boolName(this.state.selectedUser.active)}</span>
+                  <span className="title">فعال</span><span className="value">{dependencies.boolName(this.state.selectedUser.active)}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Branches</span><span className="value perms">{
+                  <span className="title">فروع العمل</span><span className="value perms">{
                     dependencies.branchesName(this.state.selectedUser.branches, this.state.fullBranchs).map((name)=>{
                       return(<span className="table_block">{name}</span>)
                     })
@@ -1519,7 +1519,7 @@ class Staff extends Component {
                   </span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Permisions</span><span className="value perms">{
+                  <span className="title">التصريحات</span><span className="value perms">{
                     this.state.selectedUser.permissions.map((perm)=>{
                       return(<span className="table_block">{dependencies.permsName(perm)}</span>)
                     })
@@ -1539,7 +1539,7 @@ class Staff extends Component {
         {this.state.publicError?
           <div scroll="no" className="mainErrorDiv">
             <Alert color="danger">
-              Oops! Something went wrong. If this problem persists, please contact your service provider.
+              حدث خطا ما ، يرجي المحاوله في وقت لاحق.
             </Alert>
           </div>
         :

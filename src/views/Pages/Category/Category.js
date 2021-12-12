@@ -70,7 +70,7 @@ class Staff extends Component {
     this.state = {
         //users
         table: {
-          headers: ["ID","Category name"]
+          headers: ["الرقم","اسم القسم"]
         },
         CategoriesTablePath: "/api/category/list",
         totalLength: 0,
@@ -273,11 +273,11 @@ class Staff extends Component {
         <Row>
           <div className="x_panel">
             <div className="x_title">
-              <h2>Categories</h2>
+              <h2>الاقسام</h2>
               <div className="ButtonsDiv">
                 {JSON.parse(localStorage.userData).permissions.includes("108")?
                   <button onClick={this.toggleAddModal} type="button" className="btn">
-                    New Category
+                    قسم جديد
                   </button>:null
                 }
               </div>  
@@ -304,8 +304,8 @@ class Staff extends Component {
                         onPageChange={this.handleTablePageChange}
                         forcePage={this.state.PageNumber}
                         containerClassName="paginationList"
-                        nextLabel="Next"
-                        previousLabel="Previous"
+                        nextLabel="التالي"
+                        previousLabel="السابق"
                       />
                 </div>
               }
@@ -389,12 +389,12 @@ class Staff extends Component {
             <div className="ButtonsDiv">
               {JSON.parse(localStorage.userData).permissions.includes("109")?
                   <button onClick={this.toggleEditModal} type="button" className="btn">
-                    Edit
+                    تعديل
                   </button>:null
               }
               {JSON.parse(localStorage.userData).permissions.includes("108")?
                   <button onClick={this.toggleSubAddModal} type="button" className="btn">
-                    Add Subcategory
+                    اضافة قسم فرعي
                   </button>:null
               }
               <button onClick={() => this.setState({showCategoriesDetails:false})} type="button" className="accept-btn btn btn-secondary close_btn">
@@ -409,13 +409,13 @@ class Staff extends Component {
               :
               <div>
                 <div className="modal_details">
-                  <span className="title">ID</span><span className="value">{this.state.selectedCategory._id}</span>
+                  <span className="title">الرقم</span><span className="value">{this.state.selectedCategory._id}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Name</span><span className="value">{this.state.selectedCategory.name}</span>
+                  <span className="title">اسم القسم</span><span className="value">{this.state.selectedCategory.name}</span>
                 </div>
                 <div className="modal_details">
-                  <span className="title">Subcategories</span><span className="value">
+                  <span className="title">الاقسام الفرعية</span><span className="value">
                     {this.state.subcategories.length === 0?
                       <span> - </span>
                     :
@@ -519,7 +519,7 @@ class Staff extends Component {
       <Modal className="usersModal" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
         <VForm onSubmit={this.handleAddCategorySubmit} >
           <ModalHeader toggle={this.toggleAddModal}>
-            New Category
+            قسم جديد
           </ModalHeader>
           <ModalBody>
           {this.state.addModalError?
@@ -533,8 +533,8 @@ class Staff extends Component {
               {this.state.addModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>Your Category has been Created Successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم إنشاء القسم بنجاح.</p>
                 </div>
               :
                 <div >
@@ -553,7 +553,7 @@ class Staff extends Component {
                             value={this.state.addForm.name}
                             onChange={(e) => this.handleAddInputChange("name", e)}
                             validations={[required]}
-                            placeholder="Category Name"
+                            placeholder="اسم القسم"
                           />
                         </div>
                       </Col>
@@ -572,14 +572,14 @@ class Staff extends Component {
               {this.state.addModalSuccess || this.state.addModalWaiting || this.state.addModalError?
                 null
               : 
-                <VButton className="btn btn-info">Add</VButton>
+                <VButton className="btn btn-info">إنشاء</VButton>
               }
               {this.state.addModalError?
-                <button className="accept-btn btn btn-default" onClick={this.addModalReset}>Try again</button>
+                <button className="accept-btn btn btn-default" onClick={this.addModalReset}>حاول مرة اخري</button>
               :
                 null
               }
-              <button className="accept-btn btn btn-default" onClick={this.toggleAddModal}>Cancel</button>
+              <button className="accept-btn btn btn-default" onClick={this.toggleAddModal}>إلغاء</button>
             </ModalFooter>
           }
         </VForm>
@@ -666,7 +666,7 @@ class Staff extends Component {
       <Modal className="usersModal" isOpen={this.state.subAddModal} toggle={this.toggleSubAddModal}>
         <VForm onSubmit={this.handleSubAddCategorySubmit} >
           <ModalHeader toggle={this.toggleSubAddModal}>
-            New Subcategory
+            قسم فرعي جديد
           </ModalHeader>
           <ModalBody>
           {this.state.subAddModalError?
@@ -680,8 +680,8 @@ class Staff extends Component {
               {this.state.subAddModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>Your Subcategory has been Created Successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم إنشاء القسم الفرع بنجاح.</p>
                 </div>
               :
                 <div >
@@ -700,7 +700,7 @@ class Staff extends Component {
                             value={this.state.subAddForm.name}
                             onChange={(e) => this.handleSubAddInputChange("name", e)}
                             validations={[required]}
-                            placeholder="Subcategory Name"
+                            placeholder="اسم القسم الفرعي"
                           />
                         </div>
                       </Col>
@@ -719,14 +719,14 @@ class Staff extends Component {
               {this.state.subAddModalSuccess || this.state.subAddModalWaiting || this.state.subAddModalError?
                 null
               : 
-                <VButton className="btn btn-info">Add</VButton>
+                <VButton className="btn btn-info">إنشاء</VButton>
               }
               {this.state.subAddModalError?
-                <button className="accept-btn btn btn-default" onClick={this.subAddModalReset}>Try again</button>
+                <button className="accept-btn btn btn-default" onClick={this.subAddModalReset}>حاول مرة اخري</button>
               :
                 null
               }
-              <button className="accept-btn btn btn-default" onClick={this.toggleSubAddModal}>Cancel</button>
+              <button className="accept-btn btn btn-default" onClick={this.toggleSubAddModal}>إلغاء</button>
             </ModalFooter>
           }
         </VForm>
@@ -813,7 +813,7 @@ class Staff extends Component {
       <Modal className="usersModal modal-lg" isOpen={this.state.editModal} toggle={this.toggleEditModal}>
         <VForm onSubmit={this.handleEditCategorySubmit} >
           <ModalHeader toggle={this.toggleEditModal}>
-            Edit Category
+            تعديل قسم
           </ModalHeader>
           <ModalBody>
           {this.state.editModalError?
@@ -827,8 +827,8 @@ class Staff extends Component {
               {this.state.editModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>Your Category has been Edited Successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم تعديل القسم بنجاح.</p>
                 </div>
               :
                 <div >
@@ -847,7 +847,7 @@ class Staff extends Component {
                             value={this.state.editForm.name}
                             onChange={(e) => this.handleEditInputChange("name", e)}
                             validations={[required]}
-                            placeholder="Category Name"
+                            placeholder="اسم القسم"
                           />
                         </div>
                       </Col>
@@ -866,14 +866,14 @@ class Staff extends Component {
               {this.state.editModalSuccess || this.state.editModalWaiting || this.state.editModalError?
                 null
               : 
-                <VButton className="btn btn-info">Edit</VButton>
+                <VButton className="btn btn-info">تعديل</VButton>
               }
               {this.state.editModalError?
-                <button className="accept-btn btn btn-default" onClick={this.editModalReset}>Try again</button>
+                <button className="accept-btn btn btn-default" onClick={this.editModalReset}>حاول مرة اخري</button>
               :
                 null
               }
-              <button className="accept-btn btn btn-default" onClick={this.toggleEditModal}>Cancel</button>
+              <button className="accept-btn btn btn-default" onClick={this.toggleEditModal}>إلغاء</button>
             </ModalFooter>
           }
         </VForm>
@@ -965,7 +965,7 @@ class Staff extends Component {
       <Modal className="usersModal modal-lg" isOpen={this.state.editSubModal} toggle={this.toggleEditSubModal}>
         <VForm onSubmit={this.handleEditSubCategorySubmit} >
           <ModalHeader toggle={this.toggleEditSubModal}>
-            Edit SubCategory
+            تعديل قسم فرعي
           </ModalHeader>
           <ModalBody>
           {this.state.editSubModalError?
@@ -979,8 +979,8 @@ class Staff extends Component {
               {this.state.editSubModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <h1>Congratulations</h1>
-                  <p>Your SubCategory has been Edited Successfully.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم تعديل القسم الفرعي بنجاح.</p>
                 </div>
               :
                 <div >
@@ -999,7 +999,7 @@ class Staff extends Component {
                             value={this.state.editSubForm.name}
                             onChange={(e) => this.handleEditSubInputChange("name", e)}
                             validations={[required]}
-                            placeholder="SubCategory Name"
+                            placeholder="اسم القسم الفرعي"
                           />
                         </div>
                       </Col>
@@ -1018,14 +1018,14 @@ class Staff extends Component {
               {this.state.editSubModalSuccess || this.state.editSubModalWaiting || this.state.editSubModalError?
                 null
               : 
-                <VButton className="btn btn-info">Edit</VButton>
+                <VButton className="btn btn-info">تعديل</VButton>
               }
               {this.state.editSubModalError?
-                <button className="accept-btn btn btn-default" onClick={this.editSubModalReset}>Try again</button>
+                <button className="accept-btn btn btn-default" onClick={this.editSubModalReset}>حاول مرة اخري</button>
               :
                 null
               }
-              <button className="accept-btn btn btn-default" onClick={this.toggleEditSubModal}>Cancel</button>
+              <button className="accept-btn btn btn-default" onClick={this.toggleEditSubModal}>إلغاء</button>
             </ModalFooter>
           }
         </VForm>
@@ -1038,7 +1038,7 @@ class Staff extends Component {
         {this.state.publicError?
           <div scroll="no" className="mainErrorDiv">
             <Alert color="danger">
-              Oops! Something went wrong. If this problem persists, please contact your service provider.
+              حدث خطا ما ، يرجي المحاوله في وقت لاحق.
             </Alert>
           </div>
         :

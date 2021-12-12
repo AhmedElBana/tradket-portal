@@ -16,7 +16,7 @@
                     "message1": "You are about to delete transaction",
                     "message2": ". Please confirm deletion or press cancel.",
                     "succesMessage": "Transaction deleted successfully",
-                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider."
+                    "faildMessage": "حدث خطا ما ، يرجي المحاوله في وقت لاحق."
                 },
                 "void": {
                     "title": "Void Transaction",
@@ -24,13 +24,13 @@
                     "message2": ". Please confirm void or press cancel.",
                     "succesMessage": "Transaction void successfully",
                     "faildMessage422": "Sorry, this transaction cannot be voided.",
-                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider."
+                    "faildMessage": "حدث خطا ما ، يرجي المحاوله في وقت لاحق."
                 },
                 "refund": {
                     "title": "Confirm Refund",
                     "succesMessage": "Transaction refund successfully",
                     "faildMessage422": "Sorry, this transaction cannot be refund.",
-                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider.",
+                    "faildMessage": "حدث خطا ما ، يرجي المحاوله في وقت لاحق.",
                     "body": {
                         "title": "Here are the details of transaction",
                         "amount": "Amount",
@@ -62,7 +62,7 @@
                     "faildMessage200": "Sorry, this transaction cannot be captured. Please make sure that the auth transaction was not captured before.",
                     "faildMessage400": "Your request cannot be fulfilled. Please make sure that the auth transaction was not captured before.",
                     "faildMessage404": "Your request cannot be fulfilled. Please make sure that your integration supports auth/capture transactions.",
-                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider.",
+                    "faildMessage": "حدث خطا ما ، يرجي المحاوله في وقت لاحق.",
                     "body": {
                         "title": "Here are the details of transaction",
                         "authAmoun": "Amount",
@@ -76,7 +76,7 @@
                     }
                 },
                 "receipt": {
-                    "faildMessage": "Oops! Something went wrong. If this problem persists, please contact your service provider."
+                    "faildMessage": "حدث خطا ما ، يرجي المحاوله في وقت لاحق."
                 }
             }
         },

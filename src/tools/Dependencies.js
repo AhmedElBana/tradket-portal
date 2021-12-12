@@ -38,6 +38,13 @@ class Dependencies {
             return type;
         }
     }
+    branchTypeName(type){
+        if(text[localStorage.lang].branch_types && text[localStorage.lang].branch_types[type]){
+            return text[localStorage.lang].branch_types[type];
+        }else{
+            return type;
+        }
+    }
     statusName(status){
         if(text[localStorage.lang].status[status]){
             return text[localStorage.lang].status[status];
@@ -54,7 +61,7 @@ class Dependencies {
     }
     
     permsName(perm){
-        return text["perms"][perm]? text["perms"][perm] : perm
+        return text[localStorage.lang]["perms"][perm]? text[localStorage.lang]["perms"][perm] : perm
     }
      
 

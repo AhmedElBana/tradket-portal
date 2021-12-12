@@ -118,7 +118,7 @@ class Order extends Component {
         {this.state.publicError?
           <div scroll="no" className="mainErrorDiv">
             <Alert color="danger">
-              Oops! Something went wrong. If this problem persists, please contact your service provider.
+              حدث خطا ما ، يرجي المحاوله في وقت لاحق.
             </Alert>
           </div>
         :

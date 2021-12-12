@@ -1,56 +1,50 @@
 {
-    "Staff": [
-      {"id":"100", "name": "Can View Staff"},
-      {"id":"101", "name": "Can Create Staff"},
-      {"id":"102", "name": "Can Edit Staff"},
-      {"id":"103", "name": "Can Deactivate Staff"}
+    "الموظفين": [
+      {"id":"100", "name": "يستطيع مشاهدة الموظفين"},
+      {"id":"101", "name": "يستطيع إنشاء موظف جديد"},
+      {"id":"102", "name": "يستطيع تعديل بيانات موظف"},
+      {"id":"103", "name": "يستطيع إيقاف/تشغيل موظف"}
     ],
-    "Branch": [
-      {"id":"104", "name": "Can View Branch"},
-      {"id":"105", "name": "Can Create Branch"},
-      {"id":"106", "name": "Can Edit Branch"},
-      {"id":"107", "name": "Can Deactivate Branch"}
+    "الفروع": [
+      {"id":"104", "name": "يستطيع مشاهدة الفروع"},
+      {"id":"105", "name": "يستطيع إنشاء فرع جديد"},
+      {"id":"106", "name": "يستطيع تعديل بيانات فرع"},
+      {"id":"107", "name": "يستطيع إيقاف/تشغيل فرع"}
     ],
-    "Category": [
-      {"id":"108", "name": "Can Create Category"},
-      {"id":"109", "name": "Can Edit Category"},
-      {"id":"110", "name": "Can Delete Category"}
+    "الاقسام": [
+      {"id":"108", "name": "يستطيع إنشاء قسم جديد"},
+      {"id":"109", "name": "يستطيع تعديل بيانات قسم"},
+      {"id":"110", "name": "يستطيع حذف قسم"}
     ],
-    "Feature": [
-      {"id":"111", "name": "Can View Feature"},
-      {"id":"112", "name": "Can Create Feature"},
-      {"id":"113", "name": "Can Edit Feature"},
-      {"id":"114", "name": "Can Delete Feature"}
+    "الخصائص": [
+      {"id":"111", "name": "يستطيع مشاهدة الخصائص"},
+      {"id":"112", "name": "يستطيع إنشاء خاصية جديدة"},
+      {"id":"113", "name": "يستطيع تعديل بيانات خاصية"},
+      {"id":"114", "name": "يستطيع حذف خاصية"}
     ],
-    "Product": [
-      {"id":"115", "name": "Can View Product"},
-      {"id":"116", "name": "Can Create Product"},
-      {"id":"117", "name": "Can Edit Product"},
-      {"id":"118", "name": "Can Deactivate Product"}
+    "المنتجات": [
+      {"id":"115", "name": "يستطيع مشاهدة المنتجات"},
+      {"id":"116", "name": "يستطيع إنشاء منتج جديد"},
+      {"id":"117", "name": "يستطيع تعديل بيانات منتج"},
+      {"id":"118", "name": "يستطيع إيقاف/تشغيل منتج"}
     ],
-    "Custom Product": [
-      {"id":"131", "name": "Can View Custom Product"},
-      {"id":"132", "name": "Can View Full Custom Product"},
-      {"id":"133", "name": "Can Create Custom Product"},
-      {"id":"134", "name": "Can Edit Custom Product"},
-      {"id":"135", "name": "Can Edit Full Custom Product"}
+    "منتجات مخصوصة": [
+      {"id":"131", "name": "يستطيع مشاهدة المنتجات المخصوصة"},
+      {"id":"132", "name": "يستطيع مشاهدة كل تفاصيل المنتجات المخصوصة"},
+      {"id":"133", "name": "يستطيع إنشاء منتج مخصوص جديد"},
+      {"id":"134", "name": "يستطيع العمل علي المنتجات المخصوصة"},
+      {"id":"135", "name": "يستطيع تعديل المنتجات المخصوصة"}
     ],
-    "Transfer": [
-      {"id":"119", "name": "Can View Transfer"},
-      {"id":"120", "name": "Can Create Transfer"},
-      {"id":"121", "name": "Can Edit Transfer"},
-      {"id":"122", "name": "Can Cancel Transfer"}
+    "نقل المنتجات": [
+      {"id":"119", "name": "يستطيع مشاهدة طلبات النقل"},
+      {"id":"120", "name": "يستطيع إنشاء طلب نقل"},
+      {"id":"121", "name": "يستطيع قبول طلب نقل"},
+      {"id":"122", "name": "يستطيع إلغاء طلب نقل"}
     ],
-    "Order": [
-      {"id":"123", "name": "Can View Order"},
-      {"id":"124", "name": "Can Create Order"},
-      {"id":"125", "name": "Can Cancel Order"},
-      {"id":"126", "name": "Can Return Order"}
-    ],
-    "Promo": [
-      {"id":"127", "name": "Can View Promo"},
-      {"id":"128", "name": "Can Create Promo"},
-      {"id":"129", "name": "Can Activate Promo"},
-      {"id":"130", "name": "Can Deactivate Promo"}
+    "الطلبات": [
+      {"id":"123", "name": "يستطيع مشاهدة الطلبات"},
+      {"id":"124", "name": "يستطيع إنشاء طلب جديد"},
+      {"id":"125", "name": "يستطيع إلغاء طلب"},
+      {"id":"126", "name": "يستطيع إرجاع طلب"}
     ]
   }

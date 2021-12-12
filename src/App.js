@@ -21,6 +21,7 @@ const Page500 = React.lazy(() => import('./views/Pages/Page500'));
 class App extends Component {
 
   render() {
+    localStorage.lang = "ar";
     return (
       <BrowserRouter>
           <React.Suspense fallback={loading()}>
