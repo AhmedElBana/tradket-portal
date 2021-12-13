@@ -141,7 +141,7 @@ class DetailsButtons extends Component {
             <div>
                 {/* accept Modal */}
                 <Modal isOpen={this.state.acceptModal} toggle={this.toggleAcceptModal}>
-                    <ModalHeader toggle={this.toggleAcceptModal}>Accept Transfer</ModalHeader>
+                    <ModalHeader toggle={this.toggleAcceptModal}>قبول طلب النقل</ModalHeader>
                     <ModalBody>
                         {this.state.acceptFaild ?
                             <div>
@@ -154,8 +154,8 @@ class DetailsButtons extends Component {
                                 {this.state.acceptSuccessfully ?
                                     <div className="staffSuccesDiv">
                                         <img src={successImg} alt="succes"/>
-                                        <h1>Congratulations</h1>
-                                        <p>Transfer Request Accepted Successfully.</p>
+                                        {/* <h1>Congratulations</h1> */}
+                                        <p>تم قبول طلب النقل بنجاح.</p>
                                     </div>
                                 :
                                     this.state.acceptFaild?
@@ -168,7 +168,7 @@ class DetailsButtons extends Component {
                                                 <Waiting height="100px" width="50px" />
                                                 :
                                                 <div>
-                                                    <p>Accept Transfer <br/>({this.props.selectedDetailsObj.id})</p>
+                                                    <p>قبول الطلب رقم  <br/>({this.props.selectedDetailsObj.id})</p>
                                                 </div>
                                             }
                                         </div>
@@ -180,14 +180,14 @@ class DetailsButtons extends Component {
                         null
                     : 
                         <ModalFooter>
-                            <Button color="primary" onClick={this.acceptTransfer} className="primaryBtn">Accept</Button>{' '}
-                            <Button color="secondary" onClick={this.toggleAcceptModal} className="secondryBtn">Close</Button>
+                            <Button color="primary" onClick={this.acceptTransfer} className="primaryBtn">قبول</Button>{' '}
+                            <Button color="secondary" onClick={this.toggleAcceptModal} className="secondryBtn">إلغاء</Button>
                         </ModalFooter>
                     }
                 </Modal>
                 {/* cancel Modal */}
                 <Modal isOpen={this.state.cancelModal} toggle={this.toggleCancelModal}>
-                    <ModalHeader toggle={this.toggleCancelModal}>Cancel Transfer</ModalHeader>
+                    <ModalHeader toggle={this.toggleCancelModal}>رفض طلب النقل</ModalHeader>
                     <ModalBody>
                         {this.state.cancelFaild ?
                             <div>
@@ -200,8 +200,8 @@ class DetailsButtons extends Component {
                                 {this.state.cancelSuccessfully ?
                                     <div className="staffSuccesDiv">
                                         <img src={successImg} alt="succes"/>
-                                        <h1>Congratulations</h1>
-                                        <p>Transfer Request Canceled Successfully.</p>
+                                        {/* <h1>Congratulations</h1> */}
+                                        <p>تم رفض طلب النقل بنجاح.</p>
                                     </div>
                                 :
                                     this.state.cancelFaild?
@@ -214,7 +214,7 @@ class DetailsButtons extends Component {
                                                 <Waiting height="100px" width="50px" />
                                                 :
                                                 <div>
-                                                    <p>Cancel Transfer <br/>({this.props.selectedDetailsObj.id})</p>
+                                                    <p>رفض طلب نقل رقم  <br/>({this.props.selectedDetailsObj.id})</p>
                                                 </div>
                                             }
                                         </div>
@@ -226,8 +226,8 @@ class DetailsButtons extends Component {
                         null
                     : 
                         <ModalFooter>
-                            <Button color="primary" onClick={this.cancelTransfer} className="primaryBtn">Confirm</Button>{' '}
-                            <Button color="secondary" onClick={this.toggleCancelModal} className="secondryBtn">Close</Button>
+                            <Button color="primary" onClick={this.cancelTransfer} className="primaryBtn">رفض</Button>{' '}
+                            <Button color="secondary" onClick={this.toggleCancelModal} className="secondryBtn">إلغاء</Button>
                         </ModalFooter>
                     }
                 </Modal>
@@ -240,8 +240,8 @@ class DetailsButtons extends Component {
                 {this.renderDetailModals()}
                 {this.props.selectedDetailsObj.status == "inProgress" &&
                     <>
-                        {this.state.userCanAccept && <Button onClick={this.toggleAcceptModal} className="filterCompButton SubmitFButton btn btn-secondary">Accept</Button>}
-                        {this.state.userCanCancel && <Button onClick={this.toggleCancelModal} className="filterCompButton SubmitFButton btn btn-secondary">Cancel</Button>}
+                        {this.state.userCanAccept && <Button onClick={this.toggleAcceptModal} className="filterCompButton SubmitFButton btn btn-secondary">قبول</Button>}
+                        {this.state.userCanCancel && <Button onClick={this.toggleCancelModal} className="filterCompButton SubmitFButton btn btn-secondary">رفض</Button>}
                     </>
                 }
             </>

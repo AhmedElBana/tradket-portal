@@ -236,7 +236,7 @@ body{
     position: absolute;
     font-size: 23px;
     top: 15px;
-    right: 15px;
+    left: 15px;
 }
 .tradketInputGroup.xsInput .simple-alert > i{
     top: 10px;
@@ -248,6 +248,7 @@ body{
     right: 25px;
 }
 .tradketInputGroup .simple-alert > .alert-danger{
+    text-align: right;
     padding: 5px 15px;
     margin: 0px;
     margin-top: 5px;
@@ -1360,6 +1361,7 @@ tr.bill_tr > td{
     }
 }
 #img-preview-popup-bg{
+    text-align: left;
     z-index: 99999 !important;
 }
 

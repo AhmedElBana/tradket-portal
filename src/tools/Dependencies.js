@@ -52,6 +52,13 @@ class Dependencies {
             return status;
         }
     }
+    custom_status(status){
+        if(text[localStorage.lang].custom_status[status]){
+            return text[localStorage.lang].custom_status[status];
+        }else{
+            return status;
+        }
+    }
     bsMerchantStatus(bs_status){
         if(text[localStorage.lang].bs_status && text[localStorage.lang].bs_status[bs_status]){
             return text[localStorage.lang].bs_status[bs_status];

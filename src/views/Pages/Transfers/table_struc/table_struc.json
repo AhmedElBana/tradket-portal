@@ -1,21 +1,23 @@
 {
   "setting": {
     "title": "Transfers",
-    "title_ar": "المنتجات الخاصه",
+    "title_ar": "طلبات نقل المنتجات",
     "pagination": true,
     "default_size": 10,
     "NEXT": true
   },
   "struc": [
-    { "name": "ID", "name_ar": "الرقم", "value": "_id", "type": "text", "NEXT_uuid": true },
-    { "name": "From Branch", "name_ar": "الاسم", "value": "source_id.name", "type": "text" },
-    { "name": "To Branch", "name_ar": "الاسم", "value": "target_id.name", "type": "text" },
+    { "name": "ID", "name_ar": "رقم الطلب", "value": "_id", "type": "text", "NEXT_uuid": true },
+    { "name": "From Branch", "name_ar": "من فرع", "value": "source_id.name", "type": "text" },
+    { "name": "To Branch", "name_ar": "إلي فرع", "value": "target_id.name", "type": "text" },
     { "name": "Created At", "name_ar": "تاريخ الإنشاء", "value": "createdAt", "type": "date" },
-    { "name": "Created From", "name_ar": "العميل", "value": "creator_id.name", "type": "text" },
-    {"name": "Status", "name_ar": "الحالة", "value": "status", "type": "text",
+    { "name": "Created From", "name_ar": "إنشاء بواسطة", "value": "creator_id.name", "type": "text" },
+    {"name": "Status", "name_ar": "الحالة", "value": "status", "type": "status",
       "lable": {
         "canceled": "errorLable",
+        "مرفوض": "errorLable",
         "completed": "successLable",
+        "مقبول": "successLable",
         "else": "pendingLable"
       }
     }

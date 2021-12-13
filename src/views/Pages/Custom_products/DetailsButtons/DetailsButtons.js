@@ -11,7 +11,7 @@ class DetailsButtons extends Component {
     render() {
         return (
             <>
-                <Link to={"/custom/products/details/" + this.props.selectedDetailsObj._id} className="filterCompButton SubmitFButton btn btn-secondary">Full Details</Link>
+                <Link to={"/custom/products/details/" + this.props.selectedDetailsObj._id} className="filterCompButton SubmitFButton btn btn-secondary">التفاصيل الكاملة</Link>
             </>
         )
     }

@@ -6,21 +6,21 @@
       {
         "title": "Transfer Details", "title_ar": "تفاصيل الطلب",
         "body": [
-          {"title": "ID", "title_ar": "الرقم", "value": "_id", "type": "string"},
-          {"title": "Status", "title_ar": "الحالة", "type": "text", "value": "status"},
-          {"title": "From Branch", "title_ar": "الفرع", "value": "source_id.name", "type": "string"},
-          {"title": "To Branch", "title_ar": "الفرع", "value": "target_id.name", "type": "string"},
-          {"title": "Create Date", "title_ar": "تاريخ الطلب", "value": "createdAt", "type": "date"},
-          {"title": "Create From", "title_ar": "رقم الكاشير", "value": "creator_id.name", "type": "string"},
-          {"title": "Products", "title_ar": "الفاتورة", "value": "products", "type": "product_bill"}
+          {"title": "ID", "title_ar": "رقم الطلب", "value": "_id", "type": "string"},
+          {"title": "Status", "title_ar": "الحالة", "type": "status", "value": "status"},
+          {"title": "From Branch", "title_ar": "من فرع", "value": "source_id.name", "type": "string"},
+          {"title": "To Branch", "title_ar": "الي فرع", "value": "target_id.name", "type": "string"},
+          {"title": "Create Date", "title_ar": "تاريخ الانشاء", "value": "createdAt", "type": "date"},
+          {"title": "Create From", "title_ar": "انشاء بواسطة", "value": "creator_id.name", "type": "string"},
+          {"title": "Products", "title_ar": "المنتجات", "value": "products", "type": "product_bill"}
         ]
       },
       {
-        "title": "Creator Details", "title_ar": "تفاصيل العميل",
+        "title": "Creator Details", "title_ar": "تفاصيل الموظف",
         "body": [
-          {"title": "ID", "title_ar": "الرقم", "value": "creator_id._id", "type": "string"},
+          {"title": "ID", "title_ar": "رقم الموظف", "value": "creator_id._id", "type": "string"},
           {"title": "Name", "title_ar": "الاسم", "value": "creator_id.name", "type": "string"},
-          {"title": "Email", "title_ar": "رقم الهاتف", "value": "creator_id.email", "type": "string"}
+          {"title": "Email", "title_ar": "البريد الالكتروني", "value": "creator_id.email", "type": "string"}
         ]
       }
     ]

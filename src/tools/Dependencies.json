@@ -86,9 +86,17 @@
             "VALU": "فاليو"
         },
         "status": {
-            "Pending": "قيد الإنتظار",
-            "Approved": "مصدق عليه",
-            "Successful": "ناجح"
+            "inProgress": "قيد الإنتظار",
+            "canceled": "مرفوض",
+            "completed": "مقبول"
+        },
+        "custom_status": {
+            "created": "لم يكتمل الطلب",
+            "assigned": "انتظار البداية",
+            "accepted": "جاري العمل",
+            "ready": "جاهز للتسليم",
+            "delivered": "تم التسليم",
+            "canceled": "تم الإلغاء"
         },
         "bs_status": {
             "Pending": "قيد الإنتظار",

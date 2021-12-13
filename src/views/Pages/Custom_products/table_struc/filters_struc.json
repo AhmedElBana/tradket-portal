@@ -26,44 +26,44 @@
     "type": "select",
     "filterName": "creator_id",
     "name": "Created By",
-    "name_ar": "الكاشير",
+    "name_ar": "الموظف",
     "message": "Select Staff",
-    "message_ar": "حدد الكاشير",
+    "message_ar": "حدد الموظف",
     "options": []
   },
   {
     "type": "select",
     "filterName": "accepted_from",
     "name": "Started By",
-    "name_ar": "الكاشير",
+    "name_ar": "بدا العمل بواسطة",
     "message": "Select Staff",
-    "message_ar": "حدد الكاشير",
+    "message_ar": "حدد الموظف",
     "options": []
   },
   {
     "type": "select",
     "filterName": "ready_from",
     "name": "Ready By",
-    "name_ar": "الكاشير",
+    "name_ar": "تم اكمال العمل بواسطة",
     "message": "Select Staff",
-    "message_ar": "حدد الكاشير",
+    "message_ar": "حدد الموظف",
     "options": []
   },
   {
     "type": "select",
     "filterName": "status",
     "name": "Status",
-    "name_ar": "الكاشير",
+    "name_ar": "الحالة",
     "message": "Select Status",
-    "message_ar": "حدد الكاشير",
+    "message_ar": "حدد حالة المنتج",
     "options": [
-      {"value": "created", "text": "Created", "text_ar": "created"},
-      {"value": "assigned", "text": "Assigned", "text_ar": "assigned"},
-      {"value": "accepted", "text": "Accepted", "text_ar": "accepted"},
+      {"value": "created", "text": "Created", "text_ar": "انشاء"},
+      {"value": "assigned", "text": "Assigned", "text_ar": "جاهز للعمل"},
+      {"value": "accepted", "text": "Accepted", "text_ar": "جاري العمل"},
       {"value": "inprogress", "text": "Inprogress", "text_ar": "inprogress"},
-      {"value": "ready", "text": "Ready", "text_ar": "ready"},
-      {"value": "delivered", "text": "Delivered", "text_ar": "delivered"},
-      {"value": "canceled", "text": "Canceled", "text_ar": "canceled"}
+      {"value": "ready", "text": "Ready", "text_ar": "جاهز"},
+      {"value": "delivered", "text": "Delivered", "text_ar": "تم التسليم"},
+      {"value": "canceled", "text": "Canceled", "text_ar": "تم الإلغاء"}
     ]
   }
 ]

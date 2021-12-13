@@ -28,6 +28,8 @@ const renderContent = (content, fullObj, strucElement) => {
     }
   }else if (strucElement.type === "status") {
     return dependencies.statusName(content);
+  }else if (strucElement.type === "custom_status") {
+    return dependencies.custom_status(content);
   }else if (strucElement.type === "payment") {
     return dependencies.paymentTypeName(content);
   } else if (strucElement.type === 'action') {

@@ -9,16 +9,19 @@
   "struc": [
     { "name": "ID", "name_ar": "الرقم", "value": "_id", "type": "text", "NEXT_uuid": true },
     { "name": "Name", "name_ar": "الاسم", "value": "name", "type": "text" },
-    { "name": "Amount", "name_ar": "المبلغ", "value": "price", "type": "text" },
+    { "name": "Amount", "name_ar": "السعر", "value": "price", "type": "text" },
     { "name": "Date Created", "name_ar": "تاريخ الإنشاء", "value": "created_at", "type": "date" },
     { "name": "Deadline", "name_ar": "تاريخ الإنتهاء", "value": "deadline", "type": "date" },
     { "name": "Branch", "name_ar": "الفرع", "value": "branch.name", "type": "text" },
     { "name": "Customer", "name_ar": "العميل", "value": "customer.phoneNumber", "type": "text" },
-    {"name": "Status", "name_ar": "الحالة", "value": "status", "type": "text",
+    {"name": "Status", "name_ar": "الحالة", "value": "status", "type": "custom_status",
       "lable": {
         "canceled": "errorLable",
+        "تم الإلغاء": "errorLable",
         "ready": "successLable",
+        "جاهز للتسليم": "successLable",
         "delivered": "successLable",
+        "تم التسليم": "successLable",
         "else": "pendingLable"
       }
     }

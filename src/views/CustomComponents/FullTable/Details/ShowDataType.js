@@ -109,11 +109,11 @@ const renderBill = (strucEle, data) => {
                 <Table className="usersTable mainTable">
                     <thead>
                     <tr>
-                        <th>Product ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
+                        <th>رقم المنتج</th>
+                        <th>الاسم</th>
+                        <th>السعر</th>
+                        <th>العدد</th>
+                        <th>الاجمالي</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -141,9 +141,9 @@ const renderProduct_bill = (strucEle, data) => {
                 <Table className="usersTable mainTable">
                     <thead>
                     <tr>
-                        <th>Product ID</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
+                        <th>رقم المنتج</th>
+                        <th>الاسم</th>
+                        <th>العدد</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -235,6 +235,8 @@ function ShowDataType(props) {
                                     <td>{ele.value && fetchValue(props.data, ele.value) != "-" ? dependencies.custom_date_format(fetchValue(props.data, ele.value)) : "-"}</td>
                                 : ele.type === "boolean"?
                                     <td>{ele.value ? dependencies.boolName(fetchValue(props.data, ele.value).trim()) : "-"}</td>
+                                : ele.type === "status"?
+                                    <td>{ele.value ? dependencies.statusName(fetchValue(props.data, ele.value).trim()) : "-"}</td>
                                 : ele.type === "array_length"?
                                     <td>{ele.value ? fetchValue(props.data, ele.value).trim().split(",").length : "-"}</td>
                                 : ele.type === "array"?
