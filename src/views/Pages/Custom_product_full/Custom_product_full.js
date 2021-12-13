@@ -91,7 +91,7 @@ class Custom_product_full extends Component {
                       {perms.includes("132") ? <p><span>السعر</span>: {this.state.data.price}</p> : <p></p>}
                       <p><span>العدد</span>: {this.state.data.quantity}</p>
                       <p><span>الحالة</span>: {dependencies.custom_status(this.state.data.status)}</p>
-                      <p><span>تاريخ التسليم</span>: {dependencies.custom_date_format(this.state.data.deadline)}</p>
+                      <p><span>تاريخ التسليم المتفق عليه</span>: {dependencies.custom_date_format(this.state.data.deadline)}</p>
                       <p><span>الفرع</span>: {this.state.data.branch.name}</p>
                       <p><span>المصنع</span>: {this.state.data.materials_branch.name}</p>
                       <p><span>تاريخ الانشاء</span>: {dependencies.custom_date_format(this.state.data.created_at)}</p>
