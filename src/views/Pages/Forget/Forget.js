@@ -47,7 +47,7 @@ const code = (value) => {
           </div>;
   }
 };
-let PasswordNameError = <span>Please add more difficulty to your password.<br/> <b>Hint</b>: add special characters, numbers and capital letters.</span>
+let PasswordNameError = <span>ادخل كلمة مرور اكثر صعوبة<br/> <b>ملاحظة</b>: ادخل حروف كبير و ارقام و علامات خاصة</span>
 const Password = (value) => {
   var patt = new RegExp("^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20})$");
   if (!patt.test(value)) {
@@ -59,7 +59,7 @@ const Password = (value) => {
           </div>;
   }
 }
-let RePasswordNameError = "Please enter the same password as above."
+let RePasswordNameError = "يجب إدخال نفس كلمة المرور."
 const RePassword = (value) => {
   let password = document.getElementById("Password").value;
   if (!validator.equals(value,password)) {
@@ -112,7 +112,7 @@ class Forget extends Component {
               value={this.state.form.email}
               onChange={(e) => this.handleFormChange("email", e)}
               validations={[required, email]}
-              placeholder="Email"
+              placeholder="البريد الالكتروني"
             />
           </div>
         </Col>
@@ -126,7 +126,7 @@ class Forget extends Component {
           null
         }
         <br/>
-        <VButton className="btn">Reset</VButton>  
+        <VButton className="btn">التالي</VButton>  
       </VForm>
     )
   }
@@ -169,7 +169,7 @@ class Forget extends Component {
     return(
       <VForm onSubmit={this.verifyCode}>
         <Col>
-          <p className="verifyText">We sent verify code to your email <br/> {this.state.form.email}</p>
+          <p className="verifyText">تم إرسال كود تحقق للبريد الالكتروني <br/> {this.state.form.email}</p>
           <div className="tradketInputGroup">
             <VInput type="text" className="tradket_b_i"
               autoComplete="off"
@@ -178,7 +178,7 @@ class Forget extends Component {
               value={this.state.form.code}
               onChange={(e) => this.handleFormChange("code", e)}
               validations={[required, code]}
-              placeholder="Verify Code"
+              placeholder="كود التحقق"
             />
           </div>
         </Col>
@@ -192,7 +192,7 @@ class Forget extends Component {
           null
         }
         <br/>
-        <VButton className="btn">Confirm</VButton>  
+        <VButton className="btn">تاكيد</VButton>  
       </VForm>
     )
   }
@@ -245,7 +245,7 @@ class Forget extends Component {
               value={this.state.form.password}
               onChange={(e) => this.handleFormChange("password", e)}
               validations={[required, Password]}
-              placeholder="New Password"
+              placeholder="كلمة المرور الجديدة"
             />
           </div>
           <div className="tradketInputGroup">
@@ -256,7 +256,7 @@ class Forget extends Component {
               value={this.state.form.confirmPassword}
               onChange={(e) => this.handleFormChange("confirmPassword", e)}
               validations={[required, RePassword]}
-              placeholder="Confirm Password"
+              placeholder="تاكيد كلمة المرور"
             />
           </div>
         </Col>
@@ -270,7 +270,7 @@ class Forget extends Component {
           null
         }
         <br/>
-        <VButton className="btn">Change Password</VButton>  
+        <VButton className="btn">تاكيد</VButton>  
       </VForm>
     )
   }
@@ -314,11 +314,11 @@ class Forget extends Component {
     return(
       <div className="resetPasswordSuccesDiv">
         <img src={successImg} alt="succes"/>
-        <h1>Congratulations</h1>
-        <p>Your password have been changed successfully.</p>
+        {/* <h1>Congratulations</h1> */}
+        <p>تم تغير كلمة المرور بنجاح.</p>
         
         <div>
-          <a href="/portal/login" className="btn">Let's Go</a>
+          <a href="/portal/login" className="btn">ابدا العمل</a>
         </div>
       </div>
     )
@@ -335,7 +335,7 @@ class Forget extends Component {
                   null
                 :
                   <div className="head">
-                    <p>Reset Password</p>
+                    <p>اعادة تعين كلمة المرور</p>
                   </div>
                 }
                 <div className="body">

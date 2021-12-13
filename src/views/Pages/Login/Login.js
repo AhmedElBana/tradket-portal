@@ -49,7 +49,7 @@ class Login extends Component {
     //validation
     if(field === "email" && this.state.firstEmail){
       if(this.state.email === ""){
-        this.setState({firstEmail: false, error: true, errorMessage: "Email field is required."})
+        this.setState({firstEmail: false, error: true, errorMessage: "يجب إدخال البريد الالكتروني"})
       }else if(!validator.isEmail(this.state.email)){
         this.setState({firstEmail: false, error: true, errorMessage: "يرجي ادخال بريد الكتروني صحيح."})
       }else{
@@ -57,9 +57,9 @@ class Login extends Component {
       }
     }else if(field === "password" && this.state.firstPassword){
       if(this.state.password === ""){
-        this.setState({firstPassword: false, error: true, errorMessage: "Password field is required."})
+        this.setState({firstPassword: false, error: true, errorMessage: "يجب إدخال كلمة المرور."})
       }else if(this.state.password.length < 6){
-        this.setState({firstPassword: false, error: true, errorMessage: "Password must be more than 6 letters."})
+        this.setState({firstPassword: false, error: true, errorMessage: "كلمة المرور يجب ان تكون اكبر من ٦ حروف."})
       }else{
         this.setState({firstPassword: false, error: false, errorMessage: ""})
       }
@@ -69,7 +69,7 @@ class Login extends Component {
     //validation
     if(field === "email" && !this.state.firstEmail){
       if(this.state.email === ""){
-        this.setState({error: true, errorMessage: "Email field is required."})
+        this.setState({error: true, errorMessage: "يجب إدخال البريد الالكتروني"})
       }else if(!validator.isEmail(this.state.email)){
         this.setState({error: true, errorMessage: "يرجي ادخال بريد الكتروني صحيح."})
       }else{
@@ -77,9 +77,9 @@ class Login extends Component {
       }
     }else if(field === "password" && !this.state.firstPassword){
       if(this.state.password === ""){
-        this.setState({error: true, errorMessage: "Password field is required."})
+        this.setState({error: true, errorMessage: "يجب إدخال كلمة المرور."})
       }else if(this.state.password.length < 6){
-        this.setState({error: true, errorMessage: "Password must be more than 6 letters."})
+        this.setState({error: true, errorMessage: "كلمة المرور يجب ان تكون اكبر من ٦ حروف."})
       }else{
         this.setState({error: false, errorMessage: ""})
       }
@@ -112,7 +112,7 @@ class Login extends Component {
             //end waiting and print error message
             if(error.response){
               if(error.response.status === 401){
-                this.setState({waiting:false, error: true, errorMessage: "Email or password is wrong."});
+                this.setState({waiting:false, error: true, errorMessage: "البريد الالكتروني او كلمة المرور غير صحيحة."});
               }else{
                 this.setState({waiting:false, error: true, errorMessage: "حدث خطا ما ، يرجي المحاوله في وقت لاحق."});
               }
@@ -132,14 +132,14 @@ class Login extends Component {
             <Col xs="12" md="9" lg="8" xl="7">
               <div className="tradket_model">
                 <div className="head">
-                  <p>LOG IN</p>
+                  <p>تسجيل دخول</p>
                 </div>
                 <div className="body">
                   {this.state.waiting?
                     <Waiting  height='190px'/>
                   :
                     <div>
-                      <Input label="Email" type="email"
+                      <Input label="البريد الالكتروني" type="email"
                         required
                         className="tradket_input"
                         floatingLabel={true} 
@@ -148,7 +148,7 @@ class Login extends Component {
                         onChange={this.handleEmailChange}
                         onBlur={()=> this.handleFormValidate("email")}
                       />
-                      <Input label="Password" type="password" 
+                      <Input label="كلمة المرور" type="password" 
                         required
                         minLength={6}
                         className="tradket_input"
@@ -164,17 +164,17 @@ class Login extends Component {
                     }
                     <br/>
                     {this.state.email === "" || this.state.password === "" || this.state.error?
-                      <button disabled className="btn">Log In</button>  
+                      <button disabled className="btn">تسجيل دخول</button>  
                     :
-                      <button className="btn" onClick={this.login}>Log In</button>  
+                      <button className="btn" onClick={this.login}>تسجيل دخول</button>  
                     }
                     <div className="login-signup-forget">
                       <Row>
                         <Col xs="12" sm="6" md="6" lg="6" xl="6">
-                          <a href="/portal/register">Not a member? Sign up</a>
+                          <a href="/portal/register">حساب جديد</a>
                         </Col>
                         <Col xs="12" sm="6" md="6" lg="6" xl="6">
-                          <a href="/portal/forget">I can't remember my password</a>
+                          <a href="/portal/forget">نسيت كلمة المرور</a>
                         </Col>
                       </Row>
                     </div>

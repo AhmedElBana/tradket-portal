@@ -40,9 +40,9 @@ class Custom_products_staff extends Component {
           <>
             <div className="row">
               <div className="custom_products_head">
-                <div className={this.state.current_step == "new" ? "active" : ""} onClick={()=>{this.current_step_change("new")}}>New</div>
-                <div className={this.state.current_step == "progress" ? "active" : ""} onClick={()=>{this.current_step_change("progress")}}>Progress</div>
-                <div className={this.state.current_step == "ready" ? "active" : ""} onClick={()=>{this.current_step_change("ready")}}>Complate</div>
+                <div className={this.state.current_step == "new" ? "active" : ""} onClick={()=>{this.current_step_change("new")}}>جديد</div>
+                <div className={this.state.current_step == "progress" ? "active" : ""} onClick={()=>{this.current_step_change("progress")}}>قيد العمل</div>
+                <div className={this.state.current_step == "ready" ? "active" : ""} onClick={()=>{this.current_step_change("ready")}}>جاهزة</div>
               </div>
             </div>
             <div>

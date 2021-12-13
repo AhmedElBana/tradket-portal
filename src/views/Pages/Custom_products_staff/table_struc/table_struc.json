@@ -1,13 +1,13 @@
 {
   "setting": {
     "title": "Custom Products",
-    "title_ar": "المنتجات الخاصه",
+    "title_ar": "المنتجات المخصوصة",
     "pagination": true,
     "default_size": 10,
     "NEXT": true
   },
   "struc": [
-    { "name": "ID", "name_ar": "الرقم", "value": "_id", "type": "text", "NEXT_uuid": true },
+    { "name": "ID", "name_ar": "رقم المنتج", "value": "_id", "type": "text", "NEXT_uuid": true },
     { "name": "Name", "name_ar": "الاسم", "value": "name", "type": "text" },
     { "name": "Date Created", "name_ar": "تاريخ الإنشاء", "value": "created_at", "type": "date" },
     { "name": "Deadline", "name_ar": "تاريخ الإنتهاء", "value": "deadline", "type": "date" },

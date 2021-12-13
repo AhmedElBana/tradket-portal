@@ -48,7 +48,7 @@ const phoneNumber = (value) => {
           </div>;
   }
 }
-let storePhoneNumberError = "Please enter more than 5 numbers."
+let storePhoneNumberError = "يرجي ادخال رقم هاتف صحيح."
 const storePhoneNumber = (value) => {
   var patt = new RegExp("^[0-9]*$");
   if (isNaN(value) || value.toString().trim().length < 5 || !patt.test(value)) {
@@ -72,7 +72,7 @@ const email = (value) => {
   }
 };
 // Password validation
-let PasswordNameError = <span>Please add more difficulty to your password.<br/> <b>Hint</b>: add special characters, numbers and capital letters.</span>
+let PasswordNameError = <span>ادخل كلمة مرور اكثر صعوبة<br/> <b>ملاحظة</b>: ادخل حروف كبير و ارقام و علامات خاصة</span>
 const Password = (value) => {
   var patt = new RegExp("^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,20})$");
   if (!patt.test(value)) {
@@ -84,7 +84,7 @@ const Password = (value) => {
           </div>;
   }
 }
-let RePasswordNameError = "Please enter the same password as above."
+let RePasswordNameError = "يجب إدخال نفس كلمة المرور."
 const RePassword = (value) => {
   let password = document.getElementById("Password").value;
   if (!validator.equals(value,password)) {
@@ -183,7 +183,7 @@ class Register extends Component {
                     null
                   :
                     <div className="head">
-                      <p>Sign Up</p>
+                      <p>إنشاء حساب جديد</p>
                     </div>
                   }
                   <div className="body">
@@ -194,11 +194,11 @@ class Register extends Component {
                         {this.state.succes?
                           <div className="singupSuccesDiv">
                             <img src={successImg} alt="succes"/>
-                            <h1>Congratulations</h1>
-                            <p>your account has been created successfully.<br/> now you can start managing <br/> your whole business.</p>
+                            {/* <h1>Congratulations</h1> */}
+                            <p>تم إنشاء الحساب بنجاح.</p>
                             
                             <div>
-                              <a href="/portal" className="btn">Get Start</a>
+                              <a href="/portal" className="btn">بدأ العمل</a>
                             </div>
                           </div>
                         :
@@ -212,7 +212,7 @@ class Register extends Component {
                                   value={this.state.form.name}
                                   onChange={(e) => this.handleFormChange("name", e)}
                                   validations={[required, fullName]}
-                                  placeholder="Full Name"
+                                  placeholder="الاسم بالكامل"
                                 />
                               </div>
                               <div className="tradketInputGroup">
@@ -222,7 +222,7 @@ class Register extends Component {
                                   value={this.state.form.storeName}
                                   onChange={(e) => this.handleFormChange("storeName", e)}
                                   validations={[required]}
-                                  placeholder="Business Name"
+                                  placeholder="اسم الشركة"
                                 />
                               </div>
                               <div className="tradketInputGroup">
@@ -232,7 +232,7 @@ class Register extends Component {
                                   value={this.state.form.email}
                                   onChange={(e) => this.handleFormChange("email", e)}
                                   validations={[required, email]}
-                                  placeholder="Email"
+                                  placeholder="البريد الالكتروني"
                                 />
                               </div>
                               <div className="tradketInputGroup">
@@ -242,7 +242,7 @@ class Register extends Component {
                                   value={this.state.form.phoneNumber}
                                   onChange={(e) => this.handleFormChange("phoneNumber", e)}
                                   validations={[required, phoneNumber]}
-                                  placeholder="Phone Number"
+                                  placeholder="رقم الهاتف"
                                 />
                               </div>
                               <div className="tradketInputGroup">
@@ -252,7 +252,7 @@ class Register extends Component {
                                   value={this.state.form.storePhoneNumber}
                                   onChange={(e) => this.handleFormChange("storePhoneNumber", e)}
                                   validations={[required, storePhoneNumber]}
-                                  placeholder="Business Phone Number"
+                                  placeholder="رقم هاتف الشركة"
                                 />
                               </div>
                               <div className="tradketInputGroup">
@@ -263,7 +263,7 @@ class Register extends Component {
                                   value={this.state.form.password}
                                   onChange={(e) => this.handleFormChange("password", e)}
                                   validations={[required, Password]}
-                                  placeholder="Password"
+                                  placeholder="كلمة المرور"
                                 />
                               </div>
                               <div className="tradketInputGroup">
@@ -274,7 +274,7 @@ class Register extends Component {
                                   value={this.state.form.confirmPassword}
                                   onChange={(e) => this.handleFormChange("confirmPassword", e)}
                                   validations={[required, RePassword]}
-                                  placeholder="Confirm Password"
+                                  placeholder="تآيد كلمة المرور"
                                 />
                               </div>
                             </Col>
@@ -288,12 +288,12 @@ class Register extends Component {
                             null
                           }
                           <br/>
-                          <VButton className="btn" onClick={this.login}>Sign Up</VButton>  
+                          <VButton className="btn" onClick={this.login}>إنشاء</VButton>  
                           <div>
                             <br/>
                             <Row className="justify-content-center">
                               <Col xs="12" sm="6" md="6" lg="6" xl="6">
-                                <a href="/portal/login">Do you have an account? LOG IN</a>
+                                <a href="/portal/login">تسجيل دخول</a>
                               </Col>
                             </Row>
                           </div>

@@ -10,12 +10,12 @@ class LogoutHeader extends Component {
         </a>
         <div className="btns_div">
           {window.location.pathname !== "/portal/login"?
-            <a href="/portal/login" className="btn_w">Log In</a>
+            <a href="/portal/login" className="btn_w">تسجيل دخول</a>
           :
             null
           }
           {window.location.pathname !== "/portal/register"?
-            <a href="/portal/register" className="btn_w">Sign Up</a>
+            <a href="/portal/register" className="btn_w">حساب جديد</a>
           :
             null
           }          

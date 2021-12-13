@@ -199,7 +199,7 @@ class Order_summary extends Component {
                 <div className="insights_body_div">
                   <div>
                       <p>اجمالي مبلغ الطلبات</p>
-                      <span>{this.state.summary.total_success_amount}EGP</span>
+                      <span>{this.state.summary.total_success_amount} جنية مصري </span>
                   </div>
                   <div>
                       <p>اجمالي عدد الطلبات</p>

@@ -57,7 +57,7 @@ body{
     max-width: calc(100% - 30px);
     border-radius: 10px;
     padding: 10px 15px;
-    text-align: left;
+    text-align: right;
 }
 .btn{
     display: inline-block;
@@ -225,7 +225,7 @@ body{
     position: relative;
 }
 .tradketInputGroup .alert{
-    text-align: left;
+    text-align: right;
     color: #813838;
     font-size: 16px;
     width: 100%;
