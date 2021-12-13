@@ -40,18 +40,18 @@
     }
     div{
         display: inline-block;
-        float: right;
+        float: left;
         input, button, select, textarea{
             height: 35px;
             padding: 0px 5px;
         }
         select{
-            float: right;
+            float: left;
             margin: 0px 5px;
             cursor: pointer;
         }
         button{
-            float: right;
+            float: left;
         }
         div.rs-picker-date{
             margin: 0px 5px;
@@ -63,7 +63,7 @@
         }
     }
 }
-.insights_body_div{
+.payments_headers .insights_body_div{
     div{
         display: inline-block;
         width: calc(33.333% - 10px);

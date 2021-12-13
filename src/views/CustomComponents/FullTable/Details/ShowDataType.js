@@ -231,12 +231,18 @@ function ShowDataType(props) {
                                     <td>{ele.value ? dependencies.convertAmount(fetchValue(props.data, ele.value), props.data.currency) : "Not Specified"}</td>
                                 : ele.type === "amount" && ele.currencyField !== undefined?
                                     <td>{ele.value ? dependencies.convertAmount(fetchValue(props.data, ele.value), fetchValue(props.data, ele.currencyField)) : "Not Specified"}</td>
+                                : ele.type === "amount_egp"?
+                                    <td>{ele.value ? dependencies.convertAmountFullNoCurr(fetchValue(props.data, ele.value)) + " جنية مصرى " : "Not Specified"}</td>
                                 : ele.type === "date"?
                                     <td>{ele.value && fetchValue(props.data, ele.value) != "-" ? dependencies.custom_date_format(fetchValue(props.data, ele.value)) : "-"}</td>
                                 : ele.type === "boolean"?
                                     <td>{ele.value ? dependencies.boolName(fetchValue(props.data, ele.value).trim()) : "-"}</td>
                                 : ele.type === "status"?
                                     <td>{ele.value ? dependencies.statusName(fetchValue(props.data, ele.value).trim()) : "-"}</td>
+                                :ele.type === "order_status"?
+                                    <td>{ele.value ? dependencies.order_status(fetchValue(props.data, ele.value).trim()) : "-"}</td>
+                                : ele.type === "type"?
+                                    <td>{ele.value ? dependencies.typeName(fetchValue(props.data, ele.value).trim()) : "-"}</td>
                                 : ele.type === "array_length"?
                                     <td>{ele.value ? fetchValue(props.data, ele.value).trim().split(",").length : "-"}</td>
                                 : ele.type === "array"?

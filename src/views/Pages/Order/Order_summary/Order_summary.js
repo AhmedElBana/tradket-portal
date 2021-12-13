@@ -151,11 +151,11 @@ class Order_summary extends Component {
             :
               <div>
                 <div className="insights_head_div">
-                  <p>Insights</p>
+                  <p>ملخص الطلبات</p>
                   <div>
-                    {this.state.show_update && <button onClick={this.handleUpdate} className="filterCompButton SubmitFButton btn btn-secondary">Update</button>}
+                    {this.state.show_update && <button onClick={this.handleUpdate} className="filterCompButton SubmitFButton btn btn-secondary">تحديث</button>}
                     <select onChange={this.handleBranchChange} value={this.state.branch}>
-                      <option value="">All Branches</option>
+                      <option value="">كل الفروع</option>
                       {this.props.branches.map((branch)=>{
                         return(
                           <option value={branch.value}>{branch.text}</option>
@@ -163,7 +163,7 @@ class Order_summary extends Component {
                       })}
                     </select>
                     <select onChange={this.handleStaffChange} value={this.state.staff}>
-                      <option value="">All Staff</option>
+                      <option value="">كل الموظفين</option>
                       {this.props.staff.map((staff)=>{
                         return(
                           <option value={staff.value}>{staff.text}</option>
@@ -173,7 +173,7 @@ class Order_summary extends Component {
                     <DatePicker
                         name={"end_date"}
                         size="lg"
-                        placeholder={"Date To"}
+                        placeholder={"الي تاريخ"}
                         disabledDate={(date) => this.disabledDate(date)}
                         placement="bottomEnd"
                         block
@@ -185,7 +185,7 @@ class Order_summary extends Component {
                     <DatePicker
                         name={"start_date"}
                         size="lg"
-                        placeholder={"Date From"}
+                        placeholder={"من تاريخ"}
                         placement="bottomStart" 
                         block
                         limitEndYear={3}
@@ -198,23 +198,23 @@ class Order_summary extends Component {
                 </div>
                 <div className="insights_body_div">
                   <div>
-                      <p>Total Amount</p>
+                      <p>اجمالي مبلغ الطلبات</p>
                       <span>{this.state.summary.total_success_amount}EGP</span>
                   </div>
                   <div>
-                      <p>Total Orders</p>
+                      <p>اجمالي عدد الطلبات</p>
                       <span>{this.state.summary.total_count}</span>
                   </div>
                   <div>
-                      <p>Success Orders</p>
+                      <p>الطلبات الناجحة</p>
                       <span>{this.state.summary.total_success_count}</span>
                   </div>
                   <div>
-                      <p>Canceled Orders</p>
+                      <p>الطلبات الملغية</p>
                       <span>{this.state.summary.total_canceled_count}</span>
                   </div>
                   <div>
-                      <p>Returned Orders</p>
+                      <p>الطلبات المرتجعه</p>
                       <span>{this.state.summary.total_returned_count}</span>
                   </div>
                 </div>

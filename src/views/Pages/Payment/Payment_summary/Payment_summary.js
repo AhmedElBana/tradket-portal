@@ -151,11 +151,11 @@ class Payment_summary extends Component {
             :
               <div>
                 <div className="insights_head_div">
-                  <p>Insights</p>
+                  <p>ملخص المدفوعات</p>
                   <div>
-                    {this.state.show_update && <button onClick={this.handleUpdate} className="filterCompButton SubmitFButton btn btn-secondary">Update</button>}
+                    {this.state.show_update && <button onClick={this.handleUpdate} className="filterCompButton SubmitFButton btn btn-secondary">تحديث</button>}
                     <select onChange={this.handleBranchChange} value={this.state.branch}>
-                      <option value="">All Branches</option>
+                      <option value="">كل الفروع</option>
                       {this.props.branches.map((branch)=>{
                         return(
                           <option value={branch.value}>{branch.text}</option>
@@ -163,7 +163,7 @@ class Payment_summary extends Component {
                       })}
                     </select>
                     <select onChange={this.handleStaffChange} value={this.state.staff}>
-                      <option value="">All Staff</option>
+                      <option value="">كل الموظفين</option>
                       {this.props.staff.map((staff)=>{
                         return(
                           <option value={staff.value}>{staff.text}</option>
@@ -173,7 +173,7 @@ class Payment_summary extends Component {
                     <DatePicker
                         name={"end_date"}
                         size="lg"
-                        placeholder={"Date To"}
+                        placeholder={"الي تاريخ"}
                         disabledDate={(date) => this.disabledDate(date)}
                         placement="bottomEnd"
                         block
@@ -185,7 +185,7 @@ class Payment_summary extends Component {
                     <DatePicker
                         name={"start_date"}
                         size="lg"
-                        placeholder={"Date From"}
+                        placeholder={"من تاريخ"}
                         placement="bottomStart" 
                         block
                         limitEndYear={3}
@@ -198,16 +198,16 @@ class Payment_summary extends Component {
                 </div>
                 <div className="insights_body_div">
                   <div>
-                      <p>Net Amount</p>
-                      <span>{this.state.summary.total_net_amount}EGP</span>
+                      <p>صافي المدفوعات</p>
+                      <span>{this.state.summary.total_net_amount} جنية مصري</span>
                   </div>
                   <div>
-                      <p>Total In</p>
-                      <span>{this.state.summary.total_in}EGP</span>
+                      <p>إجمالي الدخل</p>
+                      <span>{this.state.summary.total_in} جنية مصري</span>
                   </div>
                   <div>
-                      <p>Total Out</p>
-                      <span>{this.state.summary.total_out}EGP</span>
+                      <p>إجمالي المصروفات</p>
+                      <span>{this.state.summary.total_out} جنية مصري</span>
                   </div>
                 </div>
               </div>

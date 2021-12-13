@@ -26,22 +26,22 @@
     "type": "select",
     "filterName": "creator_id",
     "name": "Staff",
-    "name_ar": "الكاشير",
+    "name_ar": "الموظف",
     "message": "Select Staff",
-    "message_ar": "حدد الكاشير",
+    "message_ar": "حدد الموظف",
     "options": []
   },
   {
     "type": "select",
     "filterName": "status",
     "name": "Status",
-    "name_ar": "الكاشير",
+    "name_ar": "الحالة",
     "message": "Select Status",
-    "message_ar": "حدد الكاشير",
+    "message_ar": "حدد الحالة",
     "options": [
-      {"value": "success", "text": "Success", "text_ar": "Success"},
-      {"value": "canceled", "text": "Canceled", "text_ar": "Canceled"},
-      {"value": "returned", "text": "Returned", "text_ar": "Returned"}
+      {"value": "success", "text": "Success", "text_ar": "ناجح"},
+      {"value": "canceled", "text": "Canceled", "text_ar": "ملغي"},
+      {"value": "returned", "text": "Returned", "text_ar": "مرتجع"}
     ]
   }
 

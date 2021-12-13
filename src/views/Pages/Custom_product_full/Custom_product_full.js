@@ -79,7 +79,7 @@ class Custom_product_full extends Component {
               :
                 <div>
                   <div className="head_div">
-                    <p>التفاصيل الاملة</p>
+                    <p>التفاصيل الكاملة</p>
                   </div>
                   <div className="body_div">
                     <div className="custom_prod_full">
@@ -96,7 +96,7 @@ class Custom_product_full extends Component {
                       <p><span>المصنع</span>: {this.state.data.materials_branch.name}</p>
                       <p><span>تاريخ الانشاء</span>: {dependencies.custom_date_format(this.state.data.created_at)}</p>
                       <p><span>انشاء بواسطة</span>: {this.state.data.created_from.name}</p>
-                      <p><span>بدا العمل</span>: {this.state.data.accepted_at ? dependencies.custom_date_format(this.state.data.accepted_at) : "-"}</p>
+                      <p><span>تاريخ بدا العمل</span>: {this.state.data.accepted_at ? dependencies.custom_date_format(this.state.data.accepted_at) : "-"}</p>
                       <p><span>بدا العمل بواسطة</span>: {this.state.data.accepted_from ? this.state.data.accepted_from.name : "-"}</p>
                       <p><span>تاريخ اكتمال العمل</span>: {this.state.data.ready_at ? dependencies.custom_date_format(this.state.data.ready_at) : "-"}</p>
                       <p><span>اكتمل العمل بواسطة</span>: {this.state.data.ready_from ? this.state.data.ready_from.name : "-"}</p>

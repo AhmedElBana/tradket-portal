@@ -65,12 +65,10 @@
             "USD": "دولار امريكى"
         },
         "types": {
-            "card": "بطاقة",
-            "aggregator": "اكسبت كيوسك",
-            "wallet": "محفظه",
+            "in": "دخل",
+            "out": "مصروفات",
             "cash": "كاش",
-            "premium": "بريميوم",
-            "valu": "فاليو"
+            "card": "بطاقة بنكية"
         },
         "branch_types": {
             "branch": "فرع",
@@ -89,6 +87,11 @@
             "inProgress": "قيد الإنتظار",
             "canceled": "مرفوض",
             "completed": "مقبول"
+        },
+        "order_status": {
+            "success": "ناجح",
+            "canceled": "ملغي",
+            "returned": "مرتجع"
         },
         "custom_status": {
             "created": "لم يكتمل الطلب",

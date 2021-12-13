@@ -9,12 +9,18 @@ import './EnteriesTable.scss';
 
 const renderContent = (content, fullObj, strucElement) => {
   if (strucElement.type === "date") {
-    return dependencies.custom_date_format(content);
+    return <span className="date_span">{dependencies.custom_date_format(content)}</span>
   } else if (strucElement.type === "amount") {
     if(strucElement.currencyField){
       return dependencies.convertAmount(content, fetchValue(fullObj, strucElement.currencyField));
     }else{
       return dependencies.convertAmount(content, fullObj.currency);
+    }
+  } else if (strucElement.type === "amount_egp") {
+    if(strucElement.currencyField){
+      return dependencies.convertAmountFullNoCurr(content, fetchValue(fullObj, strucElement.currencyField)) + " جنية مصرى ";
+    }else{
+      return dependencies.convertAmountFullNoCurr(content, fullObj.currency) + " جنية مصرى ";
     }
   } else if (strucElement.type === "amount_cents") {
     if(fullObj.currency){
@@ -28,8 +34,12 @@ const renderContent = (content, fullObj, strucElement) => {
     }
   }else if (strucElement.type === "status") {
     return dependencies.statusName(content);
+  }else if (strucElement.type === "order_status") {
+    return dependencies.order_status(content);
   }else if (strucElement.type === "custom_status") {
     return dependencies.custom_status(content);
+  }else if (strucElement.type === "type") {
+    return dependencies.typeName(content);
   }else if (strucElement.type === "payment") {
     return dependencies.paymentTypeName(content);
   } else if (strucElement.type === 'action') {

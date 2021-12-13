@@ -1,29 +1,31 @@
 {
   "setting": {
     "title": "Payments Summary",
-    "title_ar": "ملخص الطلبات",
+    "title_ar": "المدفوعات",
     "pagination": true,
     "default_size": 10,
     "NEXT": true
   },
   "struc": [
     { "name": "ID", "name_ar": "الرقم", "value": "_id", "type": "text", "NEXT_uuid": true },
-    { "name": "Amount", "name_ar": "المبلغ", "value": "amount", "type": "text" },
-    { "name": "Type", "name_ar": "النوع", "value": "type", "type": "text", 
+    { "name": "Amount", "name_ar": "المبلغ", "value": "amount", "type": "amount_egp" },
+    { "name": "Type", "name_ar": "النوع", "value": "type", "type": "type", 
       "lable": {
         "out": "errorLable",
+        "مصروفات": "errorLable",
         "else": "successLable"
       }
     },
-    { "name": "Source", "name_ar": "الفرع", "value": "sub_type", "type": "text" },
-    { "name": "Name", "name_ar": "الفرع", "value": "name", "type": "text" },
+    { "name": "Source", "name_ar": "المصدر", "value": "sub_type", "type": "text" },
+    { "name": "Name", "name_ar": "الوصف", "value": "name", "type": "text" },
     { "name": "Date Created", "name_ar": "تاريخ الإنشاء", "value": "created_at", "type": "date" },
-    { "name": "Created From", "name_ar": "الفرع", "value": "created_from.name", "type": "text" },
+    { "name": "Created From", "name_ar": "الموظف", "value": "created_from.name", "type": "text" },
     { "name": "Branch", "name_ar": "الفرع", "value": "branch.name", "type": "text" },
     {"name": "Status", "name_ar": "الحالة", "value": "status",
-      "type": "text",
+      "type": "order_status",
       "lable": {
         "canceled": "pendingLable",
+        "ملغي": "pendingLable",
         "else": "successLable"
       }
     }

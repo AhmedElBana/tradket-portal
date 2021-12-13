@@ -1,15 +1,15 @@
 {
   "setting": {
     "title": "Customers Summary",
-    "title_ar": "ملخص الطلبات",
+    "title_ar": "العملاء",
     "pagination": true,
     "default_size": 10,
     "NEXT": true
   },
   "struc": [
-    { "name": "ID", "name_ar": "الرقم", "value": "_id", "type": "text"},
-    { "name": "Name", "name_ar": "الفرع", "value": "name", "type": "text" },
-    { "name": "Phone", "name_ar": "تاريخ الإنشاء", "value": "phoneNumber", "type": "text" },
-    { "name": "Debt", "name_ar": "الفرع", "value": "debt", "type": "text" }
+    { "name": "ID", "name_ar": "رقم العميل", "value": "_id", "type": "text"},
+    { "name": "Name", "name_ar": "اسم العميل", "value": "name", "type": "text" },
+    { "name": "Phone", "name_ar": "رقم الهاتف", "value": "phoneNumber", "type": "text" },
+    { "name": "Debt", "name_ar": "الديون", "value": "debt", "type": "text" }
   ]
 }

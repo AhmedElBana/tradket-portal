@@ -3,14 +3,14 @@
     "type": "input",
     "filterName": "phoneNumber",
     "name": "Phone Number",
-    "name_ar": "رقم المعاملة",
+    "name_ar": "رقم الهاتف",
     "validations": ["intNumber"]
   },
   {
     "type": "input",
     "filterName": "name",
     "name": "Name",
-    "name_ar": "رقم المعاملة",
+    "name_ar": "اسم العميل",
     "validations": []
   }
 ]

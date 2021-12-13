@@ -4,20 +4,20 @@
     },
     "body": [
       {
-        "title": "Payment Details", "title_ar": "تفاصيل الطلب",
+        "title": "Payment Details", "title_ar": "تفاصيل المعاملة",
         "body": [
-          {"title": "ID", "title_ar": "الرقم", "value": "_id", "type": "string"},
-          {"title": "Status", "title_ar": "الحالة", "value": "status", "type": "text"},
-          {"title": "Type", "title_ar": "type", "value": "type", "type": "string"},
-          {"title": "Source", "title_ar": "Source", "value": "sub_type", "type": "string"},
-          {"title": "Name", "title_ar": "Source", "value": "name", "type": "string"},
-          {"title": "Amount", "title_ar": "المبلغ الكلي", "value": "amount", "type": "string"},
-          {"title": "Created At", "title_ar": "تاريخ الطلب", "value": "created_at", "type": "date"},
-          {"title": "Create From", "title_ar": "رقم الكاشير", "value": "created_from.name", "type": "string"}
+          {"title": "ID", "title_ar": "رقم العملية", "value": "_id", "type": "string"},
+          {"title": "Status", "title_ar": "الحالة", "value": "status", "type": "order_status"},
+          {"title": "Type", "title_ar": "النوع", "value": "type", "type": "type"},
+          {"title": "Type", "title_ar": "وسيلة الدفع", "value": "method", "type": "type"},
+          {"title": "Source", "title_ar": "المصدر", "value": "sub_type", "type": "string"},
+          {"title": "Name", "title_ar": "الوصف", "value": "name", "type": "string"},
+          {"title": "Amount", "title_ar": "المبلغ", "value": "amount", "type": "amount_egp"},
+          {"title": "Created At", "title_ar": "تاريخ المعاملة", "value": "created_at", "type": "date"}
         ]
       },
       {
-        "title": "Staff Details", "title_ar": "تفاصيل العميل",
+        "title": "Staff Details", "title_ar": "تفاصيل الموظف",
         "conditions": {
           "list": {
             "created_from": null
@@ -27,11 +27,11 @@
         "body": [
           {"title": "ID", "title_ar": "الرقم", "value": "created_from._id", "type": "string"},
           {"title": "Name", "title_ar": "الاسم", "value": "created_from.name", "type": "string"},
-          {"title": "Email", "title_ar": "رقم الهاتف", "value": "created_from.email", "type": "string"}
+          {"title": "Email", "title_ar": "البريد الالكتروني", "value": "created_from.email", "type": "string"}
         ]
       },
       {
-        "title": "Branch Details", "title_ar": "تفاصيل العميل",
+        "title": "Branch Details", "title_ar": "تفاصيل الفرع",
         "conditions": {
           "list": {
             "branch": null
@@ -42,8 +42,8 @@
           {"title": "ID", "title_ar": "الرقم", "value": "branch._id", "type": "string"},
           {"title": "Name", "title_ar": "الاسم", "value": "branch.name", "type": "string"},
           {"title": "Phone", "title_ar": "رقم الهاتف", "value": "branch.phoneNumber", "type": "string"},
-          {"title": "Address", "title_ar": "رقم الهاتف", "value": "branch.address", "type": "string"},
-          {"title": "Type", "title_ar": "رقم الهاتف", "value": "branch.type", "type": "string"}
+          {"title": "Address", "title_ar": "العنوان", "value": "branch.address", "type": "string"},
+          {"title": "Type", "title_ar": "النوع", "value": "branch.type", "type": "string"}
         ]
       },
       {

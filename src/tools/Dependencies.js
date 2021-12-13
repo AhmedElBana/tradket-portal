@@ -38,6 +38,13 @@ class Dependencies {
             return type;
         }
     }
+    typeName(type){
+        if(text[localStorage.lang].types[type]){
+            return text[localStorage.lang].types[type];
+        }else{
+            return type;
+        }
+    }
     branchTypeName(type){
         if(text[localStorage.lang].branch_types && text[localStorage.lang].branch_types[type]){
             return text[localStorage.lang].branch_types[type];
@@ -48,6 +55,13 @@ class Dependencies {
     statusName(status){
         if(text[localStorage.lang].status[status]){
             return text[localStorage.lang].status[status];
+        }else{
+            return status;
+        }
+    }
+    order_status(status){
+        if(text[localStorage.lang].order_status[status]){
+            return text[localStorage.lang].order_status[status];
         }else{
             return status;
         }

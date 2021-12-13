@@ -26,45 +26,45 @@
     "type": "select",
     "filterName": "created_from",
     "name": "Staff",
-    "name_ar": "الكاشير",
+    "name_ar": "الموظف",
     "message": "Select Staff",
-    "message_ar": "حدد الكاشير",
+    "message_ar": "حدد الموظف",
     "options": []
   },
   {
     "type": "select",
     "filterName": "type",
     "name": "Type",
-    "name_ar": "الكاشير",
+    "name_ar": "النوع",
     "message": "Select Type",
     "message_ar": "حدد الكاشير",
     "options": [
-      {"value": "in", "text": "In", "text_ar": "Success"},
-      {"value": "out", "text": "Out", "text_ar": "Canceled"}
+      {"value": "in", "text": "In", "text_ar": "دخل"},
+      {"value": "out", "text": "Out", "text_ar": "مصروفات"}
     ]
   },
   {
     "type": "select",
     "filterName": "status",
     "name": "Status",
-    "name_ar": "الكاشير",
+    "name_ar": "الحالة",
     "message": "Select Status",
     "message_ar": "حدد الكاشير",
     "options": [
-      {"value": "success", "text": "Success", "text_ar": "Success"},
-      {"value": "canceled", "text": "Canceled", "text_ar": "Canceled"}
+      {"value": "success", "text": "Success", "text_ar": "ناجح"},
+      {"value": "canceled", "text": "Canceled", "text_ar": "ملغي"}
     ]
   },
   {
     "type": "select",
     "filterName": "method",
     "name": "Method",
-    "name_ar": "الكاشير",
+    "name_ar": "وسيلة الدفع",
     "message": "Select Method",
     "message_ar": "حدد الكاشير",
     "options": [
-      {"value": "cash", "text": "Cash", "text_ar": "Success"},
-      {"value": "card", "text": "Card", "text_ar": "Canceled"}
+      {"value": "cash", "text": "Cash", "text_ar": "كاش"},
+      {"value": "card", "text": "Card", "text_ar": "بطاقة بنكية"}
     ]
   }
 

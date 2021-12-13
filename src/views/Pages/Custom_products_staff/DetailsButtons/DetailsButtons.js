@@ -342,7 +342,7 @@ class DetailsButtons extends Component {
             <div>
                 {/* start Modal */}
                 <Modal isOpen={this.state.startModal} toggle={this.toggleStartModal}>
-                    <ModalHeader toggle={this.toggleStartModal}>Start Custom Product</ModalHeader>
+                    <ModalHeader toggle={this.toggleStartModal}>بدا العمل</ModalHeader>
                     <ModalBody>
                         {this.state.startFaild ?
                             <div>
@@ -355,8 +355,8 @@ class DetailsButtons extends Component {
                                 {this.state.startSuccessfully ?
                                     <div className="staffSuccesDiv">
                                         <img src={successImg} alt="succes"/>
-                                        <h1>Congratulations</h1>
-                                        <p>You Start Working on Custom Product Successfully.</p>
+                                        {/* <h1>Congratulations</h1> */}
+                                        <p>تم تسجيل بدا العمل بنجاح.</p>
                                     </div>
                                 :
                                     this.state.startFaild?
@@ -369,7 +369,7 @@ class DetailsButtons extends Component {
                                                 <Waiting height="100px" width="50px" />
                                                 :
                                                 <div>
-                                                    <p>Start Working on Custom Product <br/>({this.props.selectedDetailsObj.id})</p>
+                                                    <p>بدا العمل علي المنتج رقم  <br/>({this.props.selectedDetailsObj.id})</p>
                                                 </div>
                                             }
                                         </div>
@@ -381,14 +381,14 @@ class DetailsButtons extends Component {
                         null
                     : 
                         <ModalFooter>
-                            <Button color="primary" onClick={this.startProduct} className="primaryBtn">Start</Button>{' '}
-                            <Button color="secondary" onClick={this.toggleStartModal} className="secondryBtn">Close</Button>
+                            <Button color="primary" onClick={this.startProduct} className="primaryBtn">ابدأ</Button>{' '}
+                            <Button color="secondary" onClick={this.toggleStartModal} className="secondryBtn">إلغاء</Button>
                         </ModalFooter>
                     }
                 </Modal>
                 {/* start_cancel Modal */}
                 <Modal isOpen={this.state.start_cancelModal} toggle={this.toggleStart_cancelModal}>
-                    <ModalHeader toggle={this.toggleStart_cancelModal}>Back To New</ModalHeader>
+                    <ModalHeader toggle={this.toggleStart_cancelModal}>إلغاء البدا</ModalHeader>
                     <ModalBody>
                         {this.state.start_cancelFaild ?
                             <div>
@@ -401,8 +401,8 @@ class DetailsButtons extends Component {
                                 {this.state.start_cancelSuccessfully ?
                                     <div className="staffSuccesDiv">
                                         <img src={successImg} alt="succes"/>
-                                        <h1>Congratulations</h1>
-                                        <p>Custom Product Back To New Successfully.</p>
+                                        {/* <h1>Congratulations</h1> */}
+                                        <p>تم إلغاء بدا العمل بنجاح.</p>
                                     </div>
                                 :
                                     this.state.start_cancelFaild?
@@ -415,7 +415,7 @@ class DetailsButtons extends Component {
                                                 <Waiting height="100px" width="50px" />
                                                 :
                                                 <div>
-                                                    <p>Back Custom Product <br/>({this.props.selectedDetailsObj.id}) To New</p>
+                                                    <p>إلغاء العمل علي منتج رقم  <br/>({this.props.selectedDetailsObj.id})</p>
                                                 </div>
                                             }
                                         </div>
@@ -427,15 +427,15 @@ class DetailsButtons extends Component {
                         null
                     : 
                         <ModalFooter>
-                            <Button color="primary" onClick={this.start_cancelProduct} className="primaryBtn">Confirm</Button>{' '}
-                            <Button color="secondary" onClick={this.toggleStart_cancelModal} className="secondryBtn">Close</Button>
+                            <Button color="primary" onClick={this.start_cancelProduct} className="primaryBtn">تأكيد</Button>{' '}
+                            <Button color="secondary" onClick={this.toggleStart_cancelModal} className="secondryBtn">إلغاء</Button>
                         </ModalFooter>
                     }
                 </Modal>
                 {/* complate Modal */}
                 <Modal isOpen={this.state.complateModal} toggle={this.toggleComplateModal}>
                     <VForm>
-                        <ModalHeader toggle={this.toggleComplateModal}>Complate</ModalHeader>
+                        <ModalHeader toggle={this.toggleComplateModal}>تسجيل اكتمال العمل</ModalHeader>
                         <ModalBody>
                             {this.state.complateFaild ?
                                 <div>
@@ -448,8 +448,8 @@ class DetailsButtons extends Component {
                                     {this.state.complateSuccessfully ?
                                         <div className="staffSuccesDiv">
                                             <img src={successImg} alt="succes"/>
-                                            <h1>Congratulations</h1>
-                                            <p>Custom Product Complated Successfully.</p>
+                                            {/* <h1>Congratulations</h1> */}
+                                            <p>تم تسجيل اكتمال العمل بنجاح.</p>
                                         </div>
                                     :
                                         this.state.complateFaild?
@@ -462,9 +462,9 @@ class DetailsButtons extends Component {
                                                     <Waiting height="100px" width="50px" />
                                                     :
                                                     <div>
-                                                        <p>Complate Custom Product <br/>({this.props.selectedDetailsObj.id})</p>
+                                                        <p>اكتمال العمل علي المنتج رقم  <br/>({this.props.selectedDetailsObj.id})</p>
                                                         <div className="materials_update">
-                                                            <h3>Used Materials</h3>
+                                                            <h3>الخامات المستخدمة</h3>
                                                             <Row>
                                                                 {Object.keys(this.state.materialsForm).map((id)=>{
                                                                     return(
@@ -480,7 +480,7 @@ class DetailsButtons extends Component {
                                                                                         value={this.state.materialsForm[id]}
                                                                                         onChange={(e) => this.handleMaterials_change(e, id)}
                                                                                         validations={[required, NumberV]}
-                                                                                        placeholder={this.state.fullData.materials_details[id].full_data.name}
+                                                                                        placeholder={"العدد"}
                                                                                     />
                                                                                 </div>
                                                                             </Col>
@@ -500,15 +500,15 @@ class DetailsButtons extends Component {
                             null
                         : 
                             <ModalFooter>
-                                <VButton color="primary" onClick={this.complateProduct} className="btn btn-info">Complate</VButton>{' '}
-                                <Button color="secondary" onClick={this.toggleComplateModal} className="secondryBtn">Close</Button>
+                                <VButton color="primary" onClick={this.complateProduct} className="btn btn-info">تأكيد</VButton>{' '}
+                                <Button color="secondary" onClick={this.toggleComplateModal} className="secondryBtn">إلغاء</Button>
                             </ModalFooter>
                         }
                     </VForm>
                 </Modal>
                 {/* ready_cancel Modal */}
                 <Modal isOpen={this.state.ready_cancelModal} toggle={this.toggleReady_cancelModal}>
-                    <ModalHeader toggle={this.toggleReady_cancelModal}>Back To Progress</ModalHeader>
+                    <ModalHeader toggle={this.toggleReady_cancelModal}>إلغاء اكتمال العمل</ModalHeader>
                     <ModalBody>
                         {this.state.ready_cancelFaild ?
                             <div>
@@ -521,8 +521,8 @@ class DetailsButtons extends Component {
                                 {this.state.ready_cancelSuccessfully ?
                                     <div className="staffSuccesDiv">
                                         <img src={successImg} alt="succes"/>
-                                        <h1>Congratulations</h1>
-                                        <p>Custom Product Back To Progress Successfully.</p>
+                                        {/* <h1>Congratulations</h1> */}
+                                        <p>تم إلغاء اكتمال العمل بنجاح.</p>
                                     </div>
                                 :
                                     this.state.ready_cancelFaild?
@@ -535,7 +535,7 @@ class DetailsButtons extends Component {
                                                 <Waiting height="100px" width="50px" />
                                                 :
                                                 <div>
-                                                    <p>Back Custom Product <br/>({this.props.selectedDetailsObj.id}) To Progress</p>
+                                                    <p>إلغاء اكتمال العمل علي المنتج رقم  <br/>({this.props.selectedDetailsObj.id})</p>
                                                 </div>
                                             }
                                         </div>
@@ -547,8 +547,8 @@ class DetailsButtons extends Component {
                         null
                     : 
                         <ModalFooter>
-                            <Button color="primary" onClick={this.ready_cancelProduct} className="primaryBtn">Confirm</Button>{' '}
-                            <Button color="secondary" onClick={this.toggleReady_cancelModal} className="secondryBtn">Close</Button>
+                            <Button color="primary" onClick={this.ready_cancelProduct} className="primaryBtn">تاكيد</Button>{' '}
+                            <Button color="secondary" onClick={this.toggleReady_cancelModal} className="secondryBtn">إلغاء</Button>
                         </ModalFooter>
                     }
                 </Modal>
@@ -560,18 +560,18 @@ class DetailsButtons extends Component {
             <>
                 {this.renderDetailModals()}
                 {this.props.selectedDetailsObj.status == "assigned" && this.state.userCanEdit &&
-                    <Button onClick={this.toggleStartModal} className="filterCompButton SubmitFButton btn btn-secondary">Start</Button>
+                    <Button onClick={this.toggleStartModal} className="filterCompButton SubmitFButton btn btn-secondary">بدا العمل</Button>
                 }
                 {this.props.selectedDetailsObj.status == "accepted" && this.state.userCanEdit &&
-                    <Button onClick={this.toggleStart_cancelModal} className="filterCompButton SubmitFButton btn btn-secondary">Back New</Button>
+                    <Button onClick={this.toggleStart_cancelModal} className="filterCompButton SubmitFButton btn btn-secondary">إلغاء البدا</Button>
                 }
                 {this.props.selectedDetailsObj.status == "accepted" && this.state.userCanEdit &&
-                    <Button onClick={this.toggleComplateModal} className="filterCompButton SubmitFButton btn btn-secondary">Complate</Button>
+                    <Button onClick={this.toggleComplateModal} className="filterCompButton SubmitFButton btn btn-secondary">اكتمال العمل</Button>
                 }
                 {this.props.selectedDetailsObj.status == "ready" && this.state.userCanEdit &&
-                    <Button onClick={this.toggleReady_cancelModal} className="filterCompButton SubmitFButton btn btn-secondary">Back Progress</Button>
+                    <Button onClick={this.toggleReady_cancelModal} className="filterCompButton SubmitFButton btn btn-secondary">إلغاء اكتمال العمل</Button>
                 }
-                <Link to={"/custom/products/details/" + this.props.selectedDetailsObj._id} className="filterCompButton SubmitFButton btn btn-secondary">Full Details</Link>
+                <Link to={"/custom/products/details/" + this.props.selectedDetailsObj._id} className="filterCompButton SubmitFButton btn btn-secondary">التفاصيل الكاملة للمنتج</Link>
             </>
         )
     }
