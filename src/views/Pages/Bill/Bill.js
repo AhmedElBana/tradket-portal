@@ -115,7 +115,7 @@ class Bill extends Component {
                     </tr>
                   </table>
                   <div className="qrcode">
-                    <QRCode value={this.state.order.id} />
+                    <QRCode value={this.state.order.id.toString()} />
                   </div>
                 </>
               }
