@@ -71,7 +71,7 @@ class Bill extends Component {
                               <b>Type:</b> {this.state.order.type}<br />
                               <b>Status:</b> {this.state.order.status}<br />
                               <b>Date:</b> {dependencies.custom_date_format(this.state.order.createdDate)}<br />
-                              <b>ID:</b> {this.state.order._id}<br />
+                              <b>ID:</b> {this.state.order.id}<br />
                             </td>
 
                             <td>
@@ -115,7 +115,7 @@ class Bill extends Component {
                     </tr>
                   </table>
                   <div className="qrcode">
-                    <QRCode value={this.state.order._id} />
+                    <QRCode value={this.state.order.id} />
                   </div>
                 </>
               }
