@@ -269,7 +269,7 @@ const EnteriesTable = (props) => {
   let state = useSelector(state => state.tables[props.name]);
   let ArrayData = []; 
     for (let x = 0; x < props.Data.length; x++) {
-      props.Data[x].id = props.Data[x]._id;
+      if(!props.Data[x].id){props.Data[x].id = props.Data[x]._id;}
       let rowClass = "";
       if(props.Data[x].id === state.selectedRowData.id && state.selectedRow && state.pointerRow){
         rowClass += " selectedRow ";

@@ -13,7 +13,8 @@
           {"title": "Source", "title_ar": "المصدر", "value": "sub_type", "type": "string"},
           {"title": "Name", "title_ar": "الوصف", "value": "name", "type": "string"},
           {"title": "Amount", "title_ar": "المبلغ", "value": "amount", "type": "amount_egp"},
-          {"title": "Created At", "title_ar": "تاريخ المعاملة", "value": "created_at", "type": "date"}
+          {"title": "Created At", "title_ar": "تاريخ المعاملة", "value": "created_at", "type": "date"},
+          {"title": "ID", "title_ar": "رقم الطلب", "value": "order.id", "type": "string"}
         ]
       },
       {

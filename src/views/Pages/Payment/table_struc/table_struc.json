@@ -7,7 +7,7 @@
     "NEXT": true
   },
   "struc": [
-    { "name": "ID", "name_ar": "الرقم", "value": "_id", "type": "text", "NEXT_uuid": true },
+    { "name": "ID", "name_ar": "رقم العملية", "value": "_id", "type": "text", "NEXT_uuid": true },
     { "name": "Amount", "name_ar": "المبلغ", "value": "amount", "type": "amount_egp" },
     { "name": "Type", "name_ar": "النوع", "value": "type", "type": "type", 
       "lable": {
