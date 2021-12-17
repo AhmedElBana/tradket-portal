@@ -16,22 +16,22 @@ class Login extends Component {
         waiting: false,
         error: false,
         errorMessage: "",
-        email: "",
-        firstEmail: true,
+        identifier: "",
+        firstIdentifier: true,
         password: "",
         firstPassword: true
     };
-    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleIdentifierChange = this.handleIdentifierChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleFormValidate = this.handleFormValidate.bind(this);
     this.handleFormValidateChange = this.handleFormValidateChange.bind(this);
     this.removeFormErr = this.removeFormErr.bind(this);
     this.login = this.login.bind(this);
   }
-  handleEmailChange(e){
-    this.setState({email: e.target.value},()=>{
-      if(!this.state.firstEmail){
-        this.handleFormValidateChange("email")
+  handleIdentifierChange(e){
+    this.setState({identifier: e.target.value},()=>{
+      if(!this.state.firstIdentifier){
+        this.handleFormValidateChange("identifier")
       }
     });
   }
@@ -43,17 +43,18 @@ class Login extends Component {
     });
   }
   removeFormErr(e){
-    this.setState({email: e.target.value, error: false, errorMessage: ""});
+    this.setState({identifier: e.target.value, error: false, errorMessage: ""});
   }
   handleFormValidate(field){
+    var patt = new RegExp("^(01)([0-9]*)$");
     //validation
-    if(field === "email" && this.state.firstEmail){
-      if(this.state.email === ""){
-        this.setState({firstEmail: false, error: true, errorMessage: "يجب إدخال البريد الالكتروني"})
-      }else if(!validator.isEmail(this.state.email)){
-        this.setState({firstEmail: false, error: true, errorMessage: "يرجي ادخال بريد الكتروني صحيح."})
+    if(field === "identifier" && this.state.firstIdentifier){
+      if(this.state.identifier === ""){
+        this.setState({firstIdentifier: false, error: true, errorMessage: "يجب إدخال رقم الهاتف او البريد الالكتروني"})
+      }else if((!validator.isEmail(this.state.identifier)) && (isNaN(this.state.identifier) || this.state.identifier.toString().trim().length !== 11 || !patt.test(this.state.identifier))){
+        this.setState({firstIdentifier: false, error: true, errorMessage: "يرجي ادخال رقم هاتف او بريد الكتروني صحيح."})
       }else{
-        this.setState({firstEmail: false, error: false, errorMessage: ""})
+        this.setState({firstIdentifier: false, error: false, errorMessage: ""})
       }
     }else if(field === "password" && this.state.firstPassword){
       if(this.state.password === ""){
@@ -66,12 +67,13 @@ class Login extends Component {
     }
   }
   handleFormValidateChange(field){
+    var patt = new RegExp("^(01)([0-9]*)$");
     //validation
-    if(field === "email" && !this.state.firstEmail){
-      if(this.state.email === ""){
-        this.setState({error: true, errorMessage: "يجب إدخال البريد الالكتروني"})
-      }else if(!validator.isEmail(this.state.email)){
-        this.setState({error: true, errorMessage: "يرجي ادخال بريد الكتروني صحيح."})
+    if(field === "identifier" && !this.state.firstIdentifier){
+      if(this.state.identifier === ""){
+        this.setState({error: true, errorMessage: "يجب إدخال رقم الهاتف او البريد الالكتروني"})
+      }else if((!validator.isEmail(this.state.identifier)) && (isNaN(this.state.identifier) || this.state.identifier.toString().trim().length !== 11 || !patt.test(this.state.identifier))){
+        this.setState({error: true, errorMessage: "يرجي ادخال رقم هاتف او بريد الكتروني صحيح."})
       }else{
         this.setState({error: false, errorMessage: ""})
       }
@@ -89,7 +91,7 @@ class Login extends Component {
     this.setState({waiting: true},()=>{
       //send request
       let dataObj = {
-        "email": this.state.email,
+        "identifier": this.state.identifier,
         "password": this.state.password
       };
       let config = {
@@ -100,7 +102,7 @@ class Login extends Component {
       };
       let data = JSON.stringify(dataObj);
       httpClient.post(
-          "/api/users/login",
+          "/api/users/login_v2",
           config,
           data,
           (resp) => {
@@ -112,7 +114,7 @@ class Login extends Component {
             //end waiting and print error message
             if(error.response){
               if(error.response.status === 401){
-                this.setState({waiting:false, error: true, errorMessage: "البريد الالكتروني او كلمة المرور غير صحيحة."});
+                this.setState({waiting:false, error: true, errorMessage: "بيانات غير صحيحة."});
               }else{
                 this.setState({waiting:false, error: true, errorMessage: "حدث خطا ما ، يرجي المحاوله في وقت لاحق."});
               }
@@ -139,14 +141,14 @@ class Login extends Component {
                     <Waiting  height='190px'/>
                   :
                     <div>
-                      <Input label="البريد الالكتروني" type="email"
+                      <Input label="رقم الهاتف او البريد الالكتروني" type="identifier"
                         required
                         className="tradket_input"
                         floatingLabel={true} 
                         autoFocus={true}
-                        value={this.state.email} 
-                        onChange={this.handleEmailChange}
-                        onBlur={()=> this.handleFormValidate("email")}
+                        value={this.state.identifier} 
+                        onChange={this.handleIdentifierChange}
+                        onBlur={()=> this.handleFormValidate("identifier")}
                       />
                       <Input label="كلمة المرور" type="password" 
                         required
@@ -163,7 +165,7 @@ class Login extends Component {
                       null
                     }
                     <br/>
-                    {this.state.email === "" || this.state.password === "" || this.state.error?
+                    {this.state.identifier === "" || this.state.password === "" || this.state.error?
                       <button disabled className="btn">تسجيل دخول</button>  
                     :
                       <button className="btn" onClick={this.login}>تسجيل دخول</button>  
