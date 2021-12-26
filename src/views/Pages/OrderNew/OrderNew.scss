@@ -28,6 +28,8 @@
     font-weight: bold;
     span{
         // font-size: 14px;
+        display: inline-block;
+        min-width: 70px;
         font-weight: normal;
         vertical-align: top;
     }

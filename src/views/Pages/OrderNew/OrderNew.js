@@ -52,6 +52,7 @@ const OrderNew = () => {
             new_products[code] = {
                 "quantity": 1,
                 "waiting": true,
+                "registered": true,
                 "error": false,
                 "data": {}
             };
@@ -115,12 +116,21 @@ const OrderNew = () => {
                     new_products[product_id]= {
                         "quantity": 1,
                         "waiting": false,
+                        "registered": true,
                         "error": false,
                         "data": {...resp.data.data.result[0]}
                     }
                 }else{
-                    new_products[product_id]["waiting"] = false;
-                    new_products[product_id]["error"] = true;
+                    new_products[product_id]= {
+                        "quantity": 1,
+                        "waiting": false,
+                        "registered": false,
+                        "error": false,
+                        "data": {
+                            "name": "",
+                            "price": ""
+                        }
+                    }
                 }
                 setProducts({...new_products})
             },
@@ -129,6 +139,7 @@ const OrderNew = () => {
                 new_products[product_id]= {
                     "quantity": 1,
                     "waiting": false,
+                    "registered": false,
                     "error": true,
                     "data": {}
                 }
@@ -152,27 +163,59 @@ const OrderNew = () => {
                                         {products[product_id].error ?
                                             <div>
                                                 <p><span>رقم المنتج : </span>{product_id}</p>
-                                                <h3>هذا المنتج غير مسجل</h3>
+                                                <Alert color="danger">حدث خطا ما ، يرجي المحاوله في وقت لاحق.</Alert>
                                             </div>
                                         :
-                                            <div>
-                                                <p><span>رقم المنتج : </span>{products[product_id].data._id}</p>
-                                                <p><span>اسم المنتج : </span>{products[product_id].data.name}</p>
-                                                <p>
-                                                    <span>السعر : </span>
-                                                    <div className="tradketInputGroup product_price_div">
-                                                        <VInput type="text" className="tradket_b_i "
-                                                            autoComplete="off"
-                                                            name="price"
-                                                            value={products[product_id].data.price}
-                                                            onChange={(e) => handlePriceChange(e, product_id)}
-                                                            validations={[required, NumberV]}
-                                                            placeholder="السعر"
-                                                        />
-                                                    </div>
-                                                </p>
-                                                <p><span>الكمية : </span><button className="quantity_btn" onClick={(e)=>{onDec(e, product_id)}}><i className="fa fa-minus"/></button> <input className="quantity_input" value={products[product_id].quantity} disabled={true} /> <button className="quantity_btn" onClick={(e)=>{onInc(e, product_id)}}><i className="fa fa-plus" /></button></p>
-                                            </div>
+                                            !products[product_id].registered ?
+                                                <div>
+                                                    <p><span>رقم المنتج : </span>{product_id}</p>
+                                                    <p>
+                                                        <span>اسم المنتج : </span>
+                                                        <div className="tradketInputGroup product_price_div">
+                                                            <VInput type="text" className="tradket_b_i "
+                                                                autoComplete="off"
+                                                                name="name"
+                                                                value={products[product_id].data.name}
+                                                                // onChange={(e) => handlePriceChange(e, product_id)}
+                                                                // validations={[required, NumberV]}
+                                                                placeholder="اسم المنتج"
+                                                            />
+                                                        </div>
+                                                    </p>
+                                                    <p>
+                                                        <span>السعر : </span>
+                                                        <div className="tradketInputGroup product_price_div">
+                                                            <VInput type="text" className="tradket_b_i "
+                                                                autoComplete="off"
+                                                                name="price"
+                                                                value={products[product_id].data.price}
+                                                                onChange={(e) => handlePriceChange(e, product_id)}
+                                                                validations={[required, NumberV]}
+                                                                placeholder="السعر"
+                                                            />
+                                                        </div>
+                                                    </p>
+                                                    <p><span>الكمية : </span><button className="quantity_btn" onClick={(e)=>{onDec(e, product_id)}}><i className="fa fa-minus"/></button> <input className="quantity_input" value={products[product_id].quantity} disabled={true} /> <button className="quantity_btn" onClick={(e)=>{onInc(e, product_id)}}><i className="fa fa-plus" /></button></p>
+                                                </div>
+                                            :
+                                                <div>
+                                                    <p><span>رقم المنتج : </span>{products[product_id].data._id}</p>
+                                                    <p><span>اسم المنتج : </span>{products[product_id].data.name}</p>
+                                                    <p>
+                                                        <span>السعر : </span>
+                                                        <div className="tradketInputGroup product_price_div">
+                                                            <VInput type="text" className="tradket_b_i "
+                                                                autoComplete="off"
+                                                                name="price"
+                                                                value={products[product_id].data.price}
+                                                                onChange={(e) => handlePriceChange(e, product_id)}
+                                                                validations={[required, NumberV]}
+                                                                placeholder="السعر"
+                                                            />
+                                                        </div>
+                                                    </p>
+                                                    <p><span>الكمية : </span><button className="quantity_btn" onClick={(e)=>{onDec(e, product_id)}}><i className="fa fa-minus"/></button> <input className="quantity_input" value={products[product_id].quantity} disabled={true} /> <button className="quantity_btn" onClick={(e)=>{onInc(e, product_id)}}><i className="fa fa-plus" /></button></p>
+                                                </div>
                                         }
                                     </div>
                                 }
