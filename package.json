@@ -44,6 +44,8 @@
     "redux": "4.0.5",
     "rsuite": "4.8.0",
     "simple-line-icons": "^2.4.1",
+    "use-scan-detection": "^0.2.3",
+    "use-state-with-callback": "^2.0.3",
     "validator": "^12.1.0"
   },
   "devDependencies": {

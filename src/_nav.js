@@ -80,6 +80,15 @@ if(perms.includes("123")){
     icon: 'fa fa-qrcode',
     });
 }
+//OrderNew
+let OrderNewObj = []
+if(perms.includes("123")){
+  orderObj.push({
+    name: 'طلب جديد',
+    url: '/order/new',
+    icon: 'fa fa-qrcode',
+    });
+}
 //payment
 let paymentObj = []
 if(perms.includes("139")){
