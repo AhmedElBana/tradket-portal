@@ -30,7 +30,7 @@ const routes = [
   { path: '/custom/products/staff', exact: true , name: 'Custom_products_staff', component: Custom_products_staff },
   { path: '/custom/products/details/:id?', exact: true , name: 'Custom_product_full', component: Custom_product_full },
   { path: '/order', name: 'Order', exact: true, component: Order },
-  { path: '/order/new', name: 'OrderNew', exact: true, component: OrderNew },
+  { path: '/new/order', name: 'OrderNew', exact: true, component: OrderNew },
   { path: '/payment', name: 'Payment', component: Payment },
   { path: '/customer', name: 'Customer', component: Customer },
   { path: '/transfers', name: 'Transfers', component: Transfers },

@@ -85,7 +85,7 @@ let OrderNewObj = []
 if(perms.includes("123")){
   orderObj.push({
     name: 'طلب جديد',
-    url: '/order/new',
+    url: '/new/order',
     icon: 'fa fa-qrcode',
     });
 }

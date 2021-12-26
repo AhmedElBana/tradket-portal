@@ -29,12 +29,13 @@
     span{
         // font-size: 14px;
         font-weight: normal;
+        vertical-align: top;
     }
     input{
         text-align: center;
     }
     input.quantity_input{
-        width: 50px;
+        width: 90px;
     }
 }
 .quantity_btn{
@@ -51,4 +52,34 @@
     &:hover{
         background-color: #ccc;
     }
+}
+.new_order_h{
+    color: #666;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.products_full_div{
+    min-height: 300px;
+}
+.product_price_div{
+    width: 165px;
+    display: inline-block;
+    margin: 0px;
+    .tradket_b_i{
+        height: 30px;
+        line-height: 30px;
+        border-radius: 0px;
+    }
+    .simple-alert > i{
+        top: 5px !important;
+        left: 7px !important;
+    }
+}
+.new_order_footer{
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
