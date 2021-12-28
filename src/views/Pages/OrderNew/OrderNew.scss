@@ -64,7 +64,9 @@
     margin-bottom: 30px;
 }
 .products_full_div{
-    min-height: 300px;
+    position: relative;
+    min-height: 350px;
+    padding-bottom: 85px;
 }
 .product_price_div{
     width: 165px;
@@ -84,4 +86,26 @@
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
+}
+.new_order_wating_div{
+    background-color: #fff;
+    min-height: 400px;
+    padding-top: 150px;
+}
+
+.new_order_total_div{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    width: calc(100% - 20px);
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 7px;
+    padding: 15px;
+    margin: 10px;
+    .total_p{
+        margin: 0px;
+        font-size: 22px;
+    }
 }
