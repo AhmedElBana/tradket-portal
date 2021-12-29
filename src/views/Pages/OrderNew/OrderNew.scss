@@ -65,8 +65,8 @@
 }
 .products_full_div{
     position: relative;
-    min-height: 350px;
-    padding-bottom: 85px;
+    min-height: 500px;
+    padding-bottom: 220px;
 }
 .product_price_div{
     width: 165px;
@@ -106,6 +106,28 @@
     margin: 10px;
     .total_p{
         margin: 0px;
+        margin-top: 45px;
         font-size: 22px;
+        font-weight: bold;
+    }
+}
+.input_label{
+    margin: 5px;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+}
+.new_order_succes_div{
+    background-color: #fff;
+    min-height: 400px;
+    padding-top: 75px;
+    text-align: center;
+    img{
+        width: 200px;
+    }
+    p{
+        margin: 0px;
+        font-size: 22px;
+        color: #000;
     }
 }
