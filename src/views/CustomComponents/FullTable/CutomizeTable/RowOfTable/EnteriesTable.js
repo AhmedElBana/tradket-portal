@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button} from 'reactstrap';
+import { Link } from 'react-router-dom';
 import { dependencies } from './../../../../../tools/Dependencies';
 import { appConfig } from './../../../../../tools/AppConfig';
 import { auth } from './../../../../../tools/Auth';
@@ -80,6 +81,8 @@ const renderContent = (content, fullObj, strucElement) => {
       )
     }
     
+  } else if (strucElement.type === 'details') {
+    return <Link to={`/${strucElement.route}/${content}`}> التفاصيل </Link>
   } else if (strucElement.type === "string_arr") {
     return string_arr(content);
   } else if (strucElement.type === "boolean") {
@@ -143,7 +146,7 @@ const renderContentLable = (content, lable) => {
     return content
   }
 }
-const fetchValue = (dateObj, value, data_type, field) => {
+const fetchValue = (dateObj, value, data_type, field, type) => {
   let finalValue;
   if(typeof value === "object"){
       if(value["type"] && value["type"] === "equal"){
@@ -209,7 +212,11 @@ const fetchValue = (dateObj, value, data_type, field) => {
                     }
                 }
             })
-            finalValue = render_arr_obj(varFinalValue, field)
+            if(type == "arr_length"){
+              finalValue = varFinalValue.length;
+            }else{
+              finalValue = render_arr_obj(varFinalValue, field)
+            }
         })
       }else{
         finalValue = "";
@@ -282,14 +289,20 @@ const EnteriesTable = (props) => {
           {props.strucObj.map(element => {
 
 
-            let tableDataContents = fetchValue(props.Data[x], element.value, element.data_type, element.field);
+            let tableDataContents = fetchValue(props.Data[x], element.value, element.data_type, element.field, element.type);
             if(element.NEXT_uuid){
               return( 
                 <td className="NEXT_uuid_td">{tableDataContents && typeof tableDataContents !== "object" ? renderContentLable(renderContent(tableDataContents, props.Data[x], element), element.lable) : " - "}</td>
               )
             }else{
               return( 
-                <td>{tableDataContents && typeof tableDataContents !== "object" ? renderContentLable(renderContent(tableDataContents, props.Data[x], element), element.lable) : " - "}</td>
+                <td>
+                  {tableDataContents && typeof tableDataContents !== "object" ? 
+                    renderContentLable(renderContent(tableDataContents, props.Data[x], element), element.lable) 
+                  : 
+                    tableDataContents == 0 ? tableDataContents : " - "
+                  }
+                </td>
               )
             }
           })}

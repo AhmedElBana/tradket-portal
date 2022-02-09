@@ -30,6 +30,22 @@
 .staffSuccesDiv > img{
     width: 150px
 }
+.staffSuccesDiv{
+    text-align: center;
+    margin-top: 30px;
+    color: #20A8D8;
+}
+.staffSuccesDiv h1{
+    font-size: 34px;
+    margin-bottom: 30px;
+}
+.staffSuccesDiv p{
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+.staffSuccesDiv img{
+    margin-bottom: 30px;
+}
 .modal-footer > :not(:last-child){
     margin-left: 4px;
     margin-right: 0px;
@@ -119,6 +135,9 @@ body{
     cursor: pointer;
     transform: translateY(-2px);
     box-shadow: 0px 3px 6px #00000029;
+}
+.btn-space > button{
+    margin: 0px 7px;
 }
 // .btn_w:hover{
 //     text-decoration: none;
@@ -561,6 +580,12 @@ body{
     opacity: 1;
     margin-bottom: 15px;
     transition: all .2s ease;
+}
+.x_panel.small{
+    min-height: 0px;
+}
+.x_panel.center{
+    text-align: center;
 }
 .x_title {
     border-bottom: 2px solid #E6E9ED;

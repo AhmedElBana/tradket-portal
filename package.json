@@ -37,6 +37,7 @@
     "react-redux": "7.2.3",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
+    "react-select": "^5.2.2",
     "react-test-renderer": "^16.8.6",
     "react-validation": "^3.0.7",
     "react-widgets": "^4.4.11",

@@ -1,0 +1,9 @@
+[
+  {
+    "type": "input",
+    "filterName": "name",
+    "name": "Name",
+    "name_ar": "اسم المجموعة",
+    "validations": []
+  }
+]

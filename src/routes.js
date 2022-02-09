@@ -14,6 +14,7 @@ const Order = React.lazy(() => import('./views/Pages/Order/Order'));
 const OrderNew = React.lazy(() => import('./views/Pages/OrderNew/OrderNew'));
 const Payment = React.lazy(() => import('./views/Pages/Payment/Payment'));
 const Customer = React.lazy(() => import('./views/Pages/Customer/Customer'));
+const CustomersGroup  = React.lazy(() => import('./views/Pages/CustomersGroup/CustomersGroup'));
 const Transfers = React.lazy(() => import('./views/Pages/Transfers/Transfers'));
 const Promo = React.lazy(() => import('./views/Pages/Promo/Promo'));
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
@@ -33,6 +34,7 @@ const routes = [
   { path: '/new/order', name: 'OrderNew', exact: true, component: OrderNew },
   { path: '/payment', name: 'Payment', component: Payment },
   { path: '/customer', name: 'Customer', component: Customer },
+  { path: '/customers_group/:id?', name: 'customers_group', component: CustomersGroup },
   { path: '/transfers', name: 'Transfers', component: Transfers },
   // { path: '/promo', name: 'Promo', component: Promo },
 ];

@@ -10,6 +10,7 @@
     { "name": "ID", "name_ar": "رقم العميل", "value": "_id", "type": "text"},
     { "name": "Name", "name_ar": "اسم العميل", "value": "name", "type": "text" },
     { "name": "Phone", "name_ar": "رقم الهاتف", "value": "phoneNumber", "type": "text" },
+    { "name": "customers", "name_ar": "عدد المجموعات", "value": "groups", "type": "arr_length", "data_type": "arr_obj" },
     { "name": "Debt", "name_ar": "الديون", "value": "debt", "type": "text" }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "setting": {
+    "title": "Customers Summary",
+    "title_ar": "مجموعات العملاء",
+    "pagination": true,
+    "default_size": 10,
+    "NEXT": true
+  },
+  "struc": [
+    { "name": "ID", "name_ar": "رقم المجموعة", "value": "_id", "type": "text"},
+    { "name": "Name", "name_ar": "اسم المجموعة", "value": "name", "type": "text" },
+    { "name": "customers", "name_ar": "عدد العملاء", "value": "customers", "type": "arr_length", "data_type": "arr_obj" },
+    { "name": "التفاصيل", "name_ar": "التفاصيل", "value": "_id", "type": "details", "route": "customers_group" }
+  ]
+}

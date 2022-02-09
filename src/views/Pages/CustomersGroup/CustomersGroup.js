@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import { Alert, Row, Col, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import {auth} from '../../../tools/Auth';
-import 'react-widgets/dist/css/react-widgets.css';
+import AsyncSelect from 'react-select/async';
+import Input from 'muicss/lib/react/input';
 import {httpClient} from './../../../tools/HttpClient';
 import VForm from 'react-validation/build/form';
 import VInput from 'react-validation/build/input';
 import VSelect from 'react-validation/build/select';
 import VButton from 'react-validation/build/button';
 import successImg from "./../../../assets/img/success.png";
+import validator from 'validator';
+import "./CustomersGroup.scss";
 import Waiting from "./../../../views/Waiting/waiting";
-import "./Customer.scss";
-import FullTable from './../../CustomComponents/FullTable/FullTable';
-import table_struc from './table_struc/table_struc.json';
-import filter_struc from './table_struc/filters_struc.json';
-import group_table_struc from './group_table_struc/table_struc.json';
-import group_filter_struc from './group_table_struc/filters_struc.json';
-let final_filter_struc = filter_struc;
+import { auth } from '../../../tools/Auth';
+import { dependencies } from '../../../tools/Dependencies';
 
 let requiredError = "هذا الحقل إجباري."
 const required = (value) => {
@@ -42,51 +39,77 @@ const phoneNumber = (value) => {
   }
 }
 
-class Customer extends Component {
+const perms = JSON.parse(localStorage.userData).permissions;
+
+class CustomersGroup extends Component {
   constructor(props){
     super(props);
     this.state = {
-        branches: [],
-        staff: [],
-        //add modal
-        addPath: "/api/customer/create",
-        addModalWaiting: false,
-        addModal: false,
-        addModalError: false,
-        addModalFaildMessage: "",
-        addModalSuccess: false,
-        branches: [],
-        addForm: {
-          name: "",
-          phoneNumber: ""
-        },
-        //add group modal
-        addGroupPath: "/api/customerGroup/create",
-        addGroupModalWaiting: false,
-        addGroupModal: false,
-        addGroupModalError: false,
-        addGroupModalFaildMessage: "",
-        addGroupModalSuccess: false,
-        branches: [],
-        addGroupForm: {
-          name: ""
-        },
-        //public
-        publicError: false,
-        logout: false,
+      //add modal
+      addPath: "/api/customerGroup/add",
+      addModalWaiting: false,
+      addModal: false,
+      addModalError: false,
+      addModalFaildMessage: "",
+      addModalSuccess: false,
+      branches: [],
+      addForm: {
+        customer_id: ""
+      },
+      // remove customer
+      removePath: "/api/customerGroup/remove",
+      removeModalWaiting: false,
+      removeModal: false,
+      removeModalError: false,
+      removeModalFaildMessage: "",
+      removeModalSuccess: false,
+      removeForm: {
+        selected_customer: {}
+      },
+      // public
+      waiting: true,
+      data: {},
+      publicError: false
     }; 
   }
   componentDidMount(){
-    
+    this.load_data();
+  }
+  load_data = () => {
+    //request data
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth": auth.getMerchantToken()
+      },
+      params: {
+        "group_id": this.props.match.params.id
+      }
+    }
+    httpClient.get(
+        "/api/customerGroup/customers",
+        config,
+        (resp) => {
+          this.setState({waiting: false, data: resp.data.data});
+        },
+        (error) => {
+          if(error.response){
+            if(error.response.status === 401){
+              this.setState({logout: true});
+            }else{
+              this.setState({publicError: true});
+            }
+          }else{
+            this.setState({publicError: true});
+          }
+        }
+    )
   }
   //add modal
   toggleAddModal = (e) => {
     e.preventDefault();
     let addFormData = this.state.addForm;
-    addFormData.name= "";
-    addFormData.address= "";
-    addFormData.phoneNumber= "";
-    addFormData.type= "";
+    addFormData.customer_id= "";
     this.setState({
       addModal: !this.state.addModal,
       addForm: addFormData,
@@ -96,17 +119,18 @@ class Customer extends Component {
       addModalFaildMessage: ""
     });
   }
-  handleAddInputChange(inputName,event){
+  handleAddInputChange = (inputName,value) => {
     let addFormData = this.state.addForm;
-    addFormData[inputName] = event.target.value;
+    addFormData[inputName] = value.value;
     this.setState({addForm: addFormData},()=>{
+      console.log(this.state.addForm)
     })
   }
   handleAddSubmit = (event) => {
     //get form data
     let userObj = {
-      "name": this.state.addForm.name,
-      "phoneNumber": this.state.addForm.phoneNumber
+      "group_id": this.props.match.params.id,
+      "customer_id": this.state.addForm.customer_id
     };
     let userData = JSON.stringify(userObj);
     //start waiting
@@ -147,7 +171,7 @@ class Customer extends Component {
     });
     event.preventDefault();
   }
-  addModalReset(e){
+  addModalReset = (e) => {
     e.preventDefault();
     let addFormData= this.state.addForm;
     this.setState({
@@ -158,6 +182,45 @@ class Customer extends Component {
       addModalFaildMessage: ""
     });
   }
+  loadOptions = (inputValue) =>
+    new Promise((resolve) => {
+      //request data
+      let config = {
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth": auth.getMerchantToken()
+        },
+        params: {
+          "phoneNumber": inputValue
+        }
+      }
+      httpClient.get(
+          "/api/customer/list",
+          config,
+          (resp) => {
+            if(resp.data.data && resp.data.data.result){
+              let final_arr = [];
+              resp.data.data.result.map((ele) => {
+                final_arr.push({ value: ele._id, label: `${ele.name} - ${ele.phoneNumber}` })
+              })
+              resolve(final_arr);
+            }else{
+              resolve([]);
+            }
+          },
+          (error) => {
+            if(error.response){
+              if(error.response.status === 401){
+                this.setState({logout: true});
+              }else{
+                this.setState({publicError: true});
+              }
+            }else{
+              this.setState({publicError: true});
+            }
+          }
+      )
+  });
   renderAddModal(){
     return(
       <Modal className="usersModal" isOpen={this.state.addModal} toggle={this.toggleAddModal}>
@@ -178,7 +241,7 @@ class Customer extends Component {
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
                   {/* <h1>Congratulations</h1> */}
-                  <p>تم إنشاء العميل بنجاح.</p>
+                  <p>تم إضافة العميل بنجاح.</p>
                 </div>
               :
                 <div >
@@ -190,26 +253,11 @@ class Customer extends Component {
                     <Row>
                       <Col sm="12" className="inputeDiv">
                         <div className="tradketInputGroup full_width">
-                          <VInput type="text" className="tradket_b_i"
-                            autoComplete="off"
-                            autoFocus={true}
-                            name="name"
-                            value={this.state.addForm.name}
-                            onChange={(e) => this.handleAddInputChange("name", e)}
-                            validations={[required]}
-                            placeholder="اسم العميل"
-                          />
-                        </div>
-                      </Col>
-                      <Col sm="12" className="inputeDiv">
-                        <div className="tradketInputGroup full_width">
-                          <VInput type="text" className="tradket_b_i"
-                            autoComplete="off"
-                            name="phoneNumber"
-                            value={this.state.addForm.phoneNumber}
-                            onChange={(e) => this.handleAddInputChange("phoneNumber",e)}
-                            validations={[required, phoneNumber]} 
-                            placeholder="رقم هاتف العميل"
+                          <AsyncSelect 
+                            placeholder="بحث برقم الهاتف"
+                            loadOptions={this.loadOptions} 
+                            onChange={this.handleChange}
+                            onChange={(value) => this.handleAddInputChange("customer_id", value)}
                           />
                         </div>
                       </Col>
@@ -228,7 +276,7 @@ class Customer extends Component {
               {this.state.addModalSuccess || this.state.addModalWaiting || this.state.addModalError?
                 null
               : 
-                <VButton className="btn btn-info">إنشاء</VButton>
+                this.state.addForm.customer_id != "" ? <VButton className="btn btn-info">إضافة</VButton> : null
               }
               {this.state.addModalError?
                 <button className="accept-btn btn btn-default" onClick={this.addModalReset}>حاول مرة اخري</button>
@@ -242,35 +290,33 @@ class Customer extends Component {
       </Modal>
     )
   }  
-  //add group modal
-  toggleAddGroupModal = (e) => {
+  //remove modal
+  toggleRemoveModal = (e, new_customer) => {
     e.preventDefault();
-    let addGroupFormData = this.state.addGroupForm;
-    addGroupFormData.name= "";
+    let removeFormData = this.state.removeForm;
+    if(new_customer){
+      removeFormData.selected_customer= {...new_customer}
+    }else{
+      removeFormData.selected_customer= {}
+    }
     this.setState({
-      addGroupModal: !this.state.addGroupModal,
-      addGroupForm: addGroupFormData,
-      addGroupModalWaiting: false, 
-      addGroupModalSuccess: false, 
-      addGroupModalError: false, 
-      addGroupModalFaildMessage: ""
+      removeModal: !this.state.removeModal,
+      removeForm: removeFormData,
+      removeModalWaiting: false, 
+      removeModalSuccess: false, 
+      removeModalError: false, 
+      removeModalFaildMessage: ""
     });
   }
-  handleAddGroupInputChange(inputName,event){
-    let addGroupFormData = this.state.addGroupForm;
-    addGroupFormData[inputName] = event.target.value;
-    this.setState({addGroupForm: addGroupFormData},()=>{
-    })
-  }
-  handleAddGroupSubmit = (event) =>    {
-    event.preventDefault();
+  handleRemoveSubmit = (event) => {
     //get form data
     let userObj = {
-      "name": this.state.addGroupForm.name
+      "group_id": this.props.match.params.id,
+      "customer_id": this.state.removeForm.selected_customer._id
     };
     let userData = JSON.stringify(userObj);
     //start waiting
-    this.setState({addGroupModalWaiting: true},()=>{
+    this.setState({removeModalWaiting: true},()=>{
       //send request
       let config = {
         headers: {
@@ -280,11 +326,11 @@ class Customer extends Component {
         }
       }
       httpClient.post(
-          this.state.addGroupPath,
+          this.state.removePath,
           config,
           userData,
           (resp) => {
-            this.setState({addGroupModalSuccess: true ,addGroupModalWaiting:false},()=>{
+            this.setState({removeModalSuccess: true ,removeModalWaiting:false},()=>{
               setTimeout(()=>{
                 window.location.reload();
               }, 3000);
@@ -295,7 +341,7 @@ class Customer extends Component {
               if(error.response.status === 401){
                 this.setState({logout: true});
               }else if(error.response.status === 400){
-                this.setState({addGroupModalWaiting: false, addGroupModalError: true, addGroupModalFaildMessage: error.response.data.message});
+                this.setState({removeModalWaiting: false, removeModalError: true, removeModalFaildMessage: error.response.data.message});
               }else{
                 this.setState({publicError: true});
               }
@@ -305,61 +351,50 @@ class Customer extends Component {
           }
       )
     });
+    event.preventDefault();
   }
-  addGroupModalReset(e){
+  removeModalReset = (e) => {
     e.preventDefault();
-    let addGroupFormData= this.state.addGroupForm;
+    let removeFormData= this.state.removeForm;
+    removeFormData.selected_customer = {}
     this.setState({
-      addGroupForm: addGroupFormData,
-      addGroupModalWaiting: false, 
-      addGroupModalSuccess: false, 
-      addGroupModalError: false, 
-      addGroupModalFaildMessage: ""
+      removeForm: removeFormData,
+      removeModalWaiting: false, 
+      removeModalSuccess: false, 
+      removeModalError: false, 
+      removeModalFaildMessage: ""
     });
   }
-  renderAddGroupModal(){
+  renderRemoveModal(){
     return(
-      <Modal className="usersModal" isOpen={this.state.addGroupModal} toggle={this.toggleAddGroupModal}>
-        <VForm onSubmit={this.handleAddGroupSubmit} >
-          <ModalHeader toggle={this.toggleAddGroupModal}>
-          مجموعة جديدة 
+      <Modal className="usersModal" isOpen={this.state.removeModal} toggle={this.toggleRemoveModal}>
+        <VForm onSubmit={this.handleRemoveSubmit} >
+          <ModalHeader toggle={this.toggleRemoveModal}>
+            حذف عميل من المجموعة
           </ModalHeader>
           <ModalBody>
-          {this.state.addGroupModalError?
+          {this.state.removeModalError?
               <div>
                 <Alert color="danger">
-                  {this.state.addGroupModalFaildMessage}
+                  {this.state.removeModalFaildMessage}
                 </Alert>
               </div>
           :
             <div >
-              {this.state.addGroupModalSuccess?
+              {this.state.removeModalSuccess?
                 <div className="staffSuccesDiv">
                   <img src={successImg} alt="succes"/>
-                  <p>تم إنشاء المجموعة بنجاح.</p>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم حذف العميل بنجاح.</p>
                 </div>
               :
                 <div >
-                {this.state.addGroupModalWaiting?
+                {this.state.removeModalWaiting?
                   <Waiting height="250px" />
                 :
                   <div className="addModalBody">
                     <br/>
-                    <Row>
-                      <Col sm="12" className="inputeDiv">
-                        <div className="tradketInputGroup full_width">
-                          <VInput type="text" className="tradket_b_i"
-                            autoComplete="off"
-                            autoFocus={true}
-                            name="name"
-                            value={this.state.addGroupForm.name}
-                            onChange={(e) => this.handleAddGroupInputChange("name", e)}
-                            validations={[required]}
-                            placeholder="اسم المجموعة"
-                          />
-                        </div>
-                      </Col>
-                    </Row>
+                    هل انت متاكد من حذف العميل ( {this.state.removeForm.selected_customer.name} - {this.state.removeForm.selected_customer.phoneNumber} )
                   </div>
                 }
                 </div>
@@ -367,21 +402,21 @@ class Customer extends Component {
             </div>
           }
           </ModalBody>
-          {this.state.addGroupModalSuccess || this.state.addGroupModalWaiting?
+          {this.state.removeModalSuccess || this.state.removeModalWaiting?
             null
           : 
             <ModalFooter>
-              {this.state.addGroupModalSuccess || this.state.addGroupModalWaiting || this.state.addGroupModalError?
+              {this.state.removeModalSuccess || this.state.removeModalWaiting || this.state.removeModalError?
                 null
               : 
-                <VButton className="btn btn-info">إنشاء</VButton>
+                <VButton className="btn btn-info">حذف</VButton>
               }
-              {this.state.addGroupModalError?
-                <button className="accept-btn btn btn-default" onClick={this.addGroupModalReset}>حاول مرة اخري</button>
+              {this.state.removeModalError?
+                <button className="accept-btn btn btn-default" onClick={this.removeModalReset}>حاول مرة اخري</button>
               :
                 null
               }
-              <button className="accept-btn btn btn-default" onClick={this.toggleAddGroupModal}>إلغاء</button>
+              <button className="accept-btn btn btn-default" onClick={this.toggleRemoveModal}>إلغاء</button>
             </ModalFooter>
           }
         </VForm>
@@ -390,42 +425,47 @@ class Customer extends Component {
   }  
   renderBody(){
     return(
-      <div className="products-page">
-        {this.state.publicError?
-          <div scroll="no" className="mainErrorDiv">
-            <Alert color="danger">
-              حدث خطا ما ، يرجي المحاوله في وقت لاحق.
-            </Alert>
-          </div>
-        :
-          <>
-            {(JSON.parse(localStorage.userData).permissions.includes("142") || JSON.parse(localStorage.userData).permissions.includes("144")) &&
-              <Row>
-                <div className="x_panel small center btn-space">
-                  {JSON.parse(localStorage.userData).permissions.includes("142") &&
+      <div className="CustomersGroup-page">
+        <div>
+          <Row>
+            <div className="x_panel">
+              <div className="x_title">
+                <h2>تفاصيل المجموعة</h2>
+                <div className="ButtonsDiv">
+                  {JSON.parse(localStorage.userData).permissions.includes("145") &&
                     <button onClick={this.toggleAddModal} type="button" className="btn">
-                      عميل جديدة
+                      إضافة عميل للمجموعة
                     </button>
                   }
                   {this.renderAddModal()}
-                  {JSON.parse(localStorage.userData).permissions.includes("144") &&
-                    <button onClick={this.toggleAddGroupModal} type="button" className="btn">
-                      مجموعة جديدة
-                    </button>
-                  }
-                  {this.renderAddGroupModal()}
-                </div>
-              </Row>
-            }
-            <div>
-              <FullTable name="customers" path={"/api/customer/list"} table={table_struc} filters={final_filter_struc} />
+                </div>  
+              </div>
+              <div className="x_content">
+                {this.state.waiting?
+                  <Waiting height="605px" />
+                : 
+                  <div className="">
+                    {this.renderRemoveModal()}
+                    {this.state.data.map((customer) => {
+                      return (
+                        <div className="customer_block">
+                          <span className="remove_customer" onClick={(e) => {this.toggleRemoveModal(e, customer)}}>
+                            <i className="fa fa-window-close" />
+                          </span>
+                          <p><span>رقم العميل :</span>{customer._id}</p>
+                          <p><span>اسم العميل :</span>{customer.name}</p>
+                          <p><span>رقم الهاتف :</span>{customer.phoneNumber}</p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                }
+              </div>
             </div>
-            <div>
-              <FullTable name="customerGroup" path={"/api/customerGroup/list"} table={group_table_struc} filters={group_filter_struc} />
-            </div>
-          </>
-        }
+          </Row>
+        </div>
       </div>
+      
     )
   }
   render() {
@@ -438,4 +478,4 @@ class Customer extends Component {
   }
 }
 
-export default Customer;
+export default CustomersGroup;
