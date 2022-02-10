@@ -466,16 +466,30 @@ class CustomersGroup extends Component {
               // Get the width and height of the first page
               const { width, height } = pdfDocPage.getSize();
               // Draw a string of text diagonally across the first page
-              pdfDocPage.drawText(`${customer.name} \n ${customer.phoneNumber}`, {
-                x: (width / 2) - 100,
-                y: (height / 2) + 150,
-                size: 70,
-                font: HelveticaFont,
-                color: rgb(0, 0, 0),
-                lineHeight: 70,
-                opacity: 0.3,
-                rotate: degrees(-45),
-              })
+              try {
+                pdfDocPage.drawText(`${customer.name} \n ${customer.phoneNumber}`, {
+                  x: (width / 2) - 100,
+                  y: (height / 2) + 150,
+                  size: 70,
+                  font: HelveticaFont,
+                  color: rgb(0, 0, 0),
+                  lineHeight: 70,
+                  opacity: 0.3,
+                  rotate: degrees(-45),
+                })
+              }
+              catch(err) {
+                pdfDocPage.drawText(`${customer.phoneNumber}`, {
+                  x: (width / 2) - 100,
+                  y: (height / 2) + 150,
+                  size: 70,
+                  font: HelveticaFont,
+                  color: rgb(0, 0, 0),
+                  lineHeight: 70,
+                  opacity: 0.3,
+                  rotate: degrees(-45),
+                })
+              }
             }))
           })).then(async() => {
             const pdfBytes = await pdfDocNew.save()
