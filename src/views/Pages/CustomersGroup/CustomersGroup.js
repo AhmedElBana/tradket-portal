@@ -564,7 +564,7 @@ class CustomersGroup extends Component {
                           minFileSize={0}
                           clickable
                         >
-                          Drop files here or click to upload
+                          اسحب الملف هنا او اضغط للرفع
                         </Files>
                       }
                     </div>
@@ -611,7 +611,7 @@ class CustomersGroup extends Component {
                     </button>
                   }
                   {this.renderAddModal()}
-                  {JSON.parse(localStorage.userData).permissions.includes("145") &&
+                  {(JSON.parse(localStorage.userData).permissions.includes("145") && !this.state.waiting ) &&
                     <button onClick={this.togglePrintModal} type="button" className="btn">
                       طباعة ملف
                     </button>
