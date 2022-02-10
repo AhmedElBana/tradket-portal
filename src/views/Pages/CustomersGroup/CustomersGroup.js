@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Alert, Row, Col, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import AsyncSelect from 'react-select/async';
+import Files from 'react-files'
+import fontkit from '@pdf-lib/fontkit';
+import { degrees, PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import Input from 'muicss/lib/react/input';
 import {httpClient} from './../../../tools/HttpClient';
 import VForm from 'react-validation/build/form';
@@ -66,6 +69,13 @@ class CustomersGroup extends Component {
       removeForm: {
         selected_customer: {}
       },
+      // print pdf
+      printModalWaiting: false,
+      printModal: false,
+      printModalError: false,
+      printModalFaildMessage: "",
+      printModalSuccess: false,
+      printFile: null,
       // public
       waiting: true,
       data: {},
@@ -122,9 +132,7 @@ class CustomersGroup extends Component {
   handleAddInputChange = (inputName,value) => {
     let addFormData = this.state.addForm;
     addFormData[inputName] = value.value;
-    this.setState({addForm: addFormData},()=>{
-      console.log(this.state.addForm)
-    })
+    this.setState({addForm: addFormData})
   }
   handleAddSubmit = (event) => {
     //get form data
@@ -423,6 +431,157 @@ class CustomersGroup extends Component {
       </Modal>
     )
   }  
+  //print modal
+  togglePrintModal = (e, new_customer) => {
+    if(e){e.preventDefault();}
+    this.setState({
+      printModal: !this.state.printModal,
+      printFile: null,
+      printModalWaiting: false, 
+      printModalSuccess: false, 
+      printModalError: false, 
+      printModalFaildMessage: ""
+    });
+  }
+  handlePrintSubmit = (event) => {
+    event.preventDefault();
+    //start waiting
+    this.setState({printModalWaiting: true},()=>{
+      this.state.printFile.arrayBuffer()
+      .then(async arrayBuffer => {
+
+          const pdfDoc = await PDFDocument.load(arrayBuffer);
+          const pages = pdfDoc.getPages();
+          const pdfDocNew = await PDFDocument.create();
+          
+          // Embed the Helvetica font
+          let HelveticaFont = await pdfDocNew.embedFont(StandardFonts.Helvetica);
+          //Get the first page of the document
+
+          Promise.all(this.state.data.map(async (customer) => {
+            await Promise.all(pages.map(async (page, index) => {
+              const [pdfDocPage] = await pdfDocNew.copyPages(pdfDoc, [index])
+              pdfDocNew.insertPage(index, pdfDocPage)
+  
+              // Get the width and height of the first page
+              const { width, height } = pdfDocPage.getSize();
+              // Draw a string of text diagonally across the first page
+              pdfDocPage.drawText(`${customer.name} \n ${customer.phoneNumber}`, {
+                x: (width / 2) - 100,
+                y: (height / 2) + 150,
+                size: 70,
+                font: HelveticaFont,
+                color: rgb(0, 0, 0),
+                lineHeight: 70,
+                opacity: 0.3,
+                rotate: degrees(-45),
+              })
+            }))
+          })).then(async() => {
+            const pdfBytes = await pdfDocNew.save()
+            var blob = new Blob([pdfBytes], {type: "application/pdf"});
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            var fileName = "test file";
+            link.download = fileName;
+            link.click();
+            this.togglePrintModal();
+          })     
+      });
+    })
+  }
+  printModalReset = (e) => {
+    e.preventDefault();
+    this.setState({
+      printFile: null,
+      printModalWaiting: false, 
+      printModalSuccess: false, 
+      printModalError: false, 
+      printModalFaildMessage: ""
+    });
+  }
+  onFilesChange = (files) => {
+    this.setState({printFile: files[0]})
+  }
+  onFilesError = (error, file) => {
+    this.setState({printModalError: true, printModalFaildMessage: "حذث خطأ اثناء رفع الملف."})
+  }
+
+  renderPrintModal(){
+    return(
+      <Modal className="usersModal" isOpen={this.state.printModal} toggle={this.togglePrintModal}>
+        <VForm onSubmit={this.handlePrintSubmit} >
+          <ModalHeader toggle={this.togglePrintModal}>
+            طباعة ملف 
+          </ModalHeader>
+          <ModalBody>
+          {this.state.printModalError?
+              <div>
+                <Alert color="danger">
+                  {this.state.printModalFaildMessage}
+                </Alert>
+              </div>
+          :
+            <div >
+              {this.state.printModalSuccess?
+                <div className="staffSuccesDiv">
+                  <img src={successImg} alt="succes"/>
+                  {/* <h1>Congratulations</h1> */}
+                  <p>تم طباعة ملف بنجاح.</p>
+                </div>
+              :
+                <div >
+                {this.state.printModalWaiting?
+                  <Waiting height="250px" />
+                :
+                  <div className="addModalBody">
+                    <br/>
+                    <div className="files">
+                      {this.state.printFile ?
+                        <p>{this.state.printFile.name}</p>
+                      :
+                        <Files
+                          className='files-dropzone'
+                          onChange={this.onFilesChange}
+                          onError={this.onFilesError}
+                          accepts={['.pdf']}
+                          multiple
+                          maxFileSize={10000000}
+                          minFileSize={0}
+                          clickable
+                        >
+                          Drop files here or click to upload
+                        </Files>
+                      }
+                    </div>
+                  </div>
+                }
+                </div>
+              }
+            </div>
+          }
+          </ModalBody>
+          {this.state.printModalSuccess || this.state.printModalWaiting?
+            null
+          : 
+            <ModalFooter>
+              {this.state.printModalSuccess || this.state.printModalWaiting || this.state.printModalError?
+                null
+              : 
+                this.state.printFile ? <VButton className="btn btn-info">طباعة</VButton> : null
+              }
+              {this.state.printModalError?
+                <button className="accept-btn btn btn-default" onClick={this.printModalReset}>حاول مرة اخري</button>
+              :
+                null
+              }
+              <button className="accept-btn btn btn-default" onClick={this.togglePrintModal}>إلغاء</button>
+            </ModalFooter>
+          }
+        </VForm>
+      </Modal>
+    )
+  }  
   renderBody(){
     return(
       <div className="CustomersGroup-page">
@@ -438,6 +597,12 @@ class CustomersGroup extends Component {
                     </button>
                   }
                   {this.renderAddModal()}
+                  {JSON.parse(localStorage.userData).permissions.includes("145") &&
+                    <button onClick={this.togglePrintModal} type="button" className="btn">
+                      طباعة ملف
+                    </button>
+                  }
+                  {this.renderPrintModal()}
                 </div>  
               </div>
               <div className="x_content">

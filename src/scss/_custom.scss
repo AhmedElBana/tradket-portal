@@ -691,7 +691,9 @@ body{
 .x_title.details .ButtonsDiv .btn{
     margin-left: 5px;
 }
-
+.ButtonsDiv button{
+    margin-right: 5px !important;
+}
 .x_title.details .ButtonsDiv .close_btn{
     border: 1px solid transparent;
     @include m (767){
@@ -905,7 +907,15 @@ td.NEXT_uuid_td{
   .NEXT_uuid:hover > span{
     display: block;
   }  
-  
+.files-dropzone{
+    text-align: center;
+    border: 2px dashed #000;
+    border-radius: 7px;
+    padding: 30px 15px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #000;
+}
 //------------------------ end main portal style ---------------------
 
 .TableDiv{
