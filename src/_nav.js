@@ -100,7 +100,7 @@ if(perms.includes("139")){
 }
 //Customer
 let customerObj = []
-if(perms.includes("139")){
+if(perms.includes("140")){
   customerObj.push({
     name: 'العملاء',
     url: '/customer',

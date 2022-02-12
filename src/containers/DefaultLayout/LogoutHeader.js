@@ -14,11 +14,11 @@ class LogoutHeader extends Component {
           :
             null
           }
-          {window.location.pathname !== "/portal/register"?
+          {/* {window.location.pathname !== "/portal/register"?
             <a href="/portal/register" className="btn_w">حساب جديد</a>
           :
             null
-          }          
+          }*/}
         </div>
       </div>
     );

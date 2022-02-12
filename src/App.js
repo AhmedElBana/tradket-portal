@@ -32,7 +32,7 @@ class App extends Component {
                 <React.Suspense fallback={loading()}>
                   <Switch>
                     <Route exact path="/login" name="Login Page" component={!auth.isLoggedIn() ? Login :  DefaultLayout } />
-                    <Route exact path="/register" name="Register Page" component={!auth.isLoggedIn() ? Register :  DefaultLayout } />
+                    {/* <Route exact path="/register" name="Register Page" component={!auth.isLoggedIn() ? Register :  DefaultLayout } /> */}
                     <Route exact path="/forget" name="Reset password" component={!auth.isLoggedIn() ? Forget :  DefaultLayout } />
                     <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
                     <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />
