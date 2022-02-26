@@ -76,6 +76,8 @@ class CustomersGroup extends Component {
       printModalFaildMessage: "",
       printModalSuccess: false,
       printFile: null,
+      water_mark_color: "#000000",
+      water_mark_opacity: 0.5,
       // public
       waiting: true,
       data: {},
@@ -443,6 +445,14 @@ class CustomersGroup extends Component {
       printModalFaildMessage: ""
     });
   }
+  hexToRgb = (hex) => {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16) / 255,
+      g: parseInt(result[2], 16) / 255,
+      b: parseInt(result[3], 16) / 255
+    } : null;
+  }
   handlePrintSubmit = (event) => {
     event.preventDefault();
     //start waiting
@@ -472,9 +482,9 @@ class CustomersGroup extends Component {
                   y: (height / 2) + 150,
                   size: 70,
                   font: HelveticaFont,
-                  color: rgb(0, 0, 0),
+                  color: rgb(this.hexToRgb(this.state.water_mark_color).r, this.hexToRgb(this.state.water_mark_color).g, this.hexToRgb(this.state.water_mark_color).b),
                   lineHeight: 70,
-                  opacity: 0.3,
+                  opacity: this.state.water_mark_opacity,
                   rotate: degrees(-45),
                 })
               }
@@ -484,9 +494,9 @@ class CustomersGroup extends Component {
                   y: (height / 2) + 150,
                   size: 70,
                   font: HelveticaFont,
-                  color: rgb(0, 0, 0),
+                  color: rgb(this.hexToRgb(this.state.water_mark_color).r, this.hexToRgb(this.state.water_mark_color).g, this.hexToRgb(this.state.water_mark_color).b),
                   lineHeight: 70,
-                  opacity: 0.3,
+                  opacity: this.state.water_mark_opacity,
                   rotate: degrees(-45),
                 })
               }
@@ -520,7 +530,12 @@ class CustomersGroup extends Component {
   onFilesError = (error, file) => {
     this.setState({printModalError: true, printModalFaildMessage: "حذث خطأ اثناء رفع الملف."})
   }
-
+  handle_water_mark_color_change = (e) => {
+    this.setState({water_mark_color: e.target.value});
+  }
+  handle_water_mark_opacity_change = (e) => {
+    this.setState({water_mark_opacity: Number(e.target.value)});
+  }
   renderPrintModal(){
     return(
       <Modal className="usersModal" isOpen={this.state.printModal} toggle={this.togglePrintModal}>
@@ -567,6 +582,33 @@ class CustomersGroup extends Component {
                           اسحب الملف هنا او اضغط للرفع
                         </Files>
                       }
+                      <div className="water_mark_custom_div">
+                        <div className="custom_print_input">
+                          <label>لون العلامة المائيه : </label>
+                          <input type="color" name="favcolor" 
+                            value={this.state.water_mark_color}
+                            onChange={this.handle_water_mark_color_change}
+                          />
+                        </div>
+                        <div className="custom_print_input">
+                          <label>درجة الوضوح : </label>
+                          <select type="color" name="favcolor" 
+                            value={this.state.water_mark_opacity}
+                            onChange={this.handle_water_mark_opacity_change}
+                          >
+                            <option value="0.1">0.1</option>
+                            <option value="0.2">0.2</option>
+                            <option value="0.3">0.3</option>
+                            <option value="0.4">0.4</option>
+                            <option value="0.5">0.5</option>
+                            <option value="0.6">0.6</option>
+                            <option value="0.7">0.7</option>
+                            <option value="0.8">0.8</option>
+                            <option value="0.9">0.9</option>
+                            <option value="1">1</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 }
