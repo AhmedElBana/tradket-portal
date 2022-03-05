@@ -78,6 +78,7 @@ class CustomersGroup extends Component {
       printFile: null,
       water_mark_color: "#000000",
       water_mark_opacity: 0.5,
+      water_mark_direction: "vertical",
       // public
       waiting: true,
       data: {},
@@ -476,28 +477,42 @@ class CustomersGroup extends Component {
               // Get the width and height of the first page
               const { width, height } = pdfDocPage.getSize();
               // Draw a string of text diagonally across the first page
+              let x_space;
+              let y_space;
+              let rotate_degrees;
+              if(this.state.water_mark_direction == "vertical"){
+                x_space = (width / 2) - 150;
+                y_space = (height / 2) + 200;
+                rotate_degrees = -45;
+              }else{
+                x_space = (width / 2) + 150;
+                y_space = (height / 2) - 200;
+                rotate_degrees = -225;
+              }
               try {
                 pdfDocPage.drawText(`${customer.name} \n ${customer.phoneNumber}`, {
-                  x: (width / 2) - 100,
-                  y: (height / 2) + 150,
+                  x: x_space,
+                  y: y_space,
                   size: 70,
                   font: HelveticaFont,
                   color: rgb(this.hexToRgb(this.state.water_mark_color).r, this.hexToRgb(this.state.water_mark_color).g, this.hexToRgb(this.state.water_mark_color).b),
                   lineHeight: 70,
+                  textAlign: 'left',
                   opacity: this.state.water_mark_opacity,
-                  rotate: degrees(-45),
+                  rotate: degrees(rotate_degrees),
                 })
               }
               catch(err) {
                 pdfDocPage.drawText(`${customer.phoneNumber}`, {
-                  x: (width / 2) - 100,
-                  y: (height / 2) + 150,
+                  x: x_space,
+                  y: y_space,
                   size: 70,
                   font: HelveticaFont,
                   color: rgb(this.hexToRgb(this.state.water_mark_color).r, this.hexToRgb(this.state.water_mark_color).g, this.hexToRgb(this.state.water_mark_color).b),
                   lineHeight: 70,
+                  textAlign: 'left',
                   opacity: this.state.water_mark_opacity,
-                  rotate: degrees(-45),
+                  rotate: degrees(rotate_degrees),
                 })
               }
             }))
@@ -535,6 +550,9 @@ class CustomersGroup extends Component {
   }
   handle_water_mark_opacity_change = (e) => {
     this.setState({water_mark_opacity: Number(e.target.value)});
+  }
+  handle_water_mark_direction_change = (e) => {
+    this.setState({water_mark_direction: e.target.value});
   }
   renderPrintModal(){
     return(
@@ -606,6 +624,16 @@ class CustomersGroup extends Component {
                             <option value="0.8">0.8</option>
                             <option value="0.9">0.9</option>
                             <option value="1">1</option>
+                          </select>
+                        </div>
+                        <div className="custom_print_input">
+                          <label>عرض الملف : </label>
+                          <select type="color" name="favcolor" 
+                            value={this.state.water_mark_direction}
+                            onChange={this.handle_water_mark_direction_change}
+                          >
+                            <option value="vertical">طولي</option>
+                            <option value="horizontal">افقي</option>
                           </select>
                         </div>
                       </div>
