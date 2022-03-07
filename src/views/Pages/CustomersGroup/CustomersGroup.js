@@ -454,6 +454,19 @@ class CustomersGroup extends Component {
       b: parseInt(result[3], 16) / 255
     } : null;
   }
+  set_number_for_sort = (arr, property) => {
+    let final_arr = [];
+    var regex = /\D/g;
+    arr.map((ele) => {
+      let first_non_num_position = ele[property].search(regex)
+      let final_num = 0;
+      if(ele[property].slice(0, first_non_num_position) && Number(ele[property].slice(0, first_non_num_position))){
+        final_num = Number(ele[property].slice(0, first_non_num_position));
+      }
+      final_arr.push({...ele, temp_sort_field: final_num})
+    });
+    return final_arr;
+  }
   handlePrintSubmit = (event) => {
     event.preventDefault();
     //start waiting
@@ -469,7 +482,18 @@ class CustomersGroup extends Component {
           let HelveticaFont = await pdfDocNew.embedFont(StandardFonts.Helvetica);
           //Get the first page of the document
 
-          Promise.all(this.state.data.map(async (customer) => {
+          let sorted_arr = [...this.state.data];
+          try{
+            let with_position = this.set_number_for_sort(sorted_arr, "name");
+            with_position.sort(function(a, b) {
+              return a.temp_sort_field - b.temp_sort_field;
+            });
+            sorted_arr = [...with_position]
+          }catch(err){
+
+          }
+
+          Promise.all(sorted_arr.map(async (customer) => {
             await Promise.all(pages.map(async (page, index) => {
               const [pdfDocPage] = await pdfDocNew.copyPages(pdfDoc, [index])
               pdfDocNew.insertPage(index, pdfDocPage)
@@ -480,6 +504,7 @@ class CustomersGroup extends Component {
               let x_space;
               let y_space;
               let rotate_degrees;
+              let font_size = 70;
               if(this.state.water_mark_direction == "vertical"){
                 x_space = (width / 2) - 150;
                 y_space = (height / 2) + 200;
@@ -489,11 +514,20 @@ class CustomersGroup extends Component {
                 y_space = (height / 2) - 200;
                 rotate_degrees = -225;
               }
+              try{
+                if(customer.name.length >= 15 && customer.name.length < 17){
+                  font_size = 60;
+                }else if(customer.name.length >= 17 && customer.name.length < 20){
+                  font_size = 50;
+                }else if(customer.name.length >= 20){
+                  font_size = 40;
+                }
+              }catch(err){}
               try {
                 pdfDocPage.drawText(`${customer.name} \n ${customer.phoneNumber}`, {
                   x: x_space,
                   y: y_space,
-                  size: 70,
+                  size: font_size,
                   font: HelveticaFont,
                   color: rgb(this.hexToRgb(this.state.water_mark_color).r, this.hexToRgb(this.state.water_mark_color).g, this.hexToRgb(this.state.water_mark_color).b),
                   lineHeight: 70,
@@ -506,7 +540,7 @@ class CustomersGroup extends Component {
                 pdfDocPage.drawText(`${customer.phoneNumber}`, {
                   x: x_space,
                   y: y_space,
-                  size: 70,
+                  size: font_size,
                   font: HelveticaFont,
                   color: rgb(this.hexToRgb(this.state.water_mark_color).r, this.hexToRgb(this.state.water_mark_color).g, this.hexToRgb(this.state.water_mark_color).b),
                   lineHeight: 70,
