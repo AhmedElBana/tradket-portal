@@ -114,7 +114,11 @@ class Login extends Component {
             //end waiting and print error message
             if(error.response){
               if(error.response.status === 401){
-                this.setState({waiting:false, error: true, errorMessage: "بيانات غير صحيحة."});
+                if(error.response.data && error.response.data.error && error.response.data.error == "account is not active"){
+                  this.setState({waiting:false, error: true, errorMessage: "الحساب غير فعال."});
+                }else{
+                  this.setState({waiting:false, error: true, errorMessage: "بيانات غير صحيحة."});
+                }
               }else{
                 this.setState({waiting:false, error: true, errorMessage: "حدث خطا ما ، يرجي المحاوله في وقت لاحق."});
               }
