@@ -8,6 +8,7 @@ import VInput from 'react-validation/build/input';
 import VButton from 'react-validation/build/button';
 import validator from 'validator';
 import successImg from "./../../../assets/img/success.png";
+import whatsapp from './../../../assets/img/whatsapp.png';
 import "./Forget.scss";
 
 import Waiting from "./../../../views/Waiting/waiting";
@@ -35,6 +36,18 @@ const email = (value) => {
           </div>;
   }
 };
+let phoneNameError = "يرجي ادخال رقم هاتف صحيح."
+const phoneNumber = (value) => {
+  var patt = new RegExp("^(01)([0-9]*)$");
+  if (isNaN(value) || value.toString().trim().length !== 11 || !patt.test(value)) {
+    return <div className="simple-alert">
+            <i className="fa fa-exclamation-circle"></i>
+            <Alert color="danger">
+              {phoneNameError}
+            </Alert>
+          </div>;
+  }
+}
 let codeError= "Please enter valid verify code.";
 const code = (value) => {
   var patt = new RegExp("^[0-9]*$");
@@ -76,11 +89,13 @@ class Forget extends Component {
   constructor(props){
     super(props);
     this.state = {
+        type: 'whatsapp',
         waiting: false,
         error: false,
         errorMessage: "",
         step: 1,
         form: {
+          whatsapp: "",
           email: "",
           code: "",
           password: "",
@@ -98,24 +113,49 @@ class Forget extends Component {
   handleFormChange(field, e){
     let oldForm = this.state.form;
     oldForm[field] = e.target.value;
-    this.setState({form: oldForm})
+    this.setState({form: oldForm, error: false, errorMessage: ""})
   }
   renderStep1(){
     return(
       <VForm onSubmit={this.requestCode}>
-        <Col>
-          <div className="tradketInputGroup">
-            <VInput type="text" className="tradket_b_i"
-              autoComplete="off"
-              name="email"
-              autoFocus={true}
-              value={this.state.form.email}
-              onChange={(e) => this.handleFormChange("email", e)}
-              validations={[required, email]}
-              placeholder="البريد الالكتروني"
-            />
+        <p className="forget_form_desc">ارسال رمز التفعيل من خلال ...</p>
+        <div className="forget_form_tabs">
+          <div onClick={()=>{ this.setState({type: "whatsapp"})}} className={this.state.type == "whatsapp" ? "active" : ""}>
+            الواتس اب
+            <img src={whatsapp} alt="whatsapp" />
           </div>
-        </Col>
+          <div onClick={()=>{ this.setState({type: "email"})}} className={this.state.type == "email" ? "active" : ""}>البريد الالكتروني</div>
+        </div>
+        {this.state.type == "whatsapp" && 
+          <Col>
+            <div className="tradketInputGroup">
+              <VInput type="text" className="tradket_b_i"
+                autoComplete="off"
+                name="whatsapp"
+                autoFocus={true}
+                value={this.state.form.whatsapp}
+                onChange={(e) => this.handleFormChange("whatsapp", e)}
+                validations={[required, phoneNumber]}
+                placeholder="رقم الهاتف"
+              />
+            </div>
+          </Col>
+        }
+        {this.state.type == "email" && 
+          <Col>
+            <div className="tradketInputGroup">
+              <VInput type="text" className="tradket_b_i"
+                autoComplete="off"
+                name="email"
+                autoFocus={true}
+                value={this.state.form.email}
+                onChange={(e) => this.handleFormChange("email", e)}
+                validations={[required, email]}
+                placeholder="البريد الالكتروني"
+              />
+            </div>
+          </Col>
+        }
         {this.state.error?
           <Col>
             <div className="tradketInputGroup">
@@ -133,12 +173,16 @@ class Forget extends Component {
   requestCode(){
     this.setState({waiting: true},()=>{
       //send request
-      let dataObj = {
-        "email": this.state.form.email
-      };
+      let dataObj = {};
+      if(this.state.type == "whatsapp"){
+        dataObj["whatsapp"] = this.state.form.whatsapp
+      }
+      if(this.state.type == "email"){
+        dataObj["email"] = this.state.form.email
+      }
       let config = {
           headers: {
-              "Cache-Control": "no-cache",
+              // "Cache-Control": "no-cache",
               "Content-Type": "application/json",
           }
       };
@@ -169,7 +213,12 @@ class Forget extends Component {
     return(
       <VForm onSubmit={this.verifyCode}>
         <Col>
-          <p className="verifyText">تم إرسال كود تحقق للبريد الالكتروني <br/> {this.state.form.email}</p>
+          {this.state.type == "whatsapp" &&
+            <p className="verifyText">تم إرسال كود تحقق لرقم  <br/> {this.state.form.whatsapp}</p>
+          }
+          {this.state.type == "email" &&
+            <p className="verifyText">تم إرسال كود تحقق للبريد الالكتروني <br/> {this.state.form.email}</p>
+          }
           <div className="tradketInputGroup">
             <VInput type="text" className="tradket_b_i"
               autoComplete="off"
@@ -200,9 +249,14 @@ class Forget extends Component {
     this.setState({waiting: true},()=>{
       //send request
       let dataObj = {
-        "email": this.state.form.email,
         "code": this.state.form.code
       };
+      if(this.state.type == "whatsapp"){
+        dataObj["whatsapp"] = this.state.form.whatsapp
+      }
+      if(this.state.type == "email"){
+        dataObj["email"] = this.state.form.email
+      }
       let config = {
           headers: {
               "Cache-Control": "no-cache",

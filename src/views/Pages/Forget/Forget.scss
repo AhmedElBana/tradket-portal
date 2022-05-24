@@ -18,3 +18,32 @@
 .resetPasswordSuccesDiv img{
     margin-bottom: 30px;
 }
+.forget_form_tabs{
+    padding: 15px 30px;
+    padding-top: 0px;
+    margin-bottom: 15px;
+}
+.forget_form_tabs > div{
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 45px;
+    cursor: pointer;
+    transition: all ease-in-out .3s;
+    border-radius: 8px;
+    height: 45px;
+}
+.forget_form_tabs > div.active{
+    background-color: #00A2DA;
+    color: #fff;
+}
+.forget_form_tabs > div > img{
+    width: 25px;
+    margin: 0px 10px;
+}
+.forget_form_desc{
+    font-size: 16px;
+    font-weight: bold;
+}
